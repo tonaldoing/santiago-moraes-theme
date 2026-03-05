@@ -1,0 +1,131 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+body {
+  font-family: $font-body;
+  font-size: $text-body;
+  font-weight: $weight-regular;
+  color: $color-body;
+  background-color: $color-white;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: $font-primary;
+  font-weight: $weight-bold;
+  color: $color-dark;
+}
+
+h1, .h1 {
+  font-size: 28px;
+  font-weight: $weight-black;
+  line-height: $lh-hero;
+  letter-spacing: -1.5px;
+
+  @include tablet {
+    font-size: 50px;
+    letter-spacing: -2px;
+  }
+
+  @include desktop {
+    font-size: $text-hero;
+    letter-spacing: $ls-hero;
+  }
+}
+
+h2, .h2 {
+  font-size: 22px;
+  line-height: 1.1em;
+  letter-spacing: -0.5px;
+
+  @include tablet {
+    font-size: 28px;
+  }
+
+  @include desktop {
+    font-size: $text-section;
+    line-height: $lh-section;
+    letter-spacing: $ls-section;
+  }
+}
+
+h3, .h3 {
+  font-size: 16px;
+  line-height: 1.2em;
+  letter-spacing: -0.5px;
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include desktop {
+    font-size: $text-sub;
+    line-height: $lh-sub;
+    letter-spacing: $ls-sub;
+  }
+}
+
+// Body text
+p {
+  margin-bottom: 1em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Secondary text
+.text-secondary {
+  color: $color-secondary;
+  font-family: $font-primary;
+  font-size: $text-small;
+  font-weight: $weight-medium;
+  line-height: $lh-small;
+}
+
+// Site title (used as logo)
+.site-title {
+  font-family: $font-primary;
+  font-size: 16px;
+  font-weight: $weight-bold;
+  line-height: 1.2em;
+  letter-spacing: $ls-sub;
+  color: $color-dark;
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include desktop {
+    font-size: $text-sub;
+    line-height: $lh-sub;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+}
+
+// Nav text
+.nav-text {
+  font-family: $font-primary;
+  font-size: $text-small;
+  font-weight: $weight-medium;
+  line-height: $lh-small;
+}
+
+// Description text (Montserrat body for album blurbs etc.)
+.text-description {
+  font-family: $font-body;
+  font-weight: $weight-regular;
+  color: $color-secondary;
+}

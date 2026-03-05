@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Compiled CSS (rebuild with npm run sass:build)
+# Uncomment if you want to track compiled CSS:
+# assets/css/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
+npm-debug.log*

@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sm/platform-links",
+	"version": "1.0.0",
+	"title": "Plataformas de Música",
+	"category": "santiago-moraes",
+	"icon": "format-audio",
+	"description": "Grid de enlaces a plataformas musicales con iconos SVG.",
+	"textdomain": "santiago-moraes",
+	"attributes": {
+		"links": {
+			"type": "array",
+			"default": [
+				{ "platform": "spotify", "url": "" },
+				{ "platform": "bandcamp", "url": "" },
+				{ "platform": "youtube", "url": "" },
+				{ "platform": "vinyl", "url": "" }
+			],
+			"items": {
+				"type": "object"
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"render": "file:./render.php"
+}

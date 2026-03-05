@@ -1,0 +1,107 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Footer
+// ==========================================================================
+
+.site-footer {
+  background-color: $color-white;
+  padding: $widget-spacing 0;
+
+  &__inner {
+    @include container;
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: $widget-spacing;
+
+    @include mobile-only {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+}
+
+// Footer social icons
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: $social-gap;
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: $color-secondary;
+    @include transition(color);
+
+    &:hover {
+      color: $color-accent;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  }
+}
+
+// Copyright
+.site-copyright {
+  font-family: $font-primary;
+  font-size: $text-small;
+  font-weight: $weight-medium;
+  line-height: $lh-small;
+  color: $color-secondary;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+// Credits
+.site-credits {
+  font-family: $font-body;
+  font-size: 12px;
+  color: $color-secondary;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  opacity: 0.7;
+}
+
+// Scroll to top
+.scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  @include flex-center;
+  background-color: $color-dark;
+  color: $color-white;
+  border-radius: 50%;
+  opacity: 0;
+  visibility: hidden;
+  @include transition;
+  cursor: pointer;
+  z-index: 50;
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover {
+    background-color: $color-accent;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+}

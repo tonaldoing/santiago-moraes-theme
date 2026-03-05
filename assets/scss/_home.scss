@@ -1,0 +1,435 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Homepage Sections
+// ==========================================================================
+
+// ----- Hero -----
+.hero {
+  background-color: $color-black;
+  overflow: hidden;
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+    }
+  }
+
+  &__content {
+    @include flex-column;
+    justify-content: center;
+    padding: $section-padding $widget-spacing;
+    order: 2;
+
+    @include tablet {
+      width: 50%;
+      order: 1;
+      padding: $section-padding 0;
+    }
+
+    @include desktop {
+      width: 40%;
+    }
+  }
+
+  &__title {
+    color: $color-cream;
+    margin-bottom: 24px;
+  }
+
+  &__accent {
+    color: $color-accent;
+    text-decoration: underline;
+    display: block;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  &__image {
+    display: flex;
+    flex-direction: column-reverse;
+    order: 1;
+
+    @include tablet {
+      width: 50%;
+      order: 2;
+    }
+
+    @include desktop {
+      width: 60%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+// ----- Shows -----
+.shows {
+  padding-top: $section-padding;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    margin-bottom: 24px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  &__footer {
+    margin-top: 32px;
+    text-align: center;
+  }
+
+  &__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-primary;
+    font-size: $text-small;
+    font-weight: $weight-bold;
+    color: $color-accent;
+    text-decoration: none;
+    @include transition(color);
+
+    &:hover {
+      color: $color-dark;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  &__empty {
+    font-family: $font-body;
+    font-size: $text-body;
+    color: $color-secondary;
+    text-align: center;
+    padding: 48px 0;
+    margin: 0;
+  }
+}
+
+.show-card {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid $color-border;
+
+  &:first-child {
+    border-top: 1px solid $color-border;
+  }
+
+  &__date {
+    @include flex-column;
+    align-items: center;
+    font-family: $font-primary;
+    font-weight: $weight-bold;
+    color: $color-dark;
+    min-width: 56px;
+    text-align: center;
+  }
+
+  &__day {
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -1px;
+
+    @include mobile-only {
+      font-size: 24px;
+    }
+  }
+
+  &__month {
+    font-size: 12px;
+    font-weight: $weight-medium;
+    text-transform: uppercase;
+    color: $color-secondary;
+    letter-spacing: 1px;
+  }
+
+  &__info {
+    @include flex-column;
+    gap: $event-venue-gap;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  &__venue {
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-medium;
+    line-height: $lh-sub;
+    color: $color-dark;
+
+    @include mobile-only {
+      font-size: 16px;
+    }
+  }
+
+  &__city {
+    font-family: $font-primary;
+    font-size: $text-small;
+    font-weight: $weight-medium;
+    line-height: $lh-small;
+    color: $color-secondary;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// ----- Latest Release / Music -----
+.latest-release {
+  padding: $section-padding 0;
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $music-gap;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &__cover {
+    @include tablet {
+      width: 50%;
+      flex-shrink: 0;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: $card-radius;
+    }
+  }
+
+  &__info {
+    @include flex-column;
+    justify-content: center;
+    gap: $widget-spacing;
+  }
+
+  &__description {
+    color: $color-secondary;
+  }
+}
+
+// Platform links grid
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $card-grid-gap;
+}
+
+.platform-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px 10px 10px;
+  background-color: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $card-radius;
+  text-decoration: none;
+  @include transition(background-color);
+
+  &:hover {
+    background-color: var(--platform-hover-bg, $color-vinyl-hover);
+  }
+
+  &--spotify {
+    --platform-hover-bg: #{$color-spotify-hover};
+  }
+  &--bandcamp {
+    --platform-hover-bg: #{$color-bandcamp-hover};
+  }
+  &--youtube {
+    --platform-hover-bg: #{$color-youtube-hover};
+  }
+  &--vinyl {
+    --platform-hover-bg: #{$color-vinyl-hover};
+  }
+
+  &__icon {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    border-radius: $icon-radius;
+    flex-shrink: 0;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .platform-card--spotify & {
+      color: $color-spotify;
+      background-color: $color-spotify-hover;
+    }
+    .platform-card--bandcamp & {
+      color: $color-bandcamp;
+      background-color: $color-bandcamp-hover;
+    }
+    .platform-card--youtube & {
+      color: $color-youtube;
+      background-color: $color-youtube-hover;
+    }
+    .platform-card--vinyl & {
+      color: $color-dark;
+      background-color: $color-vinyl-hover;
+    }
+  }
+
+  &__label {
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-bold;
+    color: $color-dark;
+    flex: 1;
+
+    @include mobile-only {
+      font-size: 16px;
+    }
+  }
+
+  &__external {
+    color: $color-secondary;
+    flex-shrink: 0;
+
+    svg {
+      width: 10px;
+      height: 10px;
+      fill: currentColor;
+    }
+  }
+}
+
+// ----- Home Contact -----
+.home-contact {
+  background-color: $color-black;
+  padding: $section-padding 0;
+
+  &__inner {
+    @include container;
+    text-align: center;
+  }
+
+  &__title {
+    color: $color-cream;
+    margin-bottom: 32px;
+  }
+
+  &__form {
+    max-width: 700px;
+    margin: 0 auto 32px;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &__input {
+    flex: 1;
+    padding: 10px 16px;
+    border: 1px solid rgba($color-cream, 0.2);
+    border-radius: $button-radius;
+    font-family: $font-body;
+    font-size: $text-small;
+    color: $color-cream;
+    background-color: rgba($color-cream, 0.05);
+    @include transition(border-color);
+
+    &::placeholder {
+      color: $color-secondary;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+    }
+
+    &--message {
+      @include tablet {
+        flex: 2;
+      }
+    }
+  }
+
+  &__status {
+    font-family: $font-body;
+    font-size: $text-small;
+    margin-top: 12px;
+
+    &--success {
+      color: $color-success;
+    }
+
+    &--error {
+      color: $color-error;
+    }
+  }
+
+  &__social {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  &__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: $icon-radius;
+    background-color: rgba($color-cream, 0.08);
+    color: $color-cream;
+    @include transition(all);
+
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    &:hover {
+      background-color: $color-accent;
+      color: $color-white;
+    }
+  }
+}

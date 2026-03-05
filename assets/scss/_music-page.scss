@@ -1,0 +1,467 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Music Page — Album hero, discography grid, tracklists
+// ==========================================================================
+
+// ----- Album Hero (Featured Album) -----
+.album-hero {
+  background-color: $color-black;
+  padding: $section-padding 0;
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $music-gap;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &__cover {
+    @include tablet {
+      width: 40%;
+      flex-shrink: 0;
+    }
+
+    &-img {
+      width: 100%;
+      height: auto;
+      border-radius: $card-radius;
+      display: block;
+    }
+  }
+
+  &__info {
+    @include flex-column;
+    gap: $widget-spacing;
+
+    @include tablet {
+      width: 60%;
+    }
+  }
+
+  &__year {
+    font-family: $font-primary;
+    font-size: $text-small;
+    font-weight: $weight-medium;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-hero;
+    font-weight: $weight-black;
+    line-height: $lh-hero;
+    letter-spacing: $ls-hero;
+    color: $color-cream;
+    margin: 0;
+
+    @include until($bp-tablet) {
+      font-size: 50px;
+    }
+
+    @include mobile-only {
+      font-size: 36px;
+    }
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-weight: $weight-regular;
+    color: $color-secondary;
+    line-height: $lh-body;
+    margin: 0;
+  }
+
+  // Platform grid inherits styles from _home.scss — same .platform-grid / .platform-card.
+}
+
+// ----- Discography Grid Section -----
+.discography {
+  padding: $section-padding 0;
+  background-color: $color-white;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-section;
+    font-weight: $weight-bold;
+    line-height: $lh-section;
+    letter-spacing: $ls-section;
+    color: $color-dark;
+    margin-bottom: 32px;
+
+    @include mobile-only {
+      font-size: 22px;
+      line-height: 28px;
+      margin-bottom: 24px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+    }
+  }
+
+  // Demos variant — smaller cards, muted.
+  &--demos {
+    background-color: $color-cream;
+
+    .album-card__cover {
+      border-radius: $button-radius;
+    }
+
+    .album-card__name {
+      font-size: $text-body;
+    }
+
+    .album-card__year {
+      font-size: 12px;
+    }
+
+    .discography__grid {
+      @include tablet {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+    }
+  }
+}
+
+// ----- Album Card -----
+.album-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .album-card__overlay {
+    opacity: 1;
+  }
+
+  &:hover .album-card__img {
+    transform: scale(1.03);
+  }
+
+  &__cover {
+    position: relative;
+    overflow: hidden;
+    border-radius: $card-radius;
+    margin-bottom: 16px;
+    aspect-ratio: 1;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    @include transition(transform);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba($color-black, 0.5);
+    @include flex-center;
+    opacity: 0;
+    @include transition(opacity);
+  }
+
+  &__cta {
+    font-family: $font-primary;
+    font-size: $text-small;
+    font-weight: $weight-bold;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 2px solid $color-white;
+    padding: 10px 24px;
+    border-radius: $button-radius;
+  }
+
+  &__info {
+    padding: 0 4px;
+  }
+
+  &__name {
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-bold;
+    color: $color-dark;
+    margin: 0 0 4px;
+    line-height: $lh-sub;
+  }
+
+  &__year {
+    font-family: $font-body;
+    font-size: $text-small;
+    font-weight: $weight-regular;
+    color: $color-secondary;
+  }
+}
+
+// ----- Tracklist Section -----
+.tracklist {
+  padding: $section-padding 0;
+  background-color: $color-white;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-section;
+    font-weight: $weight-bold;
+    line-height: $lh-section;
+    letter-spacing: $ls-section;
+    color: $color-dark;
+    margin-bottom: 24px;
+
+    @include mobile-only {
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// ----- Track Row -----
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid $color-border;
+
+  &:first-child {
+    border-top: 1px solid $color-border;
+  }
+
+  @include mobile-only {
+    flex-wrap: wrap;
+  }
+
+  &__number {
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-bold;
+    color: $color-secondary;
+    min-width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+
+    @include mobile-only {
+      font-size: 16px;
+      min-width: 24px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-medium;
+    color: $color-dark;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include mobile-only {
+      font-size: 16px;
+      white-space: normal;
+    }
+  }
+
+  &__key {
+    font-family: $font-primary;
+    font-size: 12px;
+    font-weight: $weight-medium;
+    color: $color-secondary;
+    background-color: rgba($color-secondary, 0.1);
+    padding: 2px 8px;
+    border-radius: $tag-radius;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__platforms {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  &__platform {
+    display: inline-flex;
+    @include transition(opacity);
+
+    svg {
+      display: block;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  &__player {
+    flex-shrink: 0;
+    max-width: 250px;
+
+    @include mobile-only {
+      order: 4;
+      width: 100%;
+      max-width: 100%;
+      padding-left: 40px;
+    }
+
+    audio {
+      width: 100%;
+      height: 36px;
+      border-radius: $button-radius;
+    }
+
+    &--empty {
+      width: 0;
+
+      @include mobile-only {
+        display: none;
+      }
+    }
+  }
+
+  &__actions {
+    flex-shrink: 0;
+
+    @include mobile-only {
+      margin-left: auto;
+    }
+  }
+}
+
+// ----- Compact Album Header (legacy, kept for compat) -----
+.album-compact {
+  background-color: $color-black;
+  padding: 32px 0;
+
+  &__inner {
+    @include container;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__cover {
+    width: 80px;
+    flex-shrink: 0;
+
+    @include tablet {
+      width: 120px;
+    }
+
+    &-img {
+      width: 100%;
+      height: auto;
+      border-radius: $button-radius;
+      display: block;
+    }
+  }
+
+  &__info {
+    @include flex-column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-section;
+    font-weight: $weight-bold;
+    line-height: $lh-section;
+    letter-spacing: $ls-section;
+    color: $color-cream;
+    margin: 0;
+
+    @include mobile-only {
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
+
+  &__year {
+    font-weight: $weight-regular;
+    color: $color-secondary;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__link {
+    display: inline-flex;
+    @include transition(opacity);
+
+    svg {
+      display: block;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+// ----- Demos Divider (legacy, kept for compat) -----
+.demos-divider {
+  background-color: $color-cream;
+  padding: 24px 0;
+  margin-top: $section-padding;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-section;
+    font-weight: $weight-bold;
+    line-height: $lh-section;
+    letter-spacing: $ls-section;
+    color: $color-dark;
+    margin: 0;
+
+    @include mobile-only {
+      font-size: 22px;
+    }
+  }
+}

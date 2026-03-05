@@ -1,0 +1,149 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Block-specific styles — sm/section + sm/social-links + sm/hero--light
+// Everything else reuses existing SCSS classes.
+// ==========================================================================
+
+// ---------------------------------------------------------------------
+// sm/section — Generic wrapper block
+// ---------------------------------------------------------------------
+.sm-section {
+	padding: $section-padding 0;
+
+	// Background variants.
+	&--dark {
+		background-color: $color-black;
+		color: $color-cream;
+	}
+
+	&--light {
+		background-color: $color-white;
+		color: $color-dark;
+	}
+
+	&--cream {
+		background-color: $color-cream;
+		color: $color-dark;
+	}
+
+	// Padding variants.
+	&--compact {
+		padding: 32px 0;
+	}
+
+	&--wide {
+		padding: calc(#{$section-padding} * 1.5) 0;
+	}
+
+	// Inner container.
+	&__inner {
+		@include container;
+	}
+
+	&__inner--narrow {
+		max-width: 720px;
+	}
+
+	&__inner--full {
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+// ---------------------------------------------------------------------
+// sm/hero-section — Light variant modifier
+// ---------------------------------------------------------------------
+.hero--light {
+	background-color: $color-white;
+
+	.hero__title {
+		color: $color-dark;
+	}
+
+	.hero__buttons .btn--ghost {
+		color: $color-dark;
+		border-color: $color-dark;
+
+		&:hover {
+			background-color: $color-dark;
+			color: $color-white;
+		}
+	}
+}
+
+// ---------------------------------------------------------------------
+// sm/social-links — Standalone social icon row
+// ---------------------------------------------------------------------
+.sm-social-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	// Alignment variants.
+	&--left {
+		justify-content: flex-start;
+	}
+
+	&--center {
+		justify-content: center;
+	}
+
+	&--right {
+		justify-content: flex-end;
+	}
+
+	// Icon link base.
+	&__link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: $icon-radius;
+		color: currentColor;
+		@include transition;
+
+		svg {
+			fill: currentColor;
+		}
+
+		&:hover {
+			color: $color-accent;
+		}
+	}
+
+	// Size variants.
+	&--small &__link {
+		width: 32px;
+		height: 32px;
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	&--medium &__link {
+		width: 40px;
+		height: 40px;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	&--large &__link {
+		width: 48px;
+		height: 48px;
+
+		svg {
+			width: 24px;
+			height: 24px;
+		}
+	}
+}

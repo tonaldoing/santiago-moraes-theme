@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sm/social-links",
+	"version": "1.0.0",
+	"title": "Redes Sociales",
+	"category": "santiago-moraes",
+	"icon": "share",
+	"description": "Iconos de redes sociales desde el Customizer.",
+	"textdomain": "santiago-moraes",
+	"attributes": {
+		"size": {
+			"type": "string",
+			"default": "medium",
+			"enum": [ "small", "medium", "large" ]
+		},
+		"alignment": {
+			"type": "string",
+			"default": "center",
+			"enum": [ "left", "center", "right" ]
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"render": "file:./render.php"
+}

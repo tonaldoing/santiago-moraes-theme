@@ -1,0 +1,60 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sm/hero-section",
+	"version": "1.0.0",
+	"title": "Hero Section",
+	"category": "santiago-moraes",
+	"icon": "cover-image",
+	"description": "Sección hero con título, botones e imagen.",
+	"textdomain": "santiago-moraes",
+	"attributes": {
+		"bgStyle": {
+			"type": "string",
+			"default": "dark",
+			"enum": [ "dark", "light" ]
+		},
+		"headingLine1": {
+			"type": "string",
+			"default": "Santiago"
+		},
+		"headingLine2": {
+			"type": "string",
+			"default": "Moraes"
+		},
+		"heroDescription": {
+			"type": "string",
+			"default": ""
+		},
+		"imageId": {
+			"type": "number",
+			"default": 0
+		},
+		"imageUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"button1Text": {
+			"type": "string",
+			"default": "Escuchar ahora"
+		},
+		"button1Url": {
+			"type": "string",
+			"default": ""
+		},
+		"button2Text": {
+			"type": "string",
+			"default": "Próximos Shows"
+		},
+		"button2Url": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "full", "wide" ]
+	},
+	"render": "file:./render.php"
+}

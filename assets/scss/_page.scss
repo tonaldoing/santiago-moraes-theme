@@ -1,0 +1,122 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Generic Page template
+// ==========================================================================
+
+.page-header {
+  background-color: $color-black;
+  padding: $section-padding 0;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-hero;
+    font-weight: $weight-black;
+    line-height: $lh-hero;
+    letter-spacing: $ls-hero;
+    color: $color-cream;
+    margin: 0;
+
+    @include until($bp-tablet) {
+      font-size: 50px;
+    }
+
+    @include mobile-only {
+      font-size: 36px;
+    }
+  }
+}
+
+.page-content {
+  padding: $section-padding 0;
+  background-color: $color-white;
+
+  &__inner {
+    @include container;
+    max-width: 720px;
+  }
+
+  &__thumbnail {
+    margin-bottom: 32px;
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: $card-radius;
+      display: block;
+    }
+  }
+
+  // WP content styles.
+  h2, h3, h4, h5, h6 {
+    font-family: $font-primary;
+    font-weight: $weight-bold;
+    color: $color-dark;
+    margin: 32px 0 16px;
+  }
+
+  h2 { font-size: $text-section; line-height: $lh-section; }
+  h3 { font-size: 24px; line-height: 32px; }
+  h4 { font-size: $text-sub; line-height: $lh-sub; }
+
+  p, li {
+    font-family: $font-body;
+    font-size: $text-body;
+    line-height: $lh-body;
+    color: $color-body;
+    margin-bottom: 16px;
+  }
+
+  ul, ol {
+    padding-left: 24px;
+    margin-bottom: 16px;
+  }
+
+  a {
+    color: $color-accent;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid $color-accent;
+    padding: 16px 24px;
+    margin: 24px 0;
+    background-color: $color-cream;
+    border-radius: 0 $button-radius $button-radius 0;
+
+    p {
+      margin: 0;
+      font-style: italic;
+      color: $color-dark;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: $button-radius;
+  }
+
+  .page-links {
+    margin-top: 32px;
+    font-family: $font-primary;
+    font-weight: $weight-medium;
+
+    .page-numbers {
+      display: inline-block;
+      padding: 4px 12px;
+      margin: 0 4px;
+      border-radius: $button-radius;
+      background-color: $color-cream;
+    }
+  }
+}

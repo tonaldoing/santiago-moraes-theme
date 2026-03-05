@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sm/section",
+	"version": "1.0.0",
+	"title": "Sección",
+	"category": "santiago-moraes",
+	"icon": "align-center",
+	"description": "Contenedor de sección con fondo, padding y ancho configurable.",
+	"textdomain": "santiago-moraes",
+	"attributes": {
+		"bgColor": {
+			"type": "string",
+			"default": "light",
+			"enum": [ "dark", "light", "cream" ]
+		},
+		"padding": {
+			"type": "string",
+			"default": "normal",
+			"enum": [ "compact", "normal", "wide" ]
+		},
+		"width": {
+			"type": "string",
+			"default": "normal",
+			"enum": [ "narrow", "normal", "full" ]
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "full", "wide" ]
+	},
+	"render": "file:./render.php"
+}

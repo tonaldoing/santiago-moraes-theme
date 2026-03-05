@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "sm/latest-songs",
+	"version": "1.0.0",
+	"title": "Últimas Canciones",
+	"category": "santiago-moraes",
+	"icon": "playlist-audio",
+	"description": "Grid de las últimas canciones del CPT cancion.",
+	"textdomain": "santiago-moraes",
+	"attributes": {
+		"count": {
+			"type": "number",
+			"default": 4
+		},
+		"showChordsBadge": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"render": "file:./render.php"
+}

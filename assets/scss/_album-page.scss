@@ -1,0 +1,169 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Album Page — taxonomy-album.php (individual album at /album/{slug}/)
+// ==========================================================================
+
+.album-page {
+
+  // ── Hero Section (dark) ──
+  &__hero {
+    background-color: $color-black;
+    padding: $section-padding 0;
+  }
+
+  &__hero-inner {
+    @include container;
+    display: flex;
+    flex-direction: column;
+    gap: $music-gap;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &__cover {
+    @include tablet {
+      width: 40%;
+      flex-shrink: 0;
+    }
+
+    &-img {
+      width: 100%;
+      height: auto;
+      border-radius: $card-radius;
+      display: block;
+    }
+  }
+
+  &__info {
+    @include flex-column;
+    gap: $widget-spacing;
+
+    @include tablet {
+      width: 60%;
+    }
+  }
+
+  &__year {
+    font-family: $font-primary;
+    font-size: $text-small;
+    font-weight: $weight-medium;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-hero;
+    font-weight: $weight-black;
+    line-height: $lh-hero;
+    letter-spacing: $ls-hero;
+    color: $color-cream;
+    margin: 0;
+
+    @include until($bp-tablet) {
+      font-size: 50px;
+    }
+
+    @include mobile-only {
+      font-size: 36px;
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    font-family: $font-primary;
+    font-size: 12px;
+    font-weight: $weight-bold;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: 1px solid $color-secondary;
+    padding: 4px 12px;
+    border-radius: $button-radius;
+  }
+
+  &__description {
+    font-family: $font-body;
+    font-weight: $weight-regular;
+    color: $color-secondary;
+    line-height: $lh-body;
+    margin: 0;
+  }
+
+  // ── Tracklist Section (light) ──
+  &__tracklist {
+    padding: $section-padding 0;
+    background-color: $color-white;
+  }
+
+  &__tracklist-inner {
+    @include container;
+  }
+
+  &__tracklist-title {
+    font-family: $font-primary;
+    font-size: $text-section;
+    font-weight: $weight-bold;
+    line-height: $lh-section;
+    letter-spacing: $ls-section;
+    color: $color-dark;
+    margin-bottom: 24px;
+
+    @include mobile-only {
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
+}
+
+// ── Album Prev/Next Navigation ──
+.album-nav {
+  background-color: $color-cream;
+  padding: 32px 0;
+  border-top: 1px solid $color-border;
+
+  &__inner {
+    @include container;
+    @include flex-between;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-primary;
+    font-size: $text-body;
+    font-weight: $weight-medium;
+    color: $color-dark;
+    text-decoration: none;
+    @include transition(color);
+
+    &:hover {
+      color: $color-accent;
+    }
+
+    &--next {
+      margin-left: auto;
+    }
+
+    &--empty {
+      visibility: hidden;
+    }
+  }
+
+  &__arrow {
+    font-size: $text-sub;
+  }
+
+  &__label {
+    @include mobile-only {
+      display: none;
+    }
+  }
+}

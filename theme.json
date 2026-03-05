@@ -1,0 +1,212 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": true,
+		"layout": {
+			"contentSize": "1140px",
+			"wideSize": "1440px"
+		},
+		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"palette": [
+				{
+					"slug": "dark",
+					"color": "#1B110D",
+					"name": "Oscuro"
+				},
+				{
+					"slug": "black",
+					"color": "#010101",
+					"name": "Negro"
+				},
+				{
+					"slug": "white",
+					"color": "#FFFFFF",
+					"name": "Blanco"
+				},
+				{
+					"slug": "cream",
+					"color": "#F7F3F0",
+					"name": "Crema"
+				},
+				{
+					"slug": "accent",
+					"color": "#EC4913",
+					"name": "Acento"
+				},
+				{
+					"slug": "secondary",
+					"color": "#9A5F4C",
+					"name": "Secundario"
+				},
+				{
+					"slug": "border",
+					"color": "#E7D5CF",
+					"name": "Borde"
+				},
+				{
+					"slug": "body",
+					"color": "#0A0A0A",
+					"name": "Cuerpo"
+				}
+			]
+		},
+		"typography": {
+			"dropCap": false,
+			"defaultFontSizes": false,
+			"fontFamilies": [
+				{
+					"fontFamily": "'Be Vietnam Pro', sans-serif",
+					"slug": "primary",
+					"name": "Be Vietnam Pro",
+					"fontFace": [
+						{
+							"fontFamily": "Be Vietnam Pro",
+							"fontWeight": "400",
+							"fontStyle": "normal",
+							"src": ["https://fonts.gstatic.com/s/bevietnampro/v11/QdVPSTAyLFyeg_IDWvOJmVES_HRUBI0.woff2"]
+						},
+						{
+							"fontFamily": "Be Vietnam Pro",
+							"fontWeight": "500",
+							"fontStyle": "normal",
+							"src": ["https://fonts.gstatic.com/s/bevietnampro/v11/QdVMSTAyLFyeg_IDWvOJmVES_HScMn8.woff2"]
+						},
+						{
+							"fontFamily": "Be Vietnam Pro",
+							"fontWeight": "700",
+							"fontStyle": "normal",
+							"src": ["https://fonts.gstatic.com/s/bevietnampro/v11/QdVMSTAyLFyeg_IDWvOJmVES_HTkNH8.woff2"]
+						},
+						{
+							"fontFamily": "Be Vietnam Pro",
+							"fontWeight": "900",
+							"fontStyle": "normal",
+							"src": ["https://fonts.gstatic.com/s/bevietnampro/v11/QdVMSTAyLFyeg_IDWvOJmVES_HTANX8.woff2"]
+						}
+					]
+				},
+				{
+					"fontFamily": "'Montserrat', sans-serif",
+					"slug": "body",
+					"name": "Montserrat",
+					"fontFace": [
+						{
+							"fontFamily": "Montserrat",
+							"fontWeight": "400",
+							"fontStyle": "normal",
+							"src": ["https://fonts.gstatic.com/s/montserrat/v29/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw.woff2"]
+						},
+						{
+							"fontFamily": "Montserrat",
+							"fontWeight": "500",
+							"fontStyle": "normal",
+							"src": ["https://fonts.gstatic.com/s/montserrat/v29/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtZ6Hw.woff2"]
+						}
+					]
+				}
+			],
+			"fontSizes": [
+				{
+					"slug": "small",
+					"size": "14px",
+					"name": "Chico"
+				},
+				{
+					"slug": "medium",
+					"size": "16px",
+					"name": "Mediano"
+				},
+				{
+					"slug": "large",
+					"size": "20px",
+					"name": "Grande"
+				},
+				{
+					"slug": "x-large",
+					"size": "36px",
+					"name": "Extra Grande"
+				},
+				{
+					"slug": "xx-large",
+					"size": "72px",
+					"name": "Hero"
+				}
+			]
+		},
+		"spacing": {
+			"units": ["px", "em", "rem", "vw", "%"]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "#FFFFFF",
+			"text": "#0A0A0A"
+		},
+		"typography": {
+			"fontFamily": "'Montserrat', sans-serif",
+			"fontSize": "16px",
+			"lineHeight": "1.6"
+		},
+		"elements": {
+			"heading": {
+				"typography": {
+					"fontFamily": "'Be Vietnam Pro', sans-serif",
+					"fontWeight": "700"
+				},
+				"color": {
+					"text": "#1B110D"
+				}
+			},
+			"h1": {
+				"typography": {
+					"fontSize": "72px",
+					"fontWeight": "900",
+					"lineHeight": "1em",
+					"letterSpacing": "-3.6px"
+				}
+			},
+			"h2": {
+				"typography": {
+					"fontSize": "36px",
+					"lineHeight": "40px",
+					"letterSpacing": "-0.9px"
+				}
+			},
+			"h3": {
+				"typography": {
+					"fontSize": "20px",
+					"lineHeight": "28px",
+					"letterSpacing": "-0.5px"
+				}
+			},
+			"link": {
+				"color": {
+					"text": "#EC4913"
+				},
+				":hover": {
+					"color": {
+						"text": "#1B110D"
+					}
+				}
+			},
+			"button": {
+				"typography": {
+					"fontFamily": "'Be Vietnam Pro', sans-serif",
+					"fontSize": "14px",
+					"fontWeight": "500"
+				},
+				"color": {
+					"background": "#EC4913",
+					"text": "#FFFFFF"
+				},
+				"border": {
+					"radius": "8px"
+				}
+			}
+		}
+	}
+}

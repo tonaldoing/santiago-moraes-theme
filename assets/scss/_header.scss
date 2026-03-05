@@ -1,0 +1,385 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Header
+// ==========================================================================
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: $color-white;
+  height: $header-height-mobile;
+
+  @include desktop {
+    height: $header-height;
+  }
+
+  &__inner {
+    @include flex-between;
+    @include container;
+    height: 100%;
+  }
+}
+
+// Site title link
+.site-title a {
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
+}
+
+// Logo image
+.site-title__logo {
+  height: 40px;
+  width: auto;
+  display: block;
+
+  @include desktop {
+    height: 50px;
+  }
+}
+
+// ==========================================================================
+// Desktop Navigation
+// ==========================================================================
+
+.main-nav {
+  display: none;
+
+  @include tablet {
+    display: flex;
+    align-items: center;
+    gap: $nav-gap;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: $nav-gap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Top-level menu items.
+  &__list > .menu-item {
+    position: relative;
+
+    > a {
+      font-family: $font-primary;
+      font-size: $text-small;
+      font-weight: $weight-medium;
+      line-height: $lh-small;
+      color: $color-dark;
+      text-decoration: none;
+      @include transition(color);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $color-accent;
+        text-decoration: none;
+      }
+    }
+
+    // Caret indicator for parent items.
+    &.menu-item-has-children > a::after {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid currentColor;
+      margin-left: 2px;
+      transition: transform $transition-base;
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Desktop Submenu Dropdown
+  // -----------------------------------------------------------------------
+  .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: -12px;
+    z-index: 110;
+    min-width: 200px;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    background-color: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $card-radius;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+    // Hidden by default.
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    pointer-events: none;
+
+    // Invisible bridge between parent and submenu so cursor movement
+    // doesn't close the dropdown.
+    &::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+    }
+
+    .menu-item {
+      margin: 0;
+
+      a {
+        display: block;
+        padding: 10px 20px;
+        font-family: $font-primary;
+        font-size: $text-small;
+        font-weight: $weight-regular;
+        color: $color-dark;
+        text-decoration: none;
+        white-space: nowrap;
+        border-left: 3px solid transparent;
+        @include transition;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: $color-cream;
+          border-left-color: $color-accent;
+          color: $color-accent;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  // Show dropdown on hover or focus-within (desktop).
+  &__list > .menu-item-has-children:hover > .sub-menu,
+  &__list > .menu-item-has-children.menu-item--focus > .sub-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  // Rotate caret on hover / focus.
+  &__list > .menu-item-has-children:hover > a::after,
+  &__list > .menu-item-has-children.menu-item--focus > a::after {
+    transform: rotate(180deg);
+  }
+
+  // Hide chevron toggle button on desktop — it's for mobile only.
+  .submenu-toggle {
+    display: none;
+  }
+}
+
+// ==========================================================================
+// Mobile Menu Toggle Button
+// ==========================================================================
+
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: $color-dark;
+
+  @include tablet {
+    display: none;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// ==========================================================================
+// Mobile Menu Overlay
+// ==========================================================================
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: $header-height-mobile;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color-white;
+  z-index: 99;
+  padding: $widget-spacing;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &--open {
+    display: block;
+  }
+
+  &__list {
+    @include flex-column;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // -----------------------------------------------------------------------
+  // Mobile top-level items
+  // -----------------------------------------------------------------------
+  &__list > .menu-item {
+    border-bottom: 1px solid $color-border;
+
+    > a {
+      display: block;
+      padding: 16px 0;
+      font-family: $font-primary;
+      font-size: $text-sub;
+      font-weight: $weight-medium;
+      color: $color-dark;
+      text-decoration: none;
+      @include transition(color);
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $color-accent;
+        text-decoration: none;
+      }
+    }
+
+    // Parent items: flex layout so link + chevron sit side by side.
+    &.menu-item-has-children {
+      > a {
+        // The link takes up most of the row.
+        padding-right: 48px; // Room for the toggle button.
+      }
+
+      // Position the item as relative for the toggle button.
+      position: relative;
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Mobile submenu toggle button (chevron)
+  // -----------------------------------------------------------------------
+  .submenu-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 56px; // Match the link height (16px padding-top + 20px line + 16px padding-bottom ≈ 56).
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-left: 1px solid $color-border;
+    cursor: pointer;
+    color: $color-secondary;
+    @include transition;
+
+    &:hover {
+      color: $color-accent;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.25s ease;
+    }
+
+    &[aria-expanded='true'] svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Mobile submenu (accordion)
+  // -----------------------------------------------------------------------
+  .sub-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+
+    &--open {
+      // max-height set via JS to the scrollHeight.
+    }
+
+    .menu-item {
+      a {
+        display: block;
+        padding: 12px 0 12px 20px;
+        font-family: $font-primary;
+        font-size: $text-body;
+        font-weight: $weight-regular;
+        color: $color-dark;
+        text-decoration: none;
+        border-left: 2px solid $color-border;
+        @include transition;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: $color-accent;
+          border-left-color: $color-accent;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Header Social Icons
+// ==========================================================================
+
+.header-social {
+  display: none;
+
+  @include tablet {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: $color-secondary;
+    @include transition(color);
+
+    &:hover {
+      color: $color-dark;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+  }
+}

@@ -1,0 +1,139 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Spotify Player — Sticky bar + Homepage embed
+// ==========================================================================
+
+// -------------------------------------------------------------------------
+// Sticky player (global bottom bar)
+// -------------------------------------------------------------------------
+.sticky-player {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	background: $color-black;
+	height: 80px;
+
+	&--hidden {
+		display: none;
+	}
+
+	iframe {
+		display: block;
+		border: 0;
+	}
+}
+
+.sticky-player__close {
+	position: absolute;
+	top: 4px;
+	right: 8px;
+	z-index: 10;
+	background: rgba($color-black, 0.7);
+	border: none;
+	color: $color-cream;
+	width: 28px;
+	height: 28px;
+	border-radius: $icon-radius;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background $transition-base;
+
+	svg {
+		fill: currentColor;
+	}
+
+	&:hover {
+		background: rgba($color-accent, 0.9);
+	}
+}
+
+// -------------------------------------------------------------------------
+// FAB — Floating action button (shows when player minimized)
+// -------------------------------------------------------------------------
+.sticky-player-fab {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 999;
+	width: 56px;
+	height: 56px;
+	border-radius: $icon-radius;
+	background: $color-spotify;
+	color: $color-white;
+	border: none;
+	cursor: pointer;
+	display: none; // Hidden by default, shown via JS.
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+	transition: transform $transition-base, box-shadow $transition-base;
+
+	svg {
+		width: 24px;
+		height: 24px;
+		fill: currentColor;
+	}
+
+	&:hover {
+		transform: scale(1.08);
+		box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+	}
+}
+
+// -------------------------------------------------------------------------
+// Iframe menu blocker — blocks the Spotify 3-dot menu overlay
+// -------------------------------------------------------------------------
+.spotify-menu-blocker {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 40px;
+	height: 40px;
+	z-index: 5;
+	pointer-events: auto;
+	cursor: default;
+}
+
+// -------------------------------------------------------------------------
+// Body padding — space for the sticky player when visible
+// -------------------------------------------------------------------------
+body.has-sticky-player {
+	padding-bottom: 80px;
+}
+
+// -------------------------------------------------------------------------
+// Homepage embed (large player inside music section)
+// -------------------------------------------------------------------------
+.latest-release__player {
+	position: relative;
+	margin-top: 24px;
+	border-radius: $card-radius;
+	overflow: hidden;
+
+	iframe {
+		display: block;
+		border: 0;
+		border-radius: $card-radius;
+	}
+}
+
+// -------------------------------------------------------------------------
+// Print — hide all player elements
+// -------------------------------------------------------------------------
+@media print {
+	.sticky-player,
+	.sticky-player-fab,
+	.latest-release__player {
+		display: none !important;
+	}
+
+	body.has-sticky-player {
+		padding-bottom: 0;
+	}
+}

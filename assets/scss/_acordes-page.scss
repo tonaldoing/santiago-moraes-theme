@@ -1,0 +1,283 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Acordes Page — template-acordes.php (chords/lyrics listing)
+// ==========================================================================
+
+// ── Header ──
+.acordes-header {
+  background-color: $color-black;
+  padding: $section-padding 0;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-hero;
+    font-weight: $weight-black;
+    line-height: $lh-hero;
+    letter-spacing: $ls-hero;
+    color: $color-cream;
+    margin: 0 0 12px;
+
+    @include until($bp-tablet) {
+      font-size: 50px;
+    }
+
+    @include mobile-only {
+      font-size: 36px;
+    }
+  }
+
+  &__subtitle {
+    font-family: $font-body;
+    font-weight: $weight-regular;
+    color: $color-secondary;
+    line-height: $lh-body;
+    margin: 0;
+    font-size: $text-sub;
+
+    @include mobile-only {
+      font-size: $text-body;
+    }
+  }
+}
+
+// ── Filter Buttons ──
+.acordes-filters {
+  background-color: $color-white;
+  padding: 24px 0;
+  border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: $header-height-mobile;
+  z-index: 10;
+
+  @include desktop {
+    top: $header-height;
+  }
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.acordes-filter {
+  font-family: $font-primary;
+  font-size: $text-small;
+  font-weight: $weight-medium;
+  color: $color-dark;
+  background: transparent;
+  border: 1px solid $color-border;
+  border-radius: $button-radius;
+  padding: 8px 16px;
+  cursor: pointer;
+  @include transition(all);
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $color-dark;
+  }
+
+  &--active {
+    background-color: $color-dark;
+    border-color: $color-dark;
+    color: $color-white;
+  }
+}
+
+// ── Song List ──
+.acordes-list {
+  padding: $section-padding 0;
+  background-color: $color-white;
+
+  &__inner {
+    @include container;
+  }
+
+  &__empty {
+    font-family: $font-body;
+    color: $color-secondary;
+    font-size: $text-body;
+    text-align: center;
+    padding: 40px 0;
+  }
+}
+
+.acordes-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid $color-border;
+  text-decoration: none;
+  color: inherit;
+  @include transition(background-color);
+
+  &:first-child {
+    border-top: 1px solid $color-border;
+  }
+
+  &:hover {
+    background-color: rgba($color-cream, 0.5);
+  }
+
+  @include mobile-only {
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-medium;
+    color: $color-dark;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include mobile-only {
+      font-size: $text-body;
+      white-space: normal;
+      flex: unset;
+      width: calc(100% - 40px);
+    }
+  }
+
+  &__album {
+    font-family: $font-body;
+    font-size: $text-small;
+    font-weight: $weight-regular;
+    color: $color-secondary;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    @include mobile-only {
+      order: 3;
+      font-size: 12px;
+    }
+  }
+
+  &__key {
+    font-family: $font-primary;
+    font-size: 12px;
+    font-weight: $weight-medium;
+    color: $color-secondary;
+    background-color: rgba($color-secondary, 0.1);
+    padding: 2px 8px;
+    border-radius: $tag-radius;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    @include mobile-only {
+      order: 2;
+    }
+  }
+
+  &__arrow {
+    font-size: $text-sub;
+    color: $color-secondary;
+    flex-shrink: 0;
+    @include transition(color);
+
+    @include mobile-only {
+      display: none;
+    }
+  }
+
+  &:hover &__arrow {
+    color: $color-accent;
+  }
+}
+
+// ── Song Coming Soon (single-cancion fallback) ──
+.song-coming-soon {
+  padding: $section-padding 0;
+  text-align: center;
+  background-color: $color-cream;
+
+  &__text {
+    font-family: $font-primary;
+    font-size: $text-section;
+    font-weight: $weight-bold;
+    color: $color-secondary;
+    margin: 0;
+
+    @include mobile-only {
+      font-size: 22px;
+    }
+  }
+}
+
+// ── Song Header album link ──
+.song-header__album-link {
+  display: inline-block;
+  font-family: $font-primary;
+  font-size: $text-small;
+  font-weight: $weight-medium;
+  color: $color-secondary;
+  text-decoration: none;
+  margin-bottom: 12px;
+  @include transition(color);
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+// ── Song Prev/Next Navigation ──
+.song-nav {
+  background-color: $color-cream;
+  padding: 24px 0;
+  border-top: 1px solid $color-border;
+
+  &__inner {
+    @include container;
+    @include flex-between;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-primary;
+    font-size: $text-body;
+    font-weight: $weight-medium;
+    color: $color-dark;
+    text-decoration: none;
+    @include transition(color);
+
+    &:hover {
+      color: $color-accent;
+    }
+
+    &--next {
+      margin-left: auto;
+    }
+
+    &--empty {
+      visibility: hidden;
+    }
+  }
+
+  &__arrow {
+    font-size: $text-sub;
+  }
+
+  &__label {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include mobile-only {
+      max-width: 120px;
+    }
+  }
+}

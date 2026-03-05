@@ -1,0 +1,351 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================================================
+// Events Pages — single-evento + archive-evento
+// ==========================================================================
+
+// ── Events Archive Header ──
+.events-header {
+  background-color: $color-black;
+  padding: $section-padding 0;
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-hero;
+    font-weight: $weight-black;
+    line-height: $lh-hero;
+    letter-spacing: $ls-hero;
+    color: $color-cream;
+    margin: 0;
+
+    @include until($bp-tablet) {
+      font-size: 50px;
+    }
+
+    @include mobile-only {
+      font-size: 36px;
+    }
+  }
+}
+
+// ── Events Sections ──
+.events-section {
+  padding: $section-padding 0;
+  background-color: $color-white;
+
+  &--past {
+    background-color: $color-cream;
+  }
+
+  &__inner {
+    @include container;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-section;
+    font-weight: $weight-bold;
+    line-height: $lh-section;
+    letter-spacing: $ls-section;
+    color: $color-dark;
+    margin: 0 0 24px;
+
+    @include mobile-only {
+      font-size: 22px;
+    }
+  }
+
+  &__empty {
+    font-family: $font-body;
+    color: $color-secondary;
+    font-size: $text-body;
+    line-height: $lh-body;
+  }
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Event Card ──
+.event-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid $color-border;
+
+  &:first-child {
+    border-top: 1px solid $color-border;
+  }
+
+  @include mobile-only {
+    flex-wrap: wrap;
+  }
+
+  &__date-badge {
+    @include flex-center;
+    flex-direction: column;
+    min-width: 60px;
+    height: 60px;
+    background-color: $color-accent;
+    border-radius: $button-radius;
+    flex-shrink: 0;
+    padding: 4px;
+  }
+
+  &__day {
+    font-family: $font-primary;
+    font-size: 24px;
+    font-weight: $weight-black;
+    color: $color-white;
+    line-height: 1;
+  }
+
+  &__month {
+    font-family: $font-primary;
+    font-size: 11px;
+    font-weight: $weight-bold;
+    color: rgba($color-white, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-bold;
+    margin: 0 0 4px;
+    line-height: $lh-sub;
+
+    a {
+      color: $color-dark;
+      text-decoration: none;
+      @include transition(color);
+
+      &:hover {
+        color: $color-accent;
+      }
+    }
+
+    &--past {
+      font-weight: $weight-medium;
+      color: $color-secondary;
+      font-size: $text-body;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    font-family: $font-body;
+    font-size: $text-small;
+    color: $color-secondary;
+  }
+
+  &__venue {
+    font-weight: $weight-medium;
+  }
+
+  &__date-text {
+    font-weight: $weight-regular;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+
+    @include mobile-only {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  &__price {
+    font-family: $font-primary;
+    font-size: $text-small;
+    font-weight: $weight-bold;
+    color: $color-dark;
+  }
+
+  // Past events.
+  &--past {
+    opacity: 0.6;
+    padding: 12px 0;
+
+    .event-card__details {
+      font-size: 12px;
+    }
+  }
+}
+
+// ── Toggle Button ──
+.events-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: $font-primary;
+  font-size: $text-body;
+  font-weight: $weight-bold;
+  color: $color-dark;
+  background: transparent;
+  border: 1px solid $color-border;
+  border-radius: $button-radius;
+  padding: 12px 24px;
+  cursor: pointer;
+  @include transition(all);
+  margin-bottom: 24px;
+
+  svg {
+    @include transition(transform);
+  }
+
+  &[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
+  &:hover {
+    border-color: $color-dark;
+  }
+}
+
+// ── Single Event Hero ──
+.evento-hero {
+  position: relative;
+  background-color: $color-black;
+  background-size: cover;
+  background-position: center;
+  padding: 0;
+  min-height: 50vh;
+  @include flex-center;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba($color-black, 0.7);
+  }
+
+  &--has-image &__overlay {
+    background: rgba($color-black, 0.75);
+  }
+
+  &__inner {
+    @include container;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: $section-padding $widget-spacing;
+  }
+
+  &__date {
+    display: inline-block;
+    font-family: $font-primary;
+    font-size: $text-sub;
+    font-weight: $weight-medium;
+    color: $color-accent;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    @include mobile-only {
+      font-size: $text-body;
+    }
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $text-hero;
+    font-weight: $weight-black;
+    line-height: $lh-hero;
+    letter-spacing: $ls-hero;
+    color: $color-cream;
+    margin: 0 0 24px;
+
+    @include until($bp-tablet) {
+      font-size: 50px;
+    }
+
+    @include mobile-only {
+      font-size: 36px;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 24px;
+    margin-bottom: 32px;
+  }
+
+  &__detail {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: $font-body;
+    font-size: $text-body;
+    color: $color-cream;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__map-btn {
+    color: $color-cream;
+    border-color: rgba($color-cream, 0.5);
+
+    &:hover {
+      background-color: $color-cream;
+      color: $color-dark;
+    }
+  }
+}
+
+// ── Single Event Content ──
+.evento-content {
+  padding: $section-padding 0;
+  background-color: $color-white;
+
+  &__inner {
+    @include container;
+    max-width: 720px;
+
+    h2, h3 {
+      font-family: $font-primary;
+      font-weight: $weight-bold;
+      color: $color-dark;
+      margin: 24px 0 12px;
+    }
+
+    p, li {
+      font-family: $font-body;
+      font-size: $text-body;
+      line-height: $lh-body;
+      color: $color-body;
+      margin-bottom: 16px;
+    }
+
+    a {
+      color: $color-accent;
+    }
+  }
+}

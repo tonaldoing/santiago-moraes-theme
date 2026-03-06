@@ -95,9 +95,10 @@
     font-weight: $weight-medium;
     color: $color-accent;
     text-decoration: none;
+    @include transition(color);
 
     &:hover {
-      text-decoration: underline;
+      color: $color-hover-link;
     }
   }
 }
@@ -160,9 +161,10 @@
       color: $color-accent;
       text-decoration: none;
       font-family: $font-body;
+      @include transition(color);
 
       &:hover {
-        text-decoration: underline;
+        color: $color-hover-link;
       }
     }
   }

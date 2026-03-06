@@ -246,6 +246,11 @@
 
     a {
       color: $color-accent;
+      @include transition(color);
+
+      &:hover {
+        color: $color-hover-link;
+      }
     }
   }
 }

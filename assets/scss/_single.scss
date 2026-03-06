@@ -82,8 +82,10 @@
     a {
       color: $color-accent;
       text-decoration: underline;
+      @include transition(color);
 
       &:hover {
+        color: $color-hover-link;
         text-decoration: none;
       }
     }

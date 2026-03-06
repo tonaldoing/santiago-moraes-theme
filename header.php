@@ -143,4 +143,17 @@ $social_links = array(
 		<?php
 	endif;
 	?>
+
+	<?php // Social links in mobile menu.
+	if ( $has_social ) : ?>
+		<div class="mobile-menu__social">
+			<?php foreach ( $social_links as $network => $data ) :
+				if ( ! $data['url'] ) continue;
+			?>
+				<a href="<?php echo esc_url( $data['url'] ); ?>" class="mobile-menu__social-link" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $data['label'] ); ?>">
+					<?php echo $data['svg']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
+				</a>
+			<?php endforeach; ?>
+		</div>
+	<?php endif; ?>
 </div>

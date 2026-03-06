@@ -67,13 +67,15 @@
 }
 
 .archive-card {
+  background-color: $color-white;
   border: 1px solid $color-border;
   border-radius: $card-radius;
   overflow: hidden;
-  @include transition(box-shadow);
+  @include transition;
 
   &:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-color: $color-hover-link;
+    box-shadow: 0 4px 12px rgba($hex-black, 0.06);
   }
 
   &__thumb {

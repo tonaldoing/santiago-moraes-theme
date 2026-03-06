@@ -53,6 +53,17 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   }
 
+  // When mobile menu is open, force dark header.
+  &--menu-open {
+    background-color: $color-black !important;
+    box-shadow: none !important;
+
+    .site-title a,
+    .menu-toggle {
+      color: $color-cream;
+    }
+  }
+
   &__inner {
     @include flex-between;
     @include container;
@@ -282,14 +293,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $color-white;
+  background-color: $color-black;
   z-index: 99;
-  padding: $widget-spacing;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 
   &--open {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
 
   &__list {
@@ -297,29 +308,30 @@
     gap: 0;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 $widget-spacing;
+    flex: 1;
   }
 
   // -----------------------------------------------------------------------
   // Mobile top-level items
   // -----------------------------------------------------------------------
   &__list > .menu-item {
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px solid rgba($hex-cream, 0.1);
 
     > a {
       display: block;
-      padding: 16px 0;
+      padding: 18px 0;
       font-family: $font-primary;
-      font-size: $text-sub;
-      font-weight: $weight-medium;
-      color: $color-dark;
+      font-size: 22px;
+      font-weight: $weight-bold;
+      color: $color-cream;
       text-decoration: none;
       @include transition(color);
 
       &:hover,
       &:focus,
       &:active {
-        color: $color-hover-link;
+        color: $color-accent;
         text-decoration: none;
       }
     }
@@ -327,11 +339,9 @@
     // Parent items: flex layout so link + chevron sit side by side.
     &.menu-item-has-children {
       > a {
-        // The link takes up most of the row.
-        padding-right: 48px; // Room for the toggle button.
+        padding-right: 56px;
       }
 
-      // Position the item as relative for the toggle button.
       position: relative;
     }
   }
@@ -343,20 +353,20 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 48px;
-    height: 56px; // Match the link height (16px padding-top + 20px line + 16px padding-bottom ≈ 56).
+    width: 56px;
+    height: 62px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: none;
     border: none;
-    border-left: 1px solid $color-border;
+    border-left: 1px solid rgba($hex-cream, 0.1);
     cursor: pointer;
     color: $color-secondary;
     @include transition;
 
     &:hover {
-      color: $color-hover-link;
+      color: $color-accent;
     }
 
     svg {
@@ -376,7 +386,7 @@
   .sub-menu {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 8px;
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.3s ease;
@@ -388,23 +398,57 @@
     .menu-item {
       a {
         display: block;
-        padding: 12px 0 12px 20px;
+        padding: 10px 0 10px 20px;
         font-family: $font-primary;
         font-size: $text-body;
         font-weight: $weight-regular;
-        color: $color-dark;
+        color: $color-secondary;
         text-decoration: none;
-        border-left: 2px solid $color-border;
+        border-left: 2px solid rgba($hex-cream, 0.15);
         @include transition;
 
         &:hover,
         &:focus,
         &:active {
-          color: $color-hover-link;
-          border-left-color: $color-hover-link;
+          color: $color-cream;
+          border-left-color: $color-accent;
           text-decoration: none;
         }
       }
+    }
+  }
+
+  // -----------------------------------------------------------------------
+  // Mobile Social Links
+  // -----------------------------------------------------------------------
+  &__social {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px $widget-spacing;
+    border-top: 1px solid rgba($hex-cream, 0.1);
+  }
+
+  &__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: $icon-radius;
+    background-color: rgba($hex-cream, 0.08);
+    color: $color-cream;
+    @include transition;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    &:hover {
+      background-color: $color-accent;
+      color: $color-white;
     }
   }
 }

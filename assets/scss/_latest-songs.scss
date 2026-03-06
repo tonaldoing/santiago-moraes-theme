@@ -58,7 +58,7 @@
   align-items: center;
   gap: 14px;
   padding: 14px;
-  background-color: $color-cream;
+  background-color: $color-box;
   border: 1px solid $color-border;
   border-radius: $card-radius;
   text-decoration: none;
@@ -108,7 +108,7 @@
     font-family: $font-primary;
     font-size: $text-body;
     font-weight: $weight-bold;
-    color: $color-dark;
+    color: $color-box-heading;
     margin: 0 0 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -119,7 +119,7 @@
     display: block;
     font-family: $font-body;
     font-size: 13px;
-    color: $color-secondary;
+    color: $color-box-text;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -137,7 +137,7 @@
     font-family: $font-primary;
     font-size: 11px;
     font-weight: $weight-bold;
-    color: $color-dark;
+    color: $color-box-heading;
     background-color: $color-white;
     border: 1px solid $color-border;
     padding: 1px 8px;

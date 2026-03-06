@@ -298,7 +298,7 @@
     font-family: $font-primary;
     font-size: 28px;
     font-weight: $weight-black;
-    color: $color-dark;
+    color: $color-heading;
     letter-spacing: -0.5px;
     margin: 0;
 
@@ -342,7 +342,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px 16px 12px 12px;
-  background-color: $color-cream;
+  background-color: $color-box;
   border: 1px solid $color-border;
   border-radius: $card-radius;
   text-decoration: none;
@@ -387,12 +387,12 @@
     font-family: $font-primary;
     font-size: $text-small;
     font-weight: $weight-bold;
-    color: $color-dark;
+    color: $color-box-heading;
     flex: 1;
   }
 
   &__external {
-    color: $color-secondary;
+    color: $color-box-text;
     flex-shrink: 0;
 
     svg {

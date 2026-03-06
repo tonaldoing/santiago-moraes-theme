@@ -74,7 +74,7 @@
 // Site title link
 .site-title a {
   text-decoration: none;
-  color: $color-dark;
+  color: $color-header-text-scroll;
   @include transition(color);
 
   .site-header--transparent:not(.site-header--scrolled) & {
@@ -130,7 +130,7 @@
       font-size: $text-small;
       font-weight: $weight-medium;
       line-height: $lh-small;
-      color: $color-dark;
+      color: $color-header-text-scroll;
       text-decoration: none;
       @include transition(color);
       display: inline-flex;
@@ -265,7 +265,7 @@
   border: none;
   cursor: pointer;
   padding: 8px;
-  color: $color-dark;
+  color: $color-header-text-scroll;
   @include transition(color);
 
   .site-header--transparent:not(.site-header--scrolled) & {
@@ -472,7 +472,7 @@
     justify-content: center;
     width: 32px;
     height: 32px;
-    color: $color-secondary;
+    color: $color-header-text-scroll;
     @include transition(color);
 
     .site-header--transparent:not(.site-header--scrolled) & {

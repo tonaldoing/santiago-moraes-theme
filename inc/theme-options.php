@@ -146,6 +146,8 @@ function sm_sanitize_options( $input ) {
 		'sm_color_header_bg',
 		'sm_color_header_text',
 		'sm_color_header_text_scroll',
+		'sm_color_footer_bg',
+		'sm_color_footer_text',
 		'sm_color_btn_primary_bg',
 		'sm_color_btn_primary_text',
 		'sm_color_btn_primary_hover',
@@ -378,7 +380,7 @@ function sm_render_theme_options_page() {
 function sm_render_hidden_fields( $active_tab ) {
 	$tab_keys = array(
 		'general'    => array( 'sm_logo_type', 'sm_logo_text', 'sm_logo_image', 'sm_header_height' ),
-		'colores'    => array( 'sm_color_accent', 'sm_color_dark', 'sm_color_secondary', 'sm_color_black', 'sm_color_border', 'sm_color_cream', 'sm_color_bg_light', 'sm_color_white', 'sm_color_box', 'sm_color_heading', 'sm_color_body', 'sm_color_box_heading', 'sm_color_box_text', 'sm_color_hover_link', 'sm_color_hover_light', 'sm_color_header_bg', 'sm_color_header_text', 'sm_color_header_text_scroll', 'sm_color_btn_primary_bg', 'sm_color_btn_primary_text', 'sm_color_btn_primary_hover' ),
+		'colores'    => array( 'sm_color_accent', 'sm_color_dark', 'sm_color_secondary', 'sm_color_black', 'sm_color_border', 'sm_color_cream', 'sm_color_bg_light', 'sm_color_white', 'sm_color_box', 'sm_color_heading', 'sm_color_body', 'sm_color_box_heading', 'sm_color_box_text', 'sm_color_hover_link', 'sm_color_hover_light', 'sm_color_header_bg', 'sm_color_header_text', 'sm_color_header_text_scroll', 'sm_color_footer_bg', 'sm_color_footer_text', 'sm_color_btn_primary_bg', 'sm_color_btn_primary_text', 'sm_color_btn_primary_hover' ),
 		'tipografia' => array( 'sm_font_heading', 'sm_font_body', 'sm_font_button', 'sm_font_size_base' ),
 		'hero'       => array( 'sm_hero_line1', 'sm_hero_line2', 'sm_hero_image', 'sm_hero_btn1_text', 'sm_hero_btn1_url', 'sm_hero_btn2_text', 'sm_hero_btn2_url' ),
 		'musica'     => array( 'sm_featured_album_id', 'sm_player_enabled', 'sm_player_homepage', 'sm_player_spotify_url' ),
@@ -458,38 +460,42 @@ function sm_tab_general() {
  */
 function sm_tab_colores() {
 	$groups = array(
-		__( 'General', 'santiago-moraes' ) => array(
-			'sm_color_accent'      => array( '#EC4913', 'Acento / links — --color-accent' ),
-			'sm_color_hover_link'  => array( '#EC4913', 'Hover links y navegación — --color-hover-link' ),
-			'sm_color_border'      => array( '#E7D5CF', 'Bordes — --color-border' ),
+		__( 'Identidad', 'santiago-moraes' ) => array(
+			'sm_color_accent'      => array( '#EC4913', 'Color acento / links' ),
+			'sm_color_hover_link'  => array( '#EC4913', 'Hover de links y navegacion' ),
+			'sm_color_border'      => array( '#E7D5CF', 'Bordes generales' ),
 		),
 		__( 'Fondos', 'santiago-moraes' ) => array(
-			'sm_color_white'     => array( '#FFFFFF', 'Fondo principal — --color-white' ),
-			'sm_color_black'     => array( '#010101', 'Fondo oscuro — --color-black' ),
-			'sm_color_bg_light'  => array( '#54200F', 'Fondo secciones — --color-bg-light' ),
+			'sm_color_white'     => array( '#FFFFFF', 'Fondo principal (paginas)' ),
+			'sm_color_black'     => array( '#010101', 'Fondo oscuro (hero, secciones dark)' ),
+			'sm_color_cream'     => array( '#F7F3F0', 'Fondo crema (secciones claras)' ),
+			'sm_color_bg_light'  => array( '#54200F', 'Fondo alternativo (secciones)' ),
 		),
 		__( 'Textos', 'santiago-moraes' ) => array(
-			'sm_color_heading'     => array( '#1B110D', 'Títulos — --color-heading' ),
-			'sm_color_body'        => array( '#0A0A0A', 'Texto general — --color-body' ),
-			'sm_color_secondary'   => array( '#9A5F4C', 'Texto secundario — --color-secondary' ),
-			'sm_color_dark'        => array( '#1B110D', 'Texto destacado — --color-dark' ),
-			'sm_color_cream'       => array( '#F7F3F0', 'Texto claro (hero, footer) — --color-cream' ),
-			'sm_color_hover_light' => array( '#1B110D', 'Hover en fondo oscuro — --color-hover-light' ),
-		),
-		__( 'Cajas claras', 'santiago-moraes' ) => array(
-			'sm_color_box'         => array( '#F7F3F0', 'Fondo — --color-box' ),
-			'sm_color_box_heading' => array( '#1B110D', 'Títulos — --color-box-heading' ),
-			'sm_color_box_text'    => array( '#0A0A0A', 'Texto — --color-box-text' ),
+			'sm_color_heading'     => array( '#1B110D', 'Titulos de seccion' ),
+			'sm_color_body'        => array( '#0A0A0A', 'Texto general / parrafos' ),
+			'sm_color_secondary'   => array( '#9A5F4C', 'Texto secundario / subtitulos' ),
+			'sm_color_dark'        => array( '#1B110D', 'Texto destacado / enfasis' ),
+			'sm_color_hover_light' => array( '#1B110D', 'Hover en fondos oscuros' ),
 		),
 		__( 'Header', 'santiago-moraes' ) => array(
-			'sm_color_header_bg'           => array( '#FFFFFF', 'Fondo (scroll) — --color-header-bg' ),
-			'sm_color_header_text'         => array( '#F7F3F0', 'Texto inicial (transparente) — --color-header-text' ),
-			'sm_color_header_text_scroll'  => array( '#1B110D', 'Texto al hacer scroll — --color-header-text-scroll' ),
+			'sm_color_header_bg'           => array( '#FFFFFF', 'Fondo del header (al hacer scroll)' ),
+			'sm_color_header_text'         => array( '#F7F3F0', 'Texto en header transparente (home)' ),
+			'sm_color_header_text_scroll'  => array( '#1B110D', 'Texto del header al hacer scroll' ),
+		),
+		__( 'Footer', 'santiago-moraes' ) => array(
+			'sm_color_footer_bg'   => array( '#FFFFFF', 'Fondo del footer' ),
+			'sm_color_footer_text' => array( '#9A5F4C', 'Texto e iconos del footer' ),
+		),
+		__( 'Cards / Cajas', 'santiago-moraes' ) => array(
+			'sm_color_box'         => array( '#F7F3F0', 'Fondo de cajas' ),
+			'sm_color_box_heading' => array( '#1B110D', 'Titulos en cajas' ),
+			'sm_color_box_text'    => array( '#0A0A0A', 'Texto en cajas' ),
 		),
 		__( 'Botones', 'santiago-moraes' ) => array(
-			'sm_color_btn_primary_bg'    => array( '#EC4913', 'Fondo primario — --color-btn-primary-bg' ),
-			'sm_color_btn_primary_text'  => array( '#FFFFFF', 'Texto primario — --color-btn-primary-text' ),
-			'sm_color_btn_primary_hover' => array( '#D33F0E', 'Hover primario — --color-btn-primary-hover' ),
+			'sm_color_btn_primary_bg'    => array( '#EC4913', 'Fondo boton primario' ),
+			'sm_color_btn_primary_text'  => array( '#FFFFFF', 'Texto boton primario' ),
+			'sm_color_btn_primary_hover' => array( '#D33F0E', 'Hover boton primario' ),
 		),
 	);
 

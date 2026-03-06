@@ -108,7 +108,8 @@ $footer_social = array(
 	</div>
 </footer>
 
-<?php get_template_part( 'template-parts/components/sticky-player' ); ?>
+<?php // Sticky player deshabilitado temporalmente — se reintegrará con mejor diseño.
+// get_template_part( 'template-parts/components/sticky-player' ); ?>
 
 <?php if ( $scroll_top ) : ?>
 	<button class="scroll-top" id="scroll-top" aria-label="<?php esc_attr_e( 'Volver arriba', 'santiago-moraes' ); ?>">

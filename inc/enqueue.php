@@ -113,16 +113,16 @@ function sm_enqueue_assets() {
 		);
 	}
 
-	// Sticky Spotify player — when enabled in Theme Options.
-	if ( sm_get_option( 'sm_player_enabled', true ) ) {
-		wp_enqueue_script(
-			'sm-sticky-player',
-			SM_THEME_URI . '/assets/js/modules/sticky-player.js',
-			array(),
-			SM_THEME_VERSION,
-			array( 'strategy' => 'defer' )
-		);
-	}
+	// Sticky Spotify player — deshabilitado temporalmente.
+	// if ( sm_get_option( 'sm_player_enabled', true ) ) {
+	// 	wp_enqueue_script(
+	// 		'sm-sticky-player',
+	// 		SM_THEME_URI . '/assets/js/modules/sticky-player.js',
+	// 		array(),
+	// 		SM_THEME_VERSION,
+	// 		array( 'strategy' => 'defer' )
+	// 	);
+	// }
 
 	// Chord modules — only on single songs.
 	if ( is_singular( 'cancion' ) ) {

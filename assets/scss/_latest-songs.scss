@@ -7,7 +7,6 @@
 
 .latest-songs {
   padding: $section-padding 0;
-  background-color: $color-white;
 
   &__inner {
     @include container;
@@ -20,10 +19,11 @@
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0;
+    gap: 12px;
 
     @include tablet {
       grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
   }
 
@@ -44,7 +44,7 @@
     @include transition(color);
 
     &:hover {
-      color: $color-dark;
+      color: $color-hover-link;
     }
 
     svg {
@@ -57,24 +57,25 @@
 .song-card {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid $color-border;
+  gap: 14px;
+  padding: 14px;
+  background-color: $color-cream;
+  border: 1px solid $color-border;
+  border-radius: $card-radius;
   text-decoration: none;
   color: inherit;
-  @include transition(background-color);
-
-  &:first-child {
-    border-top: 1px solid $color-border;
-  }
+  @include transition;
+  min-width: 0;
+  overflow: hidden;
 
   &:hover {
-    background-color: rgba($color-cream, 0.5);
+    border-color: $color-hover-link;
+    box-shadow: 0 4px 12px rgba($hex-black, 0.06);
   }
 
   &__thumb {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     border-radius: $button-radius;
     overflow: hidden;
     flex-shrink: 0;
@@ -89,7 +90,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: $color-cream;
+      background-color: $color-white;
       color: $color-secondary;
 
       svg {
@@ -129,7 +130,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 4px;
+    margin-top: 6px;
   }
 
   &__key {
@@ -138,8 +139,9 @@
     font-size: 11px;
     font-weight: $weight-bold;
     color: $color-dark;
-    background-color: $color-cream;
-    padding: 1px 6px;
+    background-color: $color-white;
+    border: 1px solid $color-border;
+    padding: 1px 8px;
     border-radius: $tag-radius;
     line-height: 1.4;
   }
@@ -160,11 +162,11 @@
 
   &__arrow {
     flex-shrink: 0;
-    color: $color-secondary;
+    color: $color-border;
     @include transition(color);
 
     .song-card:hover & {
-      color: $color-accent;
+      color: $color-hover-link;
     }
   }
 }

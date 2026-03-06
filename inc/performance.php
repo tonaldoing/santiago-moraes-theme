@@ -84,7 +84,7 @@ function sm_resource_hints( $hints, $relation_type ) {
 		);
 
 		// Google Analytics.
-		$ga_id = get_theme_mod( 'sm_ga_id', '' );
+		$ga_id = sm_get_option( 'sm_ga_id', '' );
 		if ( $ga_id ) {
 			$hints[] = array(
 				'href'        => 'https://www.googletagmanager.com',

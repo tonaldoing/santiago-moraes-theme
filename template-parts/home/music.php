@@ -42,7 +42,9 @@ if ( $album_attachment ) {
 		</div>
 
 		<div class="latest-release__info">
-			<h2><?php esc_html_e( 'Lo Ultimo', 'santiago-moraes' ); ?></h2>
+			<span class="latest-release__label"><?php esc_html_e( 'Último lanzamiento', 'santiago-moraes' ); ?></span>
+			<h2 class="latest-release__album-title">Hogar</h2>
+			<p class="latest-release__artist">Santiago Moraes &middot; 2022</p>
 
 			<p class="latest-release__description text-description">
 				<?php echo esc_html__( 'Hogar esta formado por nueve temas en los que Moraes retorna a su lirica deudora de Javier Martinez y logra mezclarla con sonidos populares que miran hacia Uruguay, la tierra de sus padres.', 'santiago-moraes' ); ?>
@@ -98,7 +100,7 @@ if ( $album_attachment ) {
 
 			<?php
 			// Spotify embed player on homepage.
-			$show_player = get_theme_mod( 'sm_player_homepage', true );
+			$show_player = sm_get_option( 'sm_player_homepage', true );
 			if ( $show_player ) :
 				$spotify_url   = sm_get_default_spotify_url();
 				$spotify_embed = sm_spotify_embed_url( $spotify_url );

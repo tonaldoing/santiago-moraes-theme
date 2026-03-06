@@ -38,19 +38,19 @@ function sm_spotify_embed_url( $url, $extra_params = '' ) {
 /**
  * Get the default Spotify URL for the sticky player.
  *
- * Priority: Customizer override > featured album Spotify URL > empty.
+ * Priority: Theme Options override > featured album Spotify URL > empty.
  *
  * @return string Full Spotify URL (not embed).
  */
 function sm_get_default_spotify_url() {
-	// Customizer override.
-	$custom = get_theme_mod( 'sm_player_spotify_url', '' );
+	// Theme Options override.
+	$custom = sm_get_option( 'sm_player_spotify_url', '' );
 	if ( $custom ) {
 		return $custom;
 	}
 
 	// Featured album.
-	$album_id = absint( get_theme_mod( 'sm_featured_album_id', 0 ) );
+	$album_id = absint( sm_get_option( 'sm_featured_album_id', 0 ) );
 	if ( $album_id ) {
 		$url = get_term_meta( $album_id, '_album_spotify_url', true );
 		if ( $url ) {
@@ -91,4 +91,36 @@ function sm_get_contextual_spotify_url() {
 	}
 
 	return sm_get_default_spotify_url();
+}
+
+/**
+ * Count total upcoming events (date >= today).
+ *
+ * @return int Number of upcoming events.
+ */
+function sm_count_upcoming_events() {
+	$count = wp_cache_get( 'sm_upcoming_events_count' );
+	if ( false !== $count ) {
+		return (int) $count;
+	}
+
+	$query = new WP_Query( array(
+		'post_type'      => 'evento',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'no_found_rows'  => true,
+		'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			array(
+				'key'     => '_evento_date',
+				'value'   => gmdate( 'Y-m-d' ),
+				'compare' => '>=',
+				'type'    => 'DATE',
+			),
+		),
+	) );
+
+	$count = $query->post_count;
+	wp_cache_set( 'sm_upcoming_events_count', $count );
+
+	return $count;
 }

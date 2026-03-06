@@ -119,6 +119,25 @@
 	} );
 
 	// =====================================================================
+	// Header Scroll — transparent → solid on scroll (front page)
+	// =====================================================================
+	var header = document.getElementById( 'site-header' );
+
+	if ( header && header.classList.contains( 'site-header--transparent' ) ) {
+		var onScroll = function () {
+			if ( window.scrollY > 50 ) {
+				header.classList.add( 'site-header--scrolled' );
+			} else {
+				header.classList.remove( 'site-header--scrolled' );
+			}
+		};
+
+		// Check initial state (page might load already scrolled).
+		onScroll();
+		window.addEventListener( 'scroll', onScroll, { passive: true } );
+	}
+
+	// =====================================================================
 	// Scroll to Top
 	// =====================================================================
 	var scrollBtn = document.getElementById( 'scroll-top' );

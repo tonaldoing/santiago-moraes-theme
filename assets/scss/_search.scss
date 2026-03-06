@@ -62,7 +62,7 @@
       @include transition(color);
 
       &:hover {
-        color: $color-accent;
+        color: $color-hover-link;
       }
     }
   }
@@ -75,7 +75,7 @@
     color: $color-secondary;
     text-transform: uppercase;
     letter-spacing: 1px;
-    background-color: rgba($color-secondary, 0.1);
+    background-color: rgba($hex-secondary, 0.1);
     padding: 2px 8px;
     border-radius: $tag-radius;
     margin-bottom: 8px;

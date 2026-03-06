@@ -142,7 +142,7 @@ endif;
 if ( $show_social ) :
 	$active_social = array();
 	foreach ( $social_data as $mod_key => $info ) {
-		$url = get_theme_mod( $mod_key, '' );
+		$url = sm_get_option( $mod_key, '' );
 		if ( $url ) {
 			$active_social[ $mod_key ] = array_merge( $info, array( 'url' => $url ) );
 		}

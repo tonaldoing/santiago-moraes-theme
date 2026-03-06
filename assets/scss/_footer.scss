@@ -39,7 +39,7 @@
     @include transition(color);
 
     &:hover {
-      color: $color-accent;
+      color: $color-hover-link;
     }
 
     svg {
@@ -96,7 +96,7 @@
   }
 
   &:hover {
-    background-color: $color-accent;
+    background-color: $color-hover-link;
   }
 
   svg {

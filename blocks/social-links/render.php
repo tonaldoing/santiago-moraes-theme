@@ -46,7 +46,7 @@ $social_data = array(
 // Filter to only those with URLs.
 $active_social = array();
 foreach ( $social_data as $mod_key => $info ) {
-	$url = get_theme_mod( $mod_key, '' );
+	$url = sm_get_option( $mod_key, '' );
 	if ( $url ) {
 		$active_social[] = array_merge( $info, array( 'url' => $url ) );
 	}

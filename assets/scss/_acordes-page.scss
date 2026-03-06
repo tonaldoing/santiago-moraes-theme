@@ -124,7 +124,7 @@
   }
 
   &:hover {
-    background-color: rgba($color-cream, 0.5);
+    background-color: rgba($hex-cream, 0.5);
   }
 
   @include mobile-only {
@@ -169,7 +169,7 @@
     font-size: 12px;
     font-weight: $weight-medium;
     color: $color-secondary;
-    background-color: rgba($color-secondary, 0.1);
+    background-color: rgba($hex-secondary, 0.1);
     padding: 2px 8px;
     border-radius: $tag-radius;
     white-space: nowrap;
@@ -227,7 +227,7 @@
   @include transition(color);
 
   &:hover {
-    color: $color-accent;
+    color: $color-hover-link;
   }
 }
 
@@ -254,7 +254,7 @@
     @include transition(color);
 
     &:hover {
-      color: $color-accent;
+      color: $color-hover-link;
     }
 
     &--next {

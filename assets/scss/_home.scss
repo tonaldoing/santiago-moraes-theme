@@ -10,6 +10,17 @@
   background-color: $color-black;
   overflow: hidden;
 
+  // When header is transparent/fixed, hero fills the space underneath it.
+  .home & {
+    margin-top: -$header-height-mobile;
+    padding-top: $header-height-mobile;
+
+    @include desktop {
+      margin-top: -$header-height;
+      padding-top: $header-height;
+    }
+  }
+
   &__inner {
     @include container;
     display: flex;
@@ -88,6 +99,17 @@
     margin-bottom: 24px;
   }
 
+  &__box {
+    background-color: $color-box;
+    color: $color-box-text;
+    border-radius: $card-radius;
+    padding: 24px;
+
+    @include mobile-only {
+      padding: 16px;
+    }
+  }
+
   &__list {
     display: grid;
     grid-template-columns: 1fr;
@@ -95,7 +117,7 @@
   }
 
   &__footer {
-    margin-top: 32px;
+    margin-top: 24px;
     text-align: center;
   }
 
@@ -111,7 +133,7 @@
     @include transition(color);
 
     &:hover {
-      color: $color-dark;
+      color: $color-hover-light;
     }
 
     svg {
@@ -136,8 +158,8 @@
   padding: 16px 0;
   border-bottom: 1px solid $color-border;
 
-  &:first-child {
-    border-top: 1px solid $color-border;
+  &:last-child {
+    border-bottom: none;
   }
 
   &__date {
@@ -145,7 +167,7 @@
     align-items: center;
     font-family: $font-primary;
     font-weight: $weight-bold;
-    color: $color-dark;
+    color: $color-box-heading;
     min-width: 56px;
     text-align: center;
   }
@@ -180,7 +202,7 @@
     font-size: $text-sub;
     font-weight: $weight-medium;
     line-height: $lh-sub;
-    color: $color-dark;
+    color: $color-box-heading;
 
     @include mobile-only {
       font-size: 16px;
@@ -192,13 +214,31 @@
     font-size: $text-small;
     font-weight: $weight-medium;
     line-height: $lh-small;
-    color: $color-secondary;
+    color: $color-box-text;
   }
 
   &__actions {
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+
+  &__price {
+    font-family: $font-primary;
+    font-size: $text-small;
+    font-weight: $weight-bold;
+    color: $color-box-heading;
+  }
+
+  // Past events — muted style.
+  &--past {
+    opacity: 0.55;
+    padding: 12px 0;
+
+    .show-card__venue {
+      font-size: $text-body;
+      font-weight: $weight-medium;
+    }
   }
 }
 
@@ -210,17 +250,22 @@
     @include container;
     display: flex;
     flex-direction: column;
-    gap: $music-gap;
+    gap: 32px;
 
     @include tablet {
       flex-direction: row;
       align-items: center;
+      gap: 48px;
+    }
+
+    @include desktop {
+      gap: 64px;
     }
   }
 
   &__cover {
     @include tablet {
-      width: 50%;
+      width: 45%;
       flex-shrink: 0;
     }
 
@@ -228,17 +273,60 @@
       width: 100%;
       height: auto;
       border-radius: $card-radius;
+      box-shadow: 0 8px 30px rgba($hex-black, 0.12), 0 2px 8px rgba($hex-black, 0.06);
     }
   }
 
   &__info {
     @include flex-column;
     justify-content: center;
-    gap: $widget-spacing;
+    gap: 24px;
+  }
+
+  &__label {
+    display: inline-block;
+    font-family: $font-primary;
+    font-size: 11px;
+    font-weight: $weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $color-accent;
+    margin-bottom: -16px;
+  }
+
+  &__album-title {
+    font-family: $font-primary;
+    font-size: 28px;
+    font-weight: $weight-black;
+    color: $color-dark;
+    letter-spacing: -0.5px;
+    margin: 0;
+
+    @include tablet {
+      font-size: 32px;
+    }
+  }
+
+  &__artist {
+    font-family: $font-body;
+    font-size: $text-body;
+    font-weight: $weight-regular;
+    color: $color-secondary;
+    margin-top: -16px;
   }
 
   &__description {
     color: $color-secondary;
+    line-height: 1.7;
+  }
+
+  &__player {
+    border-radius: $card-radius;
+    overflow: hidden;
+
+    iframe {
+      display: block;
+    }
   }
 }
 
@@ -246,78 +334,61 @@
 .platform-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: $card-grid-gap;
+  gap: 8px;
 }
 
 .platform-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 20px 10px 10px;
-  background-color: $color-white;
+  padding: 12px 16px 12px 12px;
+  background-color: $color-cream;
   border: 1px solid $color-border;
   border-radius: $card-radius;
   text-decoration: none;
-  @include transition(background-color);
+  @include transition;
 
   &:hover {
-    background-color: var(--platform-hover-bg, $color-vinyl-hover);
-  }
-
-  &--spotify {
-    --platform-hover-bg: #{$color-spotify-hover};
-  }
-  &--bandcamp {
-    --platform-hover-bg: #{$color-bandcamp-hover};
-  }
-  &--youtube {
-    --platform-hover-bg: #{$color-youtube-hover};
-  }
-  &--vinyl {
-    --platform-hover-bg: #{$color-vinyl-hover};
+    border-color: $color-hover-link;
   }
 
   &__icon {
     @include flex-center;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: $icon-radius;
     flex-shrink: 0;
 
     svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
     }
 
     .platform-card--spotify & {
       color: $color-spotify;
-      background-color: $color-spotify-hover;
+      background-color: rgba($color-spotify, 0.1);
     }
     .platform-card--bandcamp & {
       color: $color-bandcamp;
-      background-color: $color-bandcamp-hover;
+      background-color: rgba($color-bandcamp, 0.1);
     }
     .platform-card--youtube & {
       color: $color-youtube;
-      background-color: $color-youtube-hover;
+      background-color: rgba($color-youtube, 0.1);
     }
     .platform-card--vinyl & {
       color: $color-dark;
-      background-color: $color-vinyl-hover;
+      background-color: rgba($hex-dark, 0.08);
     }
   }
 
   &__label {
     font-family: $font-primary;
-    font-size: $text-sub;
+    font-size: $text-small;
     font-weight: $weight-bold;
     color: $color-dark;
     flex: 1;
-
-    @include mobile-only {
-      font-size: 16px;
-    }
   }
 
   &__external {
@@ -366,12 +437,12 @@
   &__input {
     flex: 1;
     padding: 10px 16px;
-    border: 1px solid rgba($color-cream, 0.2);
+    border: 1px solid rgba($hex-cream, 0.2);
     border-radius: $button-radius;
     font-family: $font-body;
     font-size: $text-small;
     color: $color-cream;
-    background-color: rgba($color-cream, 0.05);
+    background-color: rgba($hex-cream, 0.05);
     @include transition(border-color);
 
     &::placeholder {
@@ -417,7 +488,7 @@
     width: 40px;
     height: 40px;
     border-radius: $icon-radius;
-    background-color: rgba($color-cream, 0.08);
+    background-color: rgba($hex-cream, 0.08);
     color: $color-cream;
     @include transition(all);
 

@@ -199,8 +199,8 @@ function sm_get_og_image() {
 		}
 	}
 
-	// Fallback: hero image from Customizer.
-	$hero = get_theme_mod( 'sm_hero_image', '' );
+	// Fallback: hero image from Theme Options.
+	$hero = sm_get_option( 'sm_hero_image', '' );
 	if ( $hero ) {
 		return $hero;
 	}

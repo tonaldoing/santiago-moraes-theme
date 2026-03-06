@@ -1,4 +1,3 @@
-@use 'sass:color';
 @use 'variables' as *;
 @use 'mixins' as *;
 
@@ -10,7 +9,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: $font-primary;
+  font-family: $font-button;
   font-size: $text-button;
   font-weight: $weight-medium;
   line-height: $lh-button;
@@ -26,14 +25,15 @@
 
   // Solid CTA (primary)
   &--primary {
-    background-color: $color-accent;
-    color: $color-white;
-    border: 1px solid $color-accent;
+    background-color: $color-btn-primary-bg;
+    color: $color-btn-primary-text;
+    border: 1px solid $color-btn-primary-bg;
     box-shadow: $shadow-button;
 
     &:hover {
-      background-color: color.adjust($color-accent, $lightness: -8%);
-      border-color: color.adjust($color-accent, $lightness: -8%);
+      background-color: $color-btn-primary-hover;
+      border-color: $color-btn-primary-hover;
+      color: $color-btn-primary-text;
     }
   }
 
@@ -46,7 +46,7 @@
 
     &:hover {
       background-color: $color-cream;
-      color: $color-dark;
+      color: $color-hover-light;
     }
   }
 
@@ -71,7 +71,7 @@
     padding-right: 0;
 
     &:hover {
-      color: $color-dark;
+      color: $color-hover-light;
     }
   }
 

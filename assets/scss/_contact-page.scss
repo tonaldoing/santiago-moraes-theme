@@ -151,7 +151,7 @@
       text-decoration: none;
       @include transition(color);
 
-      &:hover { color: $color-accent; }
+      &:hover { color: $color-hover-link; }
     }
   }
 }

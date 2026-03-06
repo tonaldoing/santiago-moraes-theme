@@ -41,11 +41,14 @@ require SM_THEME_DIR . '/inc/custom-post-types.php';
 require SM_THEME_DIR . '/inc/taxonomies.php';
 
 /**
- * Customizer options.
+ * Theme Options helpers (sm_get_option, CSS output, migration).
  */
-if ( file_exists( SM_THEME_DIR . '/inc/customizer.php' ) ) {
-	require SM_THEME_DIR . '/inc/customizer.php';
-}
+require SM_THEME_DIR . '/inc/theme-options-helpers.php';
+
+/**
+ * Theme Options admin page.
+ */
+require SM_THEME_DIR . '/inc/theme-options.php';
 
 /**
  * Helper functions.

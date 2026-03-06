@@ -16,6 +16,7 @@
 	z-index: 1000;
 	background: $color-black;
 	height: 80px;
+	overflow: visible; // allow close button to render above
 
 	&--hidden {
 		display: none;
@@ -27,16 +28,20 @@
 	}
 }
 
+// -------------------------------------------------------------------------
+// Close button — positioned ABOVE the player bar so it doesn't
+// overlap Spotify's own controls inside the iframe.
+// -------------------------------------------------------------------------
 .sticky-player__close {
 	position: absolute;
-	top: 4px;
-	right: 8px;
+	top: -32px;
+	right: 12px;
 	z-index: 10;
-	background: rgba($color-black, 0.7);
+	background: rgba($hex-black, 0.85);
 	border: none;
 	color: $color-cream;
-	width: 28px;
-	height: 28px;
+	width: 24px;
+	height: 24px;
 	border-radius: $icon-radius;
 	cursor: pointer;
 	display: flex;
@@ -45,11 +50,13 @@
 	transition: background $transition-base;
 
 	svg {
+		width: 10px;
+		height: 10px;
 		fill: currentColor;
 	}
 
 	&:hover {
-		background: rgba($color-accent, 0.9);
+		background: rgba($hex-accent, 0.9);
 	}
 }
 

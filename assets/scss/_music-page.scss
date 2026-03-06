@@ -177,7 +177,7 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background: rgba($color-black, 0.5);
+    background: rgba($hex-black, 0.5);
     @include flex-center;
     opacity: 0;
     @include transition(opacity);
@@ -305,7 +305,7 @@
     font-size: 12px;
     font-weight: $weight-medium;
     color: $color-secondary;
-    background-color: rgba($color-secondary, 0.1);
+    background-color: rgba($hex-secondary, 0.1);
     padding: 2px 8px;
     border-radius: $tag-radius;
     white-space: nowrap;

@@ -52,8 +52,8 @@ function sm_handle_contact_form() {
 		wp_send_json_error( array( 'message' => __( 'El mensaje es obligatorio.', 'santiago-moraes' ) ) );
 	}
 
-	// Recipient — from Customizer or fallback to admin email.
-	$to = get_theme_mod( 'sm_contact_email', get_option( 'admin_email' ) );
+	// Recipient — from Theme Options or fallback to admin email.
+	$to = sm_get_option( 'sm_contact_email', get_option( 'admin_email' ) );
 
 	// Build email.
 	$email_subject = ! empty( $subject )

@@ -64,72 +64,65 @@ $past = new WP_Query(
 			<h2 class="events-section__title"><?php esc_html_e( 'Próximos Shows', 'santiago-moraes' ); ?></h2>
 
 			<?php if ( $upcoming->have_posts() ) : ?>
-				<div class="events-list">
-					<?php
-					while ( $upcoming->have_posts() ) :
-						$upcoming->the_post();
+				<div class="shows__box">
+					<div class="shows__list">
+						<?php
+						while ( $upcoming->have_posts() ) :
+							$upcoming->the_post();
 
-						$date        = get_post_meta( get_the_ID(), '_evento_date', true );
-						$time        = get_post_meta( get_the_ID(), '_evento_time', true );
-						$venue       = get_post_meta( get_the_ID(), '_evento_venue', true );
-						$city        = get_post_meta( get_the_ID(), '_evento_city', true );
-						$ticket_link = get_post_meta( get_the_ID(), '_evento_ticket_link', true );
-						$price       = get_post_meta( get_the_ID(), '_evento_price', true );
+							$date        = get_post_meta( get_the_ID(), '_evento_date', true );
+							$time        = get_post_meta( get_the_ID(), '_evento_time', true );
+							$venue       = get_post_meta( get_the_ID(), '_evento_venue', true );
+							$city        = get_post_meta( get_the_ID(), '_evento_city', true );
+							$ticket_link = get_post_meta( get_the_ID(), '_evento_ticket_link', true );
+							$price       = get_post_meta( get_the_ID(), '_evento_price', true );
 
-						// Parse date.
-						$day = '';
-						$month_short = '';
-						if ( $date ) {
-							$ts = strtotime( $date );
-							if ( $ts ) {
-								$day = gmdate( 'j', $ts );
-								$months_arr = array( '', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' );
-								$month_short = $months_arr[ (int) gmdate( 'n', $ts ) ];
+							// Parse date.
+							$day         = '';
+							$month_short = '';
+							if ( $date ) {
+								$ts = strtotime( $date );
+								if ( $ts ) {
+									$day         = gmdate( 'j', $ts );
+									$months_arr  = array( '', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' );
+									$month_short = $months_arr[ (int) gmdate( 'n', $ts ) ];
+								}
 							}
-						}
-						?>
+							?>
 
-						<article class="event-card">
-							<div class="event-card__date-badge">
-								<span class="event-card__day"><?php echo esc_html( $day ); ?></span>
-								<span class="event-card__month"><?php echo esc_html( $month_short ); ?></span>
-							</div>
-
-							<div class="event-card__info">
-								<h3 class="event-card__title">
-									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-								</h3>
-								<div class="event-card__details">
-									<?php if ( $venue ) : ?>
-										<span class="event-card__venue"><?php echo esc_html( $venue ); ?></span>
+							<article class="show-card">
+								<div class="show-card__date">
+									<span class="show-card__day"><?php echo esc_html( $day ); ?></span>
+									<span class="show-card__month"><?php echo esc_html( $month_short ); ?></span>
+								</div>
+								<div class="show-card__info">
+									<a href="<?php the_permalink(); ?>" class="show-card__venue"><?php echo esc_html( $venue ); ?></a>
+									<span class="show-card__city">
+										<?php echo esc_html( $city ); ?>
+										<?php if ( $time ) : ?>
+											&middot; <?php echo esc_html( $time ); ?> hs
+										<?php endif; ?>
+									</span>
+								</div>
+								<div class="show-card__actions">
+									<?php if ( $price ) : ?>
+										<span class="show-card__price"><?php echo esc_html( $price ); ?></span>
 									<?php endif; ?>
-									<?php if ( $city ) : ?>
-										<span class="event-card__city"><?php echo esc_html( $city ); ?></span>
-									<?php endif; ?>
-									<?php if ( $time ) : ?>
-										<span class="event-card__time"><?php echo esc_html( $time ); ?> hs</span>
+									<?php if ( $ticket_link ) : ?>
+										<a href="<?php echo esc_url( $ticket_link ); ?>" class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
+											<?php esc_html_e( 'Entradas', 'santiago-moraes' ); ?>
+										</a>
+									<?php else : ?>
+										<a href="<?php the_permalink(); ?>" class="btn btn--outline btn--sm">
+											<?php esc_html_e( 'Info', 'santiago-moraes' ); ?>
+										</a>
 									<?php endif; ?>
 								</div>
-							</div>
+							</article>
 
-							<div class="event-card__actions">
-								<?php if ( $price ) : ?>
-									<span class="event-card__price"><?php echo esc_html( $price ); ?></span>
-								<?php endif; ?>
-								<?php if ( $ticket_link ) : ?>
-									<a href="<?php echo esc_url( $ticket_link ); ?>" class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer">
-										<?php esc_html_e( 'Entradas', 'santiago-moraes' ); ?>
-									</a>
-								<?php else : ?>
-									<a href="<?php the_permalink(); ?>" class="btn btn--outline btn--sm">
-										<?php esc_html_e( 'Ver más', 'santiago-moraes' ); ?>
-									</a>
-								<?php endif; ?>
-							</div>
-						</article>
-
-					<?php endwhile; ?>
-					<?php wp_reset_postdata(); ?>
+						<?php endwhile; ?>
+						<?php wp_reset_postdata(); ?>
+					</div>
 				</div>
 			<?php else : ?>
 				<p class="events-section__empty"><?php esc_html_e( 'No hay shows programados por el momento. Seguinos en redes para enterarte primero.', 'santiago-moraes' ); ?></p>
@@ -148,6 +141,8 @@ $past = new WP_Query(
 
 				<div class="events-past-list" id="events-past-list" hidden>
 					<?php
+					$months_short = array( '', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' );
+
 					while ( $past->have_posts() ) :
 						$past->the_post();
 
@@ -155,29 +150,30 @@ $past = new WP_Query(
 						$venue = get_post_meta( get_the_ID(), '_evento_venue', true );
 						$city  = get_post_meta( get_the_ID(), '_evento_city', true );
 
-						$date_display = '';
+						$day         = '';
+						$month_short = '';
 						if ( $date ) {
 							$ts = strtotime( $date );
 							if ( $ts ) {
-								$date_display = gmdate( 'd/m/Y', $ts );
+								$day         = gmdate( 'j', $ts );
+								$month_short = $months_short[ (int) gmdate( 'n', $ts ) ];
 							}
 						}
 						?>
 
-						<div class="event-card event-card--past">
-							<div class="event-card__info">
-								<span class="event-card__title event-card__title--past"><?php the_title(); ?></span>
-								<div class="event-card__details">
-									<?php if ( $date_display ) : ?>
-										<span class="event-card__date-text"><?php echo esc_html( $date_display ); ?></span>
-									<?php endif; ?>
-									<?php if ( $venue ) : ?>
-										<span class="event-card__venue"><?php echo esc_html( $venue ); ?></span>
-									<?php endif; ?>
-									<?php if ( $city ) : ?>
-										<span class="event-card__city"><?php echo esc_html( $city ); ?></span>
-									<?php endif; ?>
-								</div>
+						<div class="show-card show-card--past">
+							<div class="show-card__date">
+								<span class="show-card__day"><?php echo esc_html( $day ); ?></span>
+								<span class="show-card__month"><?php echo esc_html( $month_short ); ?></span>
+							</div>
+							<div class="show-card__info">
+								<span class="show-card__venue"><?php the_title(); ?></span>
+								<span class="show-card__city">
+									<?php
+									$parts = array_filter( array( $venue, $city ) );
+									echo esc_html( implode( ' · ', $parts ) );
+									?>
+								</span>
 							</div>
 						</div>
 

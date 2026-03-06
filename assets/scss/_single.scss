@@ -121,7 +121,7 @@
   font-size: 12px;
   font-weight: $weight-medium;
   color: $color-secondary;
-  background-color: rgba($color-secondary, 0.1);
+  background-color: rgba($hex-secondary, 0.1);
   padding: 4px 12px;
   border-radius: $button-radius;
   text-decoration: none;
@@ -155,7 +155,7 @@
     @include transition(color);
 
     &:hover {
-      color: $color-accent;
+      color: $color-hover-link;
     }
 
     &--next {

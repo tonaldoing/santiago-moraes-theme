@@ -9,11 +9,48 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: $color-white;
+  background-color: $color-header-bg;
   height: $header-height-mobile;
+  transition: background-color $transition-base, box-shadow $transition-base;
+
+  // WP admin bar offset for sticky (dev).
+  .admin-bar & {
+    top: 32px;
+
+    @media screen and (max-width: 782px) {
+      top: 46px;
+    }
+  }
 
   @include desktop {
     height: $header-height;
+  }
+
+  // Transparent variant — overlaps the hero on front page.
+  &--transparent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+
+    // WP admin bar offset (dev only).
+    .admin-bar & {
+      top: 32px;
+
+      @media screen and (max-width: 782px) {
+        top: 46px;
+      }
+    }
+
+    &.site-header--scrolled {
+      background-color: $color-header-bg;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // Scrolled state on normal pages.
+  &--scrolled:not(&--transparent) {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   }
 
   &__inner {
@@ -26,6 +63,12 @@
 // Site title link
 .site-title a {
   text-decoration: none;
+  color: $color-dark;
+  @include transition(color);
+
+  .site-header--transparent:not(.site-header--scrolled) & {
+    color: $color-header-text;
+  }
 
   &:hover,
   &:focus,
@@ -83,10 +126,15 @@
       align-items: center;
       gap: 4px;
 
+      // Light text when header is transparent (front page top).
+      .site-header--transparent:not(.site-header--scrolled) & {
+        color: $color-header-text;
+      }
+
       &:hover,
       &:focus,
       &:active {
-        color: $color-accent;
+        color: $color-hover-link;
         text-decoration: none;
       }
     }
@@ -110,59 +158,65 @@
   // -----------------------------------------------------------------------
   .sub-menu {
     position: absolute;
-    top: 100%;
-    left: -12px;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
     z-index: 110;
-    min-width: 200px;
+    min-width: 220px;
     list-style: none;
     margin: 0;
-    padding: 8px 0;
+    padding: 6px;
     background-color: $color-white;
-    border: 1px solid $color-border;
+    border: 1px solid rgba($hex-border, 0.6);
     border-radius: $card-radius;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
 
     // Hidden by default.
     visibility: hidden;
     opacity: 0;
-    transform: translateY(-8px);
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
     pointer-events: none;
 
-    // Invisible bridge between parent and submenu so cursor movement
-    // doesn't close the dropdown.
+    // Invisible bridge between parent and submenu.
     &::before {
       content: '';
       position: absolute;
-      top: -12px;
+      top: -16px;
       left: 0;
       right: 0;
-      height: 12px;
+      height: 16px;
     }
 
     .menu-item {
       margin: 0;
 
       a {
-        display: block;
-        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
         font-family: $font-primary;
         font-size: $text-small;
-        font-weight: $weight-regular;
+        font-weight: $weight-medium;
         color: $color-dark;
         text-decoration: none;
         white-space: nowrap;
-        border-left: 3px solid transparent;
+        border-radius: $button-radius;
         @include transition;
 
         &:hover,
         &:focus,
         &:active {
           background-color: $color-cream;
-          border-left-color: $color-accent;
-          color: $color-accent;
+          color: $color-hover-link;
           text-decoration: none;
         }
+      }
+
+      // Subtle separator between items.
+      + .menu-item {
+        margin-top: 2px;
       }
     }
   }
@@ -172,7 +226,7 @@
   &__list > .menu-item-has-children.menu-item--focus > .sub-menu {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
     pointer-events: auto;
   }
 
@@ -201,6 +255,11 @@
   cursor: pointer;
   padding: 8px;
   color: $color-dark;
+  @include transition(color);
+
+  .site-header--transparent:not(.site-header--scrolled) & {
+    color: $color-header-text;
+  }
 
   @include tablet {
     display: none;
@@ -260,7 +319,7 @@
       &:hover,
       &:focus,
       &:active {
-        color: $color-accent;
+        color: $color-hover-link;
         text-decoration: none;
       }
     }
@@ -297,7 +356,7 @@
     @include transition;
 
     &:hover {
-      color: $color-accent;
+      color: $color-hover-link;
     }
 
     svg {
@@ -341,8 +400,8 @@
         &:hover,
         &:focus,
         &:active {
-          color: $color-accent;
-          border-left-color: $color-accent;
+          color: $color-hover-link;
+          border-left-color: $color-hover-link;
           text-decoration: none;
         }
       }
@@ -372,8 +431,12 @@
     color: $color-secondary;
     @include transition(color);
 
+    .site-header--transparent:not(.site-header--scrolled) & {
+      color: $color-header-text;
+    }
+
     &:hover {
-      color: $color-dark;
+      color: $color-hover-light;
     }
 
     svg {

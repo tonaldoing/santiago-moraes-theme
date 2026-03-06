@@ -16,7 +16,7 @@ add_action( 'wp_head', 'sm_theme_color_meta', 4 );
  * Output theme-color meta tag for mobile browsers.
  */
 function sm_theme_color_meta() {
-	$color = get_theme_mod( 'sm_color_black', '#010101' );
+	$color = sm_get_option( 'sm_color_black', '#010101' );
 	echo '<meta name="theme-color" content="' . esc_attr( $color ) . '">' . "\n";
 	echo '<meta name="msapplication-TileColor" content="' . esc_attr( $color ) . '">' . "\n";
 	echo '<meta name="apple-mobile-web-app-capable" content="yes">' . "\n";
@@ -59,7 +59,7 @@ function sm_serve_manifest() {
 	}
 
 	$site_name = get_bloginfo( 'name' );
-	$color     = get_theme_mod( 'sm_color_black', '#010101' );
+	$color     = sm_get_option( 'sm_color_black', '#010101' );
 
 	$manifest = array(
 		'name'             => $site_name,

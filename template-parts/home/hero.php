@@ -1,21 +1,21 @@
 <?php
 /**
- * Homepage Hero section — uses Customizer settings.
+ * Homepage Hero section — uses Theme Options settings.
  *
  * @package Santiago_Moraes
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$line1     = get_theme_mod( 'sm_hero_line1', 'Santiago' );
-$line2     = get_theme_mod( 'sm_hero_line2', 'Moraes' );
-$btn1_text = get_theme_mod( 'sm_hero_btn1_text', __( 'Escuchar ahora', 'santiago-moraes' ) );
-$btn1_url  = get_theme_mod( 'sm_hero_btn1_url', 'https://open.spotify.com/artist/2pfLPT9ZTkPrLd8ZJiDBld' );
-$btn2_text = get_theme_mod( 'sm_hero_btn2_text', __( 'Proximos Shows', 'santiago-moraes' ) );
-$btn2_url  = get_theme_mod( 'sm_hero_btn2_url', '#shows' );
-$hero_img  = get_theme_mod( 'sm_hero_image', '' );
+$line1     = sm_get_option( 'sm_hero_line1', 'Santiago' );
+$line2     = sm_get_option( 'sm_hero_line2', 'Moraes' );
+$btn1_text = sm_get_option( 'sm_hero_btn1_text', __( 'Escuchar ahora', 'santiago-moraes' ) );
+$btn1_url  = sm_get_option( 'sm_hero_btn1_url', 'https://open.spotify.com/artist/2pfLPT9ZTkPrLd8ZJiDBld' );
+$btn2_text = sm_get_option( 'sm_hero_btn2_text', __( 'Proximos Shows', 'santiago-moraes' ) );
+$btn2_url  = sm_get_option( 'sm_hero_btn2_url', '#shows' );
+$hero_img  = sm_get_option( 'sm_hero_image', '' );
 
-// Hero image: Customizer > media library search > placeholder.
+// Hero image: Theme Options > media library search > placeholder.
 if ( $hero_img ) {
 	$hero_image_tag = '<img src="' . esc_url( $hero_img ) . '" alt="Santiago Moraes" loading="eager" decoding="async">';
 } else {

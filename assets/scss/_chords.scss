@@ -106,8 +106,8 @@ $font-chord: 'Courier New', Courier, monospace;
   white-space: nowrap;
 
   &:hover {
-    border-color: $color-accent;
-    color: $color-accent;
+    border-color: $color-hover-link;
+    color: $color-hover-link;
   }
 
   &--active {
@@ -309,8 +309,8 @@ $font-chord: 'Courier New', Courier, monospace;
     @include transition;
 
     &:hover {
-      border-color: $color-accent;
-      color: $color-accent;
+      border-color: $color-hover-link;
+      color: $color-hover-link;
     }
 
     svg {
@@ -342,7 +342,7 @@ $font-chord: 'Courier New', Courier, monospace;
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
-    border-bottom: 1px solid rgba($color-border, 0.5);
+    border-bottom: 1px solid rgba($hex-border, 0.5);
 
     &:last-child {
       border-bottom: 0;
@@ -372,7 +372,7 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 
   &__track {
-    border-bottom: 1px solid rgba($color-border, 0.5);
+    border-bottom: 1px solid rgba($hex-border, 0.5);
 
     &:last-child {
       border-bottom: 0;
@@ -389,7 +389,7 @@ $font-chord: 'Courier New', Courier, monospace;
     @include transition(color);
 
     &:hover {
-      color: $color-accent;
+      color: $color-hover-link;
     }
   }
 
@@ -421,7 +421,7 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 
   &__related-item {
-    border-bottom: 1px solid rgba($color-border, 0.5);
+    border-bottom: 1px solid rgba($hex-border, 0.5);
 
     &:last-child {
       border-bottom: 0;

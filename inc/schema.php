@@ -89,7 +89,7 @@ function sm_schema_music_group() {
 	);
 
 	// OG image as band image.
-	$hero = get_theme_mod( 'sm_hero_image', '' );
+	$hero = sm_get_option( 'sm_hero_image', '' );
 	if ( $hero ) {
 		$schema['image'] = $hero;
 	}
@@ -106,7 +106,7 @@ function sm_schema_music_group() {
 		'sm_social_twitter',
 	);
 	foreach ( $social_keys as $key ) {
-		$url = get_theme_mod( $key, '' );
+		$url = sm_get_option( $key, '' );
 		if ( $url ) {
 			$same_as[] = $url;
 		}

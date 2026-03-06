@@ -44,7 +44,7 @@ get_header();
 		}
 
 		// ── SECTION A: Featured Album Hero ──
-		$featured_id = (int) get_theme_mod( 'sm_featured_album_id', 0 );
+		$featured_id = (int) sm_get_option( 'sm_featured_album_id', 0 );
 
 		// Find the featured album term, or fall back to the most recent studio album.
 		$featured_term = null;

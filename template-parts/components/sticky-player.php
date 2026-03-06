@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$player_enabled = get_theme_mod( 'sm_player_enabled', true );
+$player_enabled = sm_get_option( 'sm_player_enabled', true );
 if ( ! $player_enabled ) {
 	return;
 }

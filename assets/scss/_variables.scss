@@ -3,18 +3,47 @@
 // ==========================================================================
 
 // ---------------------------------------------------------------------
-// Colors
+// Colors — resolved via CSS custom properties at runtime
+// (defaults set in theme-options-helpers.php → :root)
 // ---------------------------------------------------------------------
-$color-dark:      #1B110D;  // Primary text, headings, nav
-$color-black:     #010101;  // Hero background
-$color-white:     #FFFFFF;  // Header/footer bg, card bg, button text
-$color-cream:     #F7F3F0;  // Hero text on dark bg
-$color-accent:    #EC4913;  // CTA buttons, hover states, "Moraes" accent
-$color-secondary: #9A5F4C;  // Secondary text, icons, muted text
-$color-border:    #E7D5CF;  // Card/event borders
-$color-body:      #0A0A0A;  // Body text
+$color-dark:      var(--color-dark);
+$color-black:     var(--color-black);
+$color-white:     var(--color-white);
+$color-cream:     var(--color-cream);
+$color-accent:    var(--color-accent);
+$color-secondary: var(--color-secondary);
+$color-border:    var(--color-border);
+$color-bg-light:  var(--color-bg-light);
+$color-box:       var(--color-box);
+$color-heading:     var(--color-heading);
+$color-body:        var(--color-body);
+$color-box-heading:  var(--color-box-heading);
+$color-box-text:     var(--color-box-text);
 
-// Platform brand colors
+// Hovers
+$color-hover-link:   var(--color-hover-link);
+$color-hover-light:  var(--color-hover-light);
+
+// Header
+$color-header-bg:           var(--color-header-bg);
+$color-header-text:         var(--color-header-text);
+$color-header-text-scroll:  var(--color-header-text-scroll);
+
+// Buttons
+$color-btn-primary-bg:    var(--color-btn-primary-bg);
+$color-btn-primary-text:  var(--color-btn-primary-text);
+$color-btn-primary-hover: var(--color-btn-primary-hover);
+
+// Raw hex defaults — ONLY for Sass functions (rgba, color.adjust)
+$hex-dark:       #1B110D;
+$hex-black:      #010101;
+$hex-white:      #FFFFFF;
+$hex-cream:      #F7F3F0;
+$hex-accent:     #EC4913;
+$hex-secondary:  #9A5F4C;
+$hex-border:     #E7D5CF;
+
+// Platform brand colors (fixed, not theme-configurable)
 $color-spotify:   #1DB954;
 $color-bandcamp:  #629AA9;
 $color-youtube:   #FF0033;
@@ -27,13 +56,15 @@ $color-error:     #dc2626;
 $color-spotify-hover:   rgba($color-spotify, 0.1);
 $color-bandcamp-hover:  rgba($color-bandcamp, 0.1);
 $color-youtube-hover:   rgba($color-youtube, 0.1);
-$color-vinyl-hover:     rgba($color-dark, 0.1);
+$color-vinyl-hover:     rgba($hex-dark, 0.1);
 
 // ---------------------------------------------------------------------
-// Typography
+// Typography — resolved via CSS custom properties at runtime
+// (defaults set in theme-options-helpers.php → :root)
 // ---------------------------------------------------------------------
-$font-primary: 'Be Vietnam Pro', sans-serif;
-$font-body:    'Montserrat', sans-serif;
+$font-primary: var(--font-heading);
+$font-body:    var(--font-body);
+$font-button:  var(--font-button);
 
 // Type scale
 $text-hero:    72px;

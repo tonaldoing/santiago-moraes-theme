@@ -10,9 +10,9 @@
 
 get_header();
 
-$contact_phone = get_theme_mod( 'sm_contact_phone', '' );
-$contact_addr  = get_theme_mod( 'sm_contact_address', '' );
-$maps_url      = get_theme_mod( 'sm_contact_maps_url', '' );
+$contact_phone = sm_get_option( 'sm_contact_phone', '' );
+$contact_addr  = sm_get_option( 'sm_contact_address', '' );
+$maps_url      = sm_get_option( 'sm_contact_maps_url', '' );
 ?>
 
 <main id="main" class="site-main page-contact">
@@ -86,7 +86,7 @@ $maps_url      = get_theme_mod( 'sm_contact_maps_url', '' );
 				<?php
 				$has_contact_social = false;
 				foreach ( $social_links as $mod_key => $info ) {
-					if ( get_theme_mod( $mod_key, '' ) ) {
+					if ( sm_get_option( $mod_key, '' ) ) {
 						$has_contact_social = true;
 						break;
 					}
@@ -105,7 +105,7 @@ $maps_url      = get_theme_mod( 'sm_contact_maps_url', '' );
 						);
 
 						foreach ( $social_links as $mod_key => $info ) :
-							$url = get_theme_mod( $mod_key, '' );
+							$url = sm_get_option( $mod_key, '' );
 							if ( $url ) :
 								?>
 								<a href="<?php echo esc_url( $url ); ?>" class="contact-social__link" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $info['label'] ); ?>">

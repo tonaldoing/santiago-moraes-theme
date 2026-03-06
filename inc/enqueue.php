@@ -13,22 +13,33 @@ add_action( 'wp_enqueue_scripts', 'sm_enqueue_assets' );
  * Enqueue front-end styles and scripts.
  */
 function sm_enqueue_assets() {
-	// Google Fonts — Be Vietnam Pro + Montserrat.
-	wp_enqueue_style(
-		'sm-google-fonts',
-		'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&family=Montserrat:wght@400;500&display=swap',
-		array(),
-		null
-	);
+	// Google Fonts — dynamic based on Theme Options.
+	$google_url = sm_google_fonts_url();
+	if ( $google_url ) {
+		wp_enqueue_style( 'sm-google-fonts', $google_url, array(), null );
+	}
+
+	// Adobe Fonts (Typekit) — only when an Adobe font is selected.
+	$adobe_url = sm_needs_adobe_fonts();
+	if ( $adobe_url ) {
+		wp_enqueue_style( 'sm-adobe-fonts', $adobe_url, array(), null );
+	}
 
 	// Main stylesheet (compiled from SCSS).
 	$css_file = SM_THEME_DIR . '/assets/css/style.css';
 	$css_ver  = file_exists( $css_file ) ? filemtime( $css_file ) : SM_THEME_VERSION;
+	$css_deps = array();
+	if ( $google_url ) {
+		$css_deps[] = 'sm-google-fonts';
+	}
+	if ( $adobe_url ) {
+		$css_deps[] = 'sm-adobe-fonts';
+	}
 
 	wp_enqueue_style(
 		'sm-main',
 		SM_THEME_URI . '/assets/css/style.css',
-		array( 'sm-google-fonts' ),
+		$css_deps,
 		$css_ver
 	);
 
@@ -102,8 +113,8 @@ function sm_enqueue_assets() {
 		);
 	}
 
-	// Sticky Spotify player — when enabled in Customizer.
-	if ( get_theme_mod( 'sm_player_enabled', true ) ) {
+	// Sticky Spotify player — when enabled in Theme Options.
+	if ( sm_get_option( 'sm_player_enabled', true ) ) {
 		wp_enqueue_script(
 			'sm-sticky-player',
 			SM_THEME_URI . '/assets/js/modules/sticky-player.js',
@@ -145,13 +156,25 @@ add_action( 'enqueue_block_editor_assets', 'sm_enqueue_editor_assets' );
  * Enqueue editor-specific styles.
  */
 function sm_enqueue_editor_assets() {
+	// Google Fonts for the editor too.
+	$google_url = sm_google_fonts_url();
+	if ( $google_url ) {
+		wp_enqueue_style( 'sm-google-fonts', $google_url, array(), null );
+	}
+
+	// Adobe Fonts for the editor.
+	$adobe_url = sm_needs_adobe_fonts();
+	if ( $adobe_url ) {
+		wp_enqueue_style( 'sm-adobe-fonts', $adobe_url, array(), null );
+	}
+
 	$css_file = SM_THEME_DIR . '/assets/css/style.css';
 
 	if ( file_exists( $css_file ) ) {
 		wp_enqueue_style(
 			'sm-editor',
 			SM_THEME_URI . '/assets/css/style.css',
-			array(),
+			array( 'sm-google-fonts' ),
 			filemtime( $css_file )
 		);
 	}

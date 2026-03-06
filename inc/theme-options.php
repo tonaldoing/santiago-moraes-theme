@@ -114,6 +114,19 @@ function sm_register_theme_options() {
 }
 
 /**
+ * Purge LiteSpeed Cache when theme options are saved.
+ */
+add_action( 'update_option_sm_options', 'sm_purge_cache_on_save' );
+function sm_purge_cache_on_save() {
+	// LiteSpeed Cache plugin purge.
+	if ( class_exists( 'LiteSpeed\Purge' ) ) {
+		do_action( 'litespeed_purge_all' );
+	}
+	// Also clear WordPress object cache.
+	wp_cache_flush();
+}
+
+/**
  * Sanitize the full options array on save.
  *
  * @param array $input Raw form values.

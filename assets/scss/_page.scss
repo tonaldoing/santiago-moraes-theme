@@ -6,17 +6,17 @@
 // ==========================================================================
 
 .page-header {
-  background-color: $color-black;
-  padding: $section-padding 0;
+  background-color: $color-ink;
+  padding: $section-padding-y 0;
 
   &__inner {
     @include container;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-hero;
-    font-weight: $weight-black;
+    font-weight: $weight-regular;
     line-height: $lh-hero;
     letter-spacing: $ls-hero;
     color: $color-cream;
@@ -33,8 +33,8 @@
 }
 
 .page-content {
-  padding: $section-padding 0;
-  background-color: $color-white;
+  padding: $section-padding-y 0;
+  background-color: $color-paper;
 
   &__inner {
     @include container;
@@ -47,16 +47,15 @@
     img {
       width: 100%;
       height: auto;
-      border-radius: $card-radius;
+      border-radius: 0;
       display: block;
     }
   }
 
-  // WP content styles.
   h2, h3, h4, h5, h6 {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-weight: $weight-bold;
-    color: $color-dark;
+    color: $color-ink;
     margin: 32px 0 16px;
   }
 
@@ -68,7 +67,7 @@
     font-family: $font-body;
     font-size: $text-body;
     line-height: $lh-body;
-    color: $color-body;
+    color: $color-brown;
     margin-bottom: 16px;
   }
 
@@ -83,41 +82,41 @@
     @include transition(color);
 
     &:hover {
-      color: $color-hover-link;
+      color: $color-ochre;
       text-decoration: none;
     }
   }
 
   blockquote {
-    border-left: 4px solid $color-accent;
+    border-left: $border-width solid $color-accent;
     padding: 16px 24px;
     margin: 24px 0;
     background-color: $color-cream;
-    border-radius: 0 $button-radius $button-radius 0;
+    border-radius: 0;
 
     p {
       margin: 0;
       font-style: italic;
-      color: $color-dark;
+      color: $color-ink;
     }
   }
 
   img {
     max-width: 100%;
     height: auto;
-    border-radius: $button-radius;
+    border-radius: 0;
   }
 
   .page-links {
     margin-top: 32px;
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-weight: $weight-medium;
 
     .page-numbers {
       display: inline-block;
       padding: 4px 12px;
       margin: 0 4px;
-      border-radius: $button-radius;
+      border-radius: 0;
       background-color: $color-cream;
     }
   }

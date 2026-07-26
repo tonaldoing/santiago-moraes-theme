@@ -14,9 +14,9 @@
 	left: 0;
 	right: 0;
 	z-index: 1000;
-	background: $color-black;
+	background: $color-ink;
 	height: 80px;
-	overflow: visible; // allow close button to render above
+	overflow: visible;
 
 	&--hidden {
 		display: none;
@@ -29,20 +29,19 @@
 }
 
 // -------------------------------------------------------------------------
-// Close button — positioned ABOVE the player bar so it doesn't
-// overlap Spotify's own controls inside the iframe.
+// Close button
 // -------------------------------------------------------------------------
 .sticky-player__close {
 	position: absolute;
 	top: -32px;
 	right: 12px;
 	z-index: 10;
-	background: rgba($hex-black, 0.85);
+	background: rgba($hex-ink, 0.85);
 	border: none;
 	color: $color-cream;
 	width: 24px;
 	height: 24px;
-	border-radius: $icon-radius;
+	border-radius: 0;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -56,7 +55,7 @@
 	}
 
 	&:hover {
-		background: rgba($hex-accent, 0.9);
+		background: rgba($hex-brick, 0.9);
 	}
 }
 
@@ -70,15 +69,15 @@
 	z-index: 999;
 	width: 56px;
 	height: 56px;
-	border-radius: $icon-radius;
+	border-radius: 0;
 	background: $color-spotify;
-	color: $color-white;
+	color: $color-paper;
 	border: none;
 	cursor: pointer;
-	display: none; // Hidden by default, shown via JS.
+	display: none;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+	box-shadow: $shadow-brick;
 	transition: transform $transition-base, box-shadow $transition-base;
 
 	svg {
@@ -89,12 +88,12 @@
 
 	&:hover {
 		transform: scale(1.08);
-		box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+		box-shadow: $shadow-brick-lg;
 	}
 }
 
 // -------------------------------------------------------------------------
-// Iframe menu blocker — blocks the Spotify 3-dot menu overlay
+// Iframe menu blocker
 // -------------------------------------------------------------------------
 .spotify-menu-blocker {
 	position: absolute;
@@ -120,13 +119,13 @@ body.has-sticky-player {
 .latest-release__player {
 	position: relative;
 	margin-top: 24px;
-	border-radius: $card-radius;
+	border-radius: 0;
 	overflow: hidden;
 
 	iframe {
 		display: block;
 		border: 0;
-		border-radius: $card-radius;
+		border-radius: 0;
 	}
 }
 

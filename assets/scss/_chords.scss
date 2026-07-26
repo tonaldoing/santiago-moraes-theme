@@ -6,7 +6,7 @@
 // ==========================================================================
 
 // Monospace font for chord alignment.
-$font-chord: 'Courier New', Courier, monospace;
+$font-chord: $font-mono;
 
 // ----- 60/40 Song Layout -----
 .song-layout {
@@ -22,7 +22,7 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 
   &__main {
-    min-width: 0; // prevent overflow from monospace content
+    min-width: 0;
   }
 }
 
@@ -41,7 +41,6 @@ $font-chord: 'Courier New', Courier, monospace;
 .chord-viewer {
   overflow-x: hidden;
 
-  // When chords are hidden, collapse the chord row.
   &--chords-hidden {
     .chord {
       display: none;
@@ -63,16 +62,10 @@ $font-chord: 'Courier New', Courier, monospace;
   flex-wrap: wrap;
   gap: 12px;
   padding: 12px 16px;
-  background-color: $color-cream;
-  border-radius: $card-radius;
+  background-color: rgba($hex-cream, 0.06);
+  border: $border-width solid rgba($hex-cream, 0.1);
+  border-radius: 0;
   margin-bottom: 24px;
-  position: sticky;
-  top: $header-height-mobile;
-  z-index: 10;
-
-  @include desktop {
-    top: $header-height;
-  }
 }
 
 .chord-viewer__controls-group {
@@ -94,31 +87,31 @@ $font-chord: 'Courier New', Courier, monospace;
   @include flex-center;
   gap: 6px;
   padding: 6px 10px;
-  border: 1px solid $color-border;
-  border-radius: $button-radius;
-  background-color: $color-white;
-  color: $color-dark;
-  font-family: $font-primary;
+  border: $border-width solid rgba($hex-cream, 0.12);
+  border-radius: 0;
+  background-color: rgba($hex-cream, 0.04);
+  color: $color-cream;
+  font-family: $font-heading;
   font-size: $text-small;
   font-weight: $weight-medium;
   cursor: pointer;
-  @include transition;
+  transition: all $transition-fast;
   white-space: nowrap;
 
   &:hover {
-    border-color: $color-hover-link;
-    color: $color-hover-link;
+    border-color: rgba($hex-brick, 0.5);
+    color: $color-accent;
   }
 
   &--active {
     background-color: $color-accent;
     border-color: $color-accent;
-    color: $color-white;
+    color: #fff;
 
     &:hover {
-      background-color: $color-dark;
-      border-color: $color-dark;
-      color: $color-white;
+      background-color: rgba($hex-brick, 0.8);
+      border-color: rgba($hex-brick, 0.8);
+      color: #fff;
     }
   }
 
@@ -132,14 +125,13 @@ $font-chord: 'Courier New', Courier, monospace;
     }
   }
 
-  // Key display between transpose buttons.
   &__key-display {
     @include flex-center;
     min-width: 40px;
     padding: 4px 8px;
-    background-color: $color-white;
-    border: 1px solid $color-border;
-    border-radius: $button-radius;
+    background-color: rgba($hex-cream, 0.06);
+    border: $border-width solid rgba($hex-cream, 0.12);
+    border-radius: 0;
     font-family: $font-chord;
     font-size: $text-small;
     font-weight: $weight-bold;
@@ -147,7 +139,6 @@ $font-chord: 'Courier New', Courier, monospace;
     text-align: center;
   }
 
-  // Speed slider.
   &__speed {
     width: 80px;
     accent-color: $color-accent;
@@ -164,7 +155,7 @@ $font-chord: 'Courier New', Courier, monospace;
   font-family: $font-chord;
   font-size: 14px;
   line-height: 1.4;
-  color: $color-dark;
+  color: $color-cream;
   overflow-x: auto;
   overflow-y: visible;
 }
@@ -178,7 +169,7 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-bold;
     color: $color-accent;
@@ -186,7 +177,7 @@ $font-chord: 'Courier New', Courier, monospace;
     letter-spacing: 1px;
     margin-bottom: 8px;
     padding-bottom: 4px;
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px solid rgba($hex-cream, 0.1);
   }
 }
 
@@ -254,7 +245,7 @@ $font-chord: 'Courier New', Courier, monospace;
   display: block;
   font-family: $font-chord;
   font-size: 14px;
-  color: $color-dark;
+  color: $color-cream;
   white-space: pre;
   line-height: 1.4;
 }
@@ -270,24 +261,25 @@ $font-chord: 'Courier New', Courier, monospace;
   @include desktop {
     margin-top: 0;
     position: sticky;
-    top: calc(#{$header-height} + 24px);
+    top: calc(60px + 24px);
   }
 
   &__card {
-    background-color: $color-cream;
-    border-radius: $card-radius;
+    background-color: rgba($hex-cream, 0.04);
+    border: $border-width solid rgba($hex-cream, 0.08);
+    border-radius: 0;
     padding: 20px;
   }
 
   &__card-title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-body;
     font-weight: $weight-bold;
-    color: $color-dark;
+    color: $color-cream;
     margin: 0 0 12px;
   }
 
-  // ── Streaming Links ──
+  // -- Streaming Links --
   &__links {
     @include flex-column;
     gap: 8px;
@@ -298,19 +290,19 @@ $font-chord: 'Courier New', Courier, monospace;
     align-items: center;
     gap: 10px;
     padding: 10px 14px;
-    background-color: $color-white;
-    border: 1px solid $color-border;
-    border-radius: $button-radius;
-    font-family: $font-primary;
+    background-color: rgba($hex-cream, 0.04);
+    border: $border-width solid rgba($hex-cream, 0.1);
+    border-radius: 0;
+    font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-dark;
+    color: $color-cream;
     text-decoration: none;
-    @include transition;
+    transition: all $transition-fast;
 
     &:hover {
-      border-color: $color-hover-link;
-      color: $color-hover-link;
+      background-color: rgba($hex-cream, 0.08);
+      border-color: rgba($hex-cream, 0.2);
     }
 
     svg {
@@ -333,7 +325,7 @@ $font-chord: 'Courier New', Courier, monospace;
     }
   }
 
-  // ── Details List ──
+  // -- Details List --
   &__details {
     margin: 0;
   }
@@ -342,29 +334,29 @@ $font-chord: 'Courier New', Courier, monospace;
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
-    border-bottom: 1px solid rgba($hex-border, 0.5);
+    border-bottom: 1px solid rgba($hex-cream, 0.08);
 
     &:last-child {
       border-bottom: 0;
     }
 
     dt {
-      font-family: $font-primary;
+      font-family: $font-heading;
       font-size: $text-small;
       font-weight: $weight-medium;
-      color: $color-secondary;
+      color: rgba($hex-cream, 0.5);
     }
 
     dd {
       margin: 0;
-      font-family: $font-primary;
+      font-family: $font-heading;
       font-size: $text-small;
       font-weight: $weight-bold;
-      color: $color-dark;
+      color: $color-cream;
     }
   }
 
-  // ── Album Tracklist ──
+  // -- Album Tracklist --
   &__tracklist {
     list-style: none;
     margin: 0;
@@ -372,7 +364,7 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 
   &__track {
-    border-bottom: 1px solid rgba($hex-border, 0.5);
+    border-bottom: 1px solid rgba($hex-cream, 0.08);
 
     &:last-child {
       border-bottom: 0;
@@ -386,18 +378,18 @@ $font-chord: 'Courier New', Courier, monospace;
     gap: 8px;
     padding: 8px 0;
     text-decoration: none;
-    @include transition(color);
+    transition: color $transition-fast;
 
     &:hover {
-      color: $color-hover-link;
+      color: $color-accent;
     }
   }
 
   &__track-title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-dark;
+    color: $color-cream;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -413,7 +405,7 @@ $font-chord: 'Courier New', Courier, monospace;
     display: inline-flex;
   }
 
-  // ── Related Songs ──
+  // -- Related Songs --
   &__related {
     list-style: none;
     margin: 0;
@@ -421,7 +413,7 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 
   &__related-item {
-    border-bottom: 1px solid rgba($hex-border, 0.5);
+    border-bottom: 1px solid rgba($hex-cream, 0.08);
 
     &:last-child {
       border-bottom: 0;
@@ -434,7 +426,7 @@ $font-chord: 'Courier New', Courier, monospace;
     gap: 2px;
     padding: 8px 0;
     text-decoration: none;
-    @include transition(color);
+    transition: color $transition-fast;
 
     &:hover .song-sidebar__related-title {
       color: $color-accent;
@@ -442,32 +434,33 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 
   &__related-title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-dark;
-    @include transition(color);
+    color: $color-cream;
+    transition: color $transition-fast;
   }
 
   &__related-album {
     font-family: $font-body;
     font-size: 12px;
-    color: $color-secondary;
+    color: rgba($hex-cream, 0.5);
   }
 }
 
 // ----- Song Coming Soon (no lyrics fallback) -----
 .song-coming-soon {
-  padding: $section-padding 0;
+  padding: $section-padding-y 0;
   text-align: center;
-  background-color: $color-cream;
-  border-radius: $card-radius;
+  background-color: rgba($hex-cream, 0.04);
+  border: $border-width solid rgba($hex-cream, 0.08);
+  border-radius: 0;
 
   &__text {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
-    color: $color-secondary;
+    color: rgba($hex-cream, 0.4);
     margin: 0;
 
     @include mobile-only {
@@ -476,9 +469,141 @@ $font-chord: 'Courier New', Courier, monospace;
   }
 }
 
+// ----- Chord Diagrams -----
+.chord-diagrams {
+  margin-bottom: 24px;
+  background-color: rgba($hex-cream, 0.03);
+  border: $border-width solid rgba($hex-cream, 0.07);
+  border-radius: 0;
+  overflow: hidden;
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    color: $color-cream;
+    font-family: $font-heading;
+    font-size: $text-small;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: rgba($hex-cream, 0.04);
+    }
+
+    svg {
+      transition: transform $transition-fast;
+    }
+
+    &[aria-expanded='false'] svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 16px 16px;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+}
+
+.chord-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 0;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: rgba($hex-cream, 0.06);
+  }
+}
+
+// ----- Chord Diagram Lightbox -----
+.chord-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($hex-ink, 0.85);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-fast, visibility $transition-fast;
+
+  &--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px;
+    background-color: $hex-ink;
+    border: $border-width solid rgba($hex-cream, 0.1);
+    border-radius: 0;
+    max-width: 320px;
+    width: 90%;
+
+    svg {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-size: 28px;
+    font-weight: $weight-regular;
+    color: $color-cream;
+  }
+
+  &__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: rgba($hex-cream, 0.4);
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-cream;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
 // ----- Print Styles -----
 @media print {
-  // Hide everything except the chord viewer content.
   .site-header,
   .site-footer,
   .mobile-menu,

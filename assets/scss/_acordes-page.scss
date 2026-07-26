@@ -5,19 +5,19 @@
 // Acordes Page — template-acordes.php (chords/lyrics listing)
 // ==========================================================================
 
-// ── Header ──
+// -- Header --
 .acordes-header {
-  background-color: $color-black;
-  padding: $section-padding 0;
+  background-color: $color-ink;
+  padding: $section-padding-y 0;
 
   &__inner {
     @include container;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-hero;
-    font-weight: $weight-black;
+    font-weight: $weight-regular;
     line-height: $lh-hero;
     letter-spacing: $ls-hero;
     color: $color-cream;
@@ -35,7 +35,7 @@
   &__subtitle {
     font-family: $font-body;
     font-weight: $weight-regular;
-    color: $color-secondary;
+    color: $color-olive;
     line-height: $lh-body;
     margin: 0;
     font-size: $text-sub;
@@ -46,17 +46,17 @@
   }
 }
 
-// ── Filter Buttons ──
+// -- Filter Buttons --
 .acordes-filters {
-  background-color: $color-white;
+  background-color: $color-paper;
   padding: 24px 0;
-  border-bottom: 1px solid $color-border;
+  border-bottom: $border-width solid $color-border;
   position: sticky;
-  top: $header-height-mobile;
+  top: 58px;
   z-index: 10;
 
   @include desktop {
-    top: $header-height;
+    top: 60px;
   }
 
   &__inner {
@@ -68,33 +68,33 @@
 }
 
 .acordes-filter {
-  font-family: $font-primary;
+  font-family: $font-heading;
   font-size: $text-small;
   font-weight: $weight-medium;
-  color: $color-dark;
+  color: $color-ink;
   background: transparent;
-  border: 1px solid $color-border;
-  border-radius: $button-radius;
+  border: $border-width solid $color-border;
+  border-radius: 0;
   padding: 8px 16px;
   cursor: pointer;
   @include transition(all);
   white-space: nowrap;
 
   &:hover {
-    border-color: $color-dark;
+    border-color: $color-ink;
   }
 
   &--active {
-    background-color: $color-dark;
-    border-color: $color-dark;
-    color: $color-white;
+    background-color: $color-ink;
+    border-color: $color-ink;
+    color: $color-paper;
   }
 }
 
-// ── Song List ──
+// -- Song List --
 .acordes-list {
-  padding: $section-padding 0;
-  background-color: $color-white;
+  padding: $section-padding-y 0;
+  background-color: $color-paper;
 
   &__inner {
     @include container;
@@ -102,7 +102,7 @@
 
   &__empty {
     font-family: $font-body;
-    color: $color-secondary;
+    color: $color-olive;
     font-size: $text-body;
     text-align: center;
     padding: 40px 0;
@@ -114,13 +114,13 @@
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid $color-border;
+  border-bottom: $border-width solid $color-border;
   text-decoration: none;
   color: inherit;
   @include transition(background-color);
 
   &:first-child {
-    border-top: 1px solid $color-border;
+    border-top: $border-width solid $color-border;
   }
 
   &:hover {
@@ -132,10 +132,10 @@
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-sub;
     font-weight: $weight-medium;
-    color: $color-dark;
+    color: $color-ink;
     flex: 1;
     min-width: 0;
     white-space: nowrap;
@@ -154,7 +154,7 @@
     font-family: $font-body;
     font-size: $text-small;
     font-weight: $weight-regular;
-    color: $color-secondary;
+    color: $color-olive;
     white-space: nowrap;
     flex-shrink: 0;
 
@@ -165,13 +165,13 @@
   }
 
   &__key {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: 12px;
     font-weight: $weight-medium;
-    color: $color-secondary;
-    background-color: rgba($hex-secondary, 0.1);
+    color: $color-olive;
+    background-color: rgba($hex-olive, 0.1);
     padding: 2px 8px;
-    border-radius: $tag-radius;
+    border-radius: 0;
     white-space: nowrap;
     flex-shrink: 0;
 
@@ -182,7 +182,7 @@
 
   &__arrow {
     font-size: $text-sub;
-    color: $color-secondary;
+    color: $color-olive;
     flex-shrink: 0;
     @include transition(color);
 
@@ -192,21 +192,21 @@
   }
 
   &:hover &__arrow {
-    color: $color-hover-link;
+    color: $color-ochre;
   }
 }
 
-// ── Song Coming Soon (single-cancion fallback) ──
+// -- Song Coming Soon (single-cancion fallback) --
 .song-coming-soon {
-  padding: $section-padding 0;
+  padding: $section-padding-y 0;
   text-align: center;
   background-color: $color-cream;
 
   &__text {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
-    color: $color-secondary;
+    color: $color-olive;
     margin: 0;
 
     @include mobile-only {
@@ -215,27 +215,27 @@
   }
 }
 
-// ── Song Header album link ──
+// -- Song Header album link --
 .song-header__album-link {
   display: inline-block;
-  font-family: $font-primary;
+  font-family: $font-heading;
   font-size: $text-small;
   font-weight: $weight-medium;
-  color: $color-secondary;
+  color: $color-olive;
   text-decoration: none;
   margin-bottom: 12px;
   @include transition(color);
 
   &:hover {
-    color: $color-hover-link;
+    color: $color-ochre;
   }
 }
 
-// ── Song Prev/Next Navigation ──
+// -- Song Prev/Next Navigation --
 .song-nav {
   background-color: $color-cream;
   padding: 24px 0;
-  border-top: 1px solid $color-border;
+  border-top: $border-width solid $color-border;
 
   &__inner {
     @include container;
@@ -246,15 +246,15 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-body;
     font-weight: $weight-medium;
-    color: $color-dark;
+    color: $color-ink;
     text-decoration: none;
     @include transition(color);
 
     &:hover {
-      color: $color-hover-link;
+      color: $color-ochre;
     }
 
     &--next {

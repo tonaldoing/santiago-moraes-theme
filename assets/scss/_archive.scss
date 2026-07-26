@@ -6,17 +6,17 @@
 // ==========================================================================
 
 .archive-header {
-  background-color: $color-black;
-  padding: $section-padding 0;
+  background-color: $color-ink;
+  padding: $section-padding-y 0;
 
   &__inner {
     @include container;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-hero;
-    font-weight: $weight-black;
+    font-weight: $weight-regular;
     line-height: $lh-hero;
     letter-spacing: $ls-hero;
     color: $color-cream;
@@ -34,15 +34,14 @@
   &__description {
     font-family: $font-body;
     font-size: $text-body;
-    color: $color-secondary;
+    color: rgba($hex-cream, 0.6);
     line-height: $lh-body;
     margin: 12px 0 0;
   }
 }
 
 .archive-list {
-  padding: $section-padding 0;
-  background-color: $color-white;
+  padding: $section-padding-y 0;
 
   &__inner {
     @include container;
@@ -50,7 +49,7 @@
 
   &__empty {
     font-family: $font-body;
-    color: $color-secondary;
+    color: rgba($hex-cream, 0.5);
     text-align: center;
     padding: 40px 0;
   }
@@ -58,24 +57,26 @@
 
 .archive-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 
   @include tablet {
-    gap: 32px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
 }
 
 .archive-card {
-  background-color: $color-white;
-  border: 1px solid $color-border;
-  border-radius: $card-radius;
+  background-color: rgba($hex-cream, 0.03);
+  border: $border-width solid rgba($hex-cream, 0.07);
+  border-radius: 0;
   overflow: hidden;
-  @include transition;
+  transition: all $transition-fast;
 
   &:hover {
-    border-color: $color-hover-link;
-    box-shadow: 0 4px 12px rgba($hex-black, 0.06);
+    background-color: rgba($hex-cream, 0.07);
+    border-color: rgba($hex-brick, 0.25);
+    transform: translateY(-2px);
   }
 
   &__thumb {
@@ -101,18 +102,18 @@
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-sub;
-    font-weight: $weight-bold;
-    margin: 0 0 8px;
+    font-weight: $weight-regular;
+    margin: 0 0 6px;
 
     a {
-      color: $color-box-heading;
+      color: $color-cream;
       text-decoration: none;
-      @include transition(color);
+      transition: color $transition-fast;
 
       &:hover {
-        color: $color-hover-link;
+        color: $color-accent;
       }
     }
   }
@@ -120,7 +121,7 @@
   &__date {
     font-family: $font-body;
     font-size: $text-small;
-    color: $color-secondary;
+    color: rgba($hex-cream, 0.4);
     display: block;
     margin-bottom: 8px;
   }
@@ -128,7 +129,7 @@
   &__excerpt {
     font-family: $font-body;
     font-size: $text-small;
-    color: $color-body;
+    color: rgba($hex-cream, 0.6);
     line-height: $lh-body;
     margin: 0;
   }

@@ -2,18 +2,16 @@
 @use 'mixins' as *;
 
 // ==========================================================================
-// Header
+// Header — Rebranding (Brutalist Editorial)
 // ==========================================================================
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: $color-header-bg;
-  height: $header-height-mobile;
-  transition: background-color $transition-base, box-shadow $transition-base;
+  background-color: $color-ink;
+  @include border-bottom;
 
-  // WP admin bar offset for sticky (dev).
   .admin-bar & {
     top: 32px;
 
@@ -22,81 +20,18 @@
     }
   }
 
-  @include desktop {
-    height: $header-height;
-  }
-
-  // Transparent variant — overlaps the hero on front page.
-  &--transparent {
-    position: fixed;
-    left: 0;
-    right: 0;
-    background-color: transparent;
-
-    // WP admin bar offset (dev only).
-    .admin-bar & {
-      top: 32px;
-
-      @media screen and (max-width: 782px) {
-        top: 46px;
-      }
-    }
-
-    &.site-header--scrolled {
-      background-color: $color-header-bg;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-    }
-  }
-
-  // Scrolled state on normal pages.
-  &--scrolled:not(&--transparent) {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  }
-
-  // When mobile menu is open, force dark header.
-  &--menu-open {
-    background-color: $color-black !important;
-    box-shadow: none !important;
-
-    .site-title a,
-    .menu-toggle {
-      color: $color-cream;
-    }
-  }
-
   &__inner {
-    @include flex-between;
-    @include container;
-    height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 0 $section-padding-x;
   }
 }
 
-// Site title link
-.site-title a {
-  text-decoration: none;
-  color: $color-header-text-scroll;
-  @include transition(color);
-
-  .site-header--transparent:not(.site-header--scrolled) & {
-    color: $color-header-text;
-  }
-
-  &:hover,
-  &:focus,
-  &:active {
-    text-decoration: none;
-  }
-}
-
-// Logo image
-.site-title__logo {
-  height: 40px;
-  width: auto;
-  display: block;
-
-  @include desktop {
-    height: 50px;
-  }
+// Site title link — already styled in _typography.scss
+.site-title {
+  padding: 14px 0;
 }
 
 // ==========================================================================
@@ -108,146 +43,47 @@
 
   @include tablet {
     display: flex;
-    align-items: center;
-    gap: $nav-gap;
+    align-items: stretch;
+    gap: 2px;
   }
 
   &__list {
     display: flex;
-    align-items: center;
-    gap: $nav-gap;
+    align-items: stretch;
+    gap: 2px;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  // Top-level menu items.
   &__list > .menu-item {
-    position: relative;
+    display: flex;
 
     > a {
-      font-family: $font-primary;
-      font-size: $text-small;
-      font-weight: $weight-medium;
-      line-height: $lh-small;
-      color: $color-header-text-scroll;
-      text-decoration: none;
-      @include transition(color);
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 4px;
+      padding: 0 18px;
+      font-family: $font-mono;
+      font-size: $text-small;
+      letter-spacing: $ls-mono;
+      text-transform: uppercase;
+      color: $color-cream;
+      text-decoration: none;
+      transition: background-color $transition-fast, color $transition-fast;
 
-      // Light text when header is transparent (front page top).
-      .site-header--transparent:not(.site-header--scrolled) & {
-        color: $color-header-text;
-      }
-
-      &:hover,
-      &:focus,
-      &:active {
-        color: $color-hover-link;
-        text-decoration: none;
+      &:hover {
+        background-color: rgba($hex-ochre, 0.2);
+        color: $color-ochre;
       }
     }
 
-    // Caret indicator for parent items.
-    &.menu-item-has-children > a::after {
-      content: '';
-      display: inline-block;
-      width: 0;
-      height: 0;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 4px solid currentColor;
-      margin-left: 2px;
-      transition: transform $transition-base;
+    &.current-menu-item > a,
+    &.current_page_item > a {
+      background-color: $color-ochre;
+      color: $color-ink;
     }
   }
 
-  // -----------------------------------------------------------------------
-  // Desktop Submenu Dropdown
-  // -----------------------------------------------------------------------
-  .sub-menu {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(-4px);
-    z-index: 110;
-    min-width: 220px;
-    list-style: none;
-    margin: 0;
-    padding: 6px;
-    background-color: $color-white;
-    border: 1px solid rgba($hex-border, 0.6);
-    border-radius: $card-radius;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
-    backdrop-filter: blur(8px);
-
-    // Hidden by default.
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    pointer-events: none;
-
-    // Invisible bridge between parent and submenu.
-    &::before {
-      content: '';
-      position: absolute;
-      top: -16px;
-      left: 0;
-      right: 0;
-      height: 16px;
-    }
-
-    .menu-item {
-      margin: 0;
-
-      a {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 14px;
-        font-family: $font-primary;
-        font-size: $text-small;
-        font-weight: $weight-medium;
-        color: $color-dark;
-        text-decoration: none;
-        white-space: nowrap;
-        border-radius: $button-radius;
-        @include transition;
-
-        &:hover,
-        &:focus,
-        &:active {
-          background-color: $color-cream;
-          color: $color-hover-link;
-          text-decoration: none;
-        }
-      }
-
-      // Subtle separator between items.
-      + .menu-item {
-        margin-top: 2px;
-      }
-    }
-  }
-
-  // Show dropdown on hover or focus-within (desktop).
-  &__list > .menu-item-has-children:hover > .sub-menu,
-  &__list > .menu-item-has-children.menu-item--focus > .sub-menu {
-    visibility: visible;
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-  }
-
-  // Rotate caret on hover / focus.
-  &__list > .menu-item-has-children:hover > a::after,
-  &__list > .menu-item-has-children.menu-item--focus > a::after {
-    transform: rotate(180deg);
-  }
-
-  // Hide chevron toggle button on desktop — it's for mobile only.
   .submenu-toggle {
     display: none;
   }
@@ -265,12 +101,7 @@
   border: none;
   cursor: pointer;
   padding: 8px;
-  color: $color-header-text-scroll;
-  @include transition(color);
-
-  .site-header--transparent:not(.site-header--scrolled) & {
-    color: $color-header-text;
-  }
+  color: $color-cream;
 
   @include tablet {
     display: none;
@@ -289,14 +120,15 @@
 .mobile-menu {
   display: none;
   position: fixed;
-  top: $header-height-mobile;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $color-black;
+  background-color: $color-ink;
   z-index: 99;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  padding-top: 80px;
 
   &--open {
     display: flex;
@@ -308,153 +140,60 @@
     gap: 0;
     list-style: none;
     margin: 0;
-    padding: 0 $widget-spacing;
+    padding: 0 $section-padding-x;
     flex: 1;
   }
 
-  // -----------------------------------------------------------------------
-  // Mobile top-level items
-  // -----------------------------------------------------------------------
-  &__list > .menu-item {
-    border-bottom: 1px solid rgba($hex-cream, 0.1);
+  &__list > .menu-item,
+  &__list > li {
+    border-bottom: 2px solid rgba($hex-cream, 0.1);
 
     > a {
       display: block;
       padding: 18px 0;
-      font-family: $font-primary;
+      font-family: $font-heading;
       font-size: 22px;
-      font-weight: $weight-bold;
+      text-transform: uppercase;
       color: $color-cream;
       text-decoration: none;
-      @include transition(color);
+      transition: color $transition-fast;
 
-      &:hover,
-      &:focus,
-      &:active {
-        color: $color-accent;
-        text-decoration: none;
+      &:hover {
+        color: $color-ochre;
       }
     }
 
-    // Parent items: flex layout so link + chevron sit side by side.
-    &.menu-item-has-children {
-      > a {
-        padding-right: 56px;
-      }
-
-      position: relative;
+    &.current-menu-item > a,
+    &.current_page_item > a {
+      color: $color-ochre;
     }
   }
 
-  // -----------------------------------------------------------------------
-  // Mobile submenu toggle button (chevron)
-  // -----------------------------------------------------------------------
-  .submenu-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 56px;
-    height: 62px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    border-left: 1px solid rgba($hex-cream, 0.1);
-    cursor: pointer;
-    color: $color-secondary;
-    @include transition;
-
-    &:hover {
-      color: $color-accent;
-    }
-
-    svg {
-      width: 12px;
-      height: 12px;
-      transition: transform 0.25s ease;
-    }
-
-    &[aria-expanded='true'] svg {
-      transform: rotate(180deg);
-    }
-  }
-
-  // -----------------------------------------------------------------------
-  // Mobile submenu (accordion)
-  // -----------------------------------------------------------------------
-  .sub-menu {
-    list-style: none;
-    margin: 0;
-    padding: 0 0 8px;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease;
-
-    &--open {
-      // max-height set via JS to the scrollHeight.
-    }
-
-    .menu-item {
-      a {
-        display: block;
-        padding: 10px 0 10px 20px;
-        font-family: $font-primary;
-        font-size: $text-body;
-        font-weight: $weight-regular;
-        color: $color-secondary;
-        text-decoration: none;
-        border-left: 2px solid rgba($hex-cream, 0.15);
-        @include transition;
-
-        &:hover,
-        &:focus,
-        &:active {
-          color: $color-cream;
-          border-left-color: $color-accent;
-          text-decoration: none;
-        }
-      }
-    }
-  }
-
-  // -----------------------------------------------------------------------
-  // Mobile Social Links
-  // -----------------------------------------------------------------------
   &__social {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    padding: 24px $widget-spacing;
-    border-top: 1px solid rgba($hex-cream, 0.1);
+    gap: 20px;
+    padding: 24px $section-padding-x;
+    border-top: 2px solid rgba($hex-cream, 0.1);
   }
 
   &__social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: $icon-radius;
-    background-color: rgba($hex-cream, 0.08);
-    color: $color-cream;
-    @include transition;
-
-    svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
+    font-family: $font-mono;
+    font-size: 11px;
+    letter-spacing: $ls-mono;
+    text-transform: uppercase;
+    color: rgba($hex-cream, 0.5);
+    text-decoration: none;
+    transition: color $transition-fast;
 
     &:hover {
-      background-color: $color-accent;
-      color: $color-white;
+      color: $color-ochre;
     }
   }
 }
 
 // ==========================================================================
-// Header Social Icons
+// Header Social Links (text, not icons)
 // ==========================================================================
 
 .header-social {
@@ -463,30 +202,20 @@
   @include tablet {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 14px;
   }
 
   &__link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    color: $color-header-text-scroll;
-    @include transition(color);
-
-    .site-header--transparent:not(.site-header--scrolled) & {
-      color: $color-header-text;
-    }
+    font-family: $font-mono;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba($hex-cream, 0.5);
+    text-decoration: none;
+    transition: color $transition-fast;
 
     &:hover {
-      color: $color-hover-light;
-    }
-
-    svg {
-      width: 16px;
-      height: 16px;
-      fill: currentColor;
+      color: $color-ochre;
     }
   }
 }

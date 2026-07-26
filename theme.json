@@ -5,7 +5,7 @@
 		"appearanceTools": true,
 		"useRootPaddingAwareAlignments": true,
 		"layout": {
-			"contentSize": "1140px",
+			"contentSize": "1240px",
 			"wideSize": "1440px"
 		},
 		"color": {
@@ -13,59 +13,49 @@
 			"defaultGradients": false,
 			"palette": [
 				{
-					"slug": "dark",
-					"color": "#1B110D",
-					"name": "Oscuro"
+					"slug": "ink",
+					"color": "#1F3C57",
+					"name": "Tinta (Navy)"
 				},
 				{
-					"slug": "black",
-					"color": "#010101",
-					"name": "Negro"
+					"slug": "paper",
+					"color": "#E9DCC6",
+					"name": "Papel (Beige)"
 				},
 				{
-					"slug": "white",
-					"color": "#FFFFFF",
-					"name": "Blanco"
+					"slug": "ochre",
+					"color": "#E08B3E",
+					"name": "Ocre"
+				},
+				{
+					"slug": "brick",
+					"color": "#A8341C",
+					"name": "Ladrillo"
 				},
 				{
 					"slug": "cream",
-					"color": "#F7F3F0",
+					"color": "#F4E9D6",
 					"name": "Crema"
 				},
 				{
-					"slug": "accent",
-					"color": "#EC4913",
-					"name": "Acento"
+					"slug": "warm",
+					"color": "#D9CBB2",
+					"name": "Cálido"
 				},
 				{
-					"slug": "secondary",
-					"color": "#9A5F4C",
-					"name": "Secundario"
+					"slug": "muted",
+					"color": "#C9B896",
+					"name": "Arena"
 				},
 				{
-					"slug": "border",
-					"color": "#E7D5CF",
-					"name": "Borde"
+					"slug": "brown",
+					"color": "#3A2A1C",
+					"name": "Marrón"
 				},
 				{
-					"slug": "body",
-					"color": "#0A0A0A",
-					"name": "Cuerpo"
-				},
-				{
-					"slug": "bg-light",
-					"color": "#54200F",
-					"name": "Fondo Claro"
-				},
-				{
-					"slug": "box",
-					"color": "#F7F3F0",
-					"name": "Fondo Cajas"
-				},
-				{
-					"slug": "heading",
-					"color": "#1B110D",
-					"name": "Títulos"
+					"slug": "olive",
+					"color": "#6B573C",
+					"name": "Oliva"
 				}
 			]
 		},
@@ -74,40 +64,45 @@
 			"defaultFontSizes": false,
 			"fontFamilies": [
 				{
-					"fontFamily": "'Be Vietnam Pro', sans-serif",
-					"slug": "primary",
-					"name": "Be Vietnam Pro"
+					"fontFamily": "'Archivo Black', sans-serif",
+					"slug": "heading",
+					"name": "Archivo Black"
 				},
 				{
-					"fontFamily": "'Montserrat', sans-serif",
+					"fontFamily": "'Newsreader', Georgia, serif",
 					"slug": "body",
-					"name": "Montserrat"
+					"name": "Newsreader"
+				},
+				{
+					"fontFamily": "'DM Mono', monospace",
+					"slug": "mono",
+					"name": "DM Mono"
 				}
 			],
 			"fontSizes": [
 				{
 					"slug": "small",
-					"size": "14px",
+					"size": "12px",
 					"name": "Chico"
 				},
 				{
 					"slug": "medium",
-					"size": "16px",
+					"size": "17px",
 					"name": "Mediano"
 				},
 				{
 					"slug": "large",
-					"size": "20px",
+					"size": "22px",
 					"name": "Grande"
 				},
 				{
 					"slug": "x-large",
-					"size": "36px",
+					"size": "52px",
 					"name": "Extra Grande"
 				},
 				{
 					"slug": "xx-large",
-					"size": "72px",
+					"size": "104px",
 					"name": "Hero"
 				}
 			]
@@ -118,68 +113,72 @@
 	},
 	"styles": {
 		"color": {
-			"background": "var(--color-white)",
-			"text": "var(--color-body)"
+			"background": "#E9DCC6",
+			"text": "#3A2A1C"
 		},
 		"typography": {
-			"fontFamily": "var(--font-body)",
-			"fontSize": "16px",
-			"lineHeight": "1.6"
+			"fontFamily": "'Newsreader', Georgia, serif",
+			"fontSize": "17px",
+			"lineHeight": "1.55"
 		},
 		"elements": {
 			"heading": {
 				"typography": {
-					"fontFamily": "var(--font-heading)",
-					"fontWeight": "700"
+					"fontFamily": "'Archivo Black', sans-serif",
+					"fontWeight": "400",
+					"textTransform": "uppercase"
 				},
 				"color": {
-					"text": "var(--color-heading)"
+					"text": "#1F3C57"
 				}
 			},
 			"h1": {
 				"typography": {
-					"fontSize": "72px",
-					"fontWeight": "900",
-					"lineHeight": "1em",
-					"letterSpacing": "-3.6px"
+					"fontSize": "clamp(48px, 8vw, 124px)",
+					"lineHeight": "0.84",
+					"letterSpacing": "-0.045em"
 				}
 			},
 			"h2": {
 				"typography": {
-					"fontSize": "36px",
-					"lineHeight": "40px",
-					"letterSpacing": "-0.9px"
+					"fontSize": "clamp(30px, 3.6vw, 52px)",
+					"lineHeight": "0.92",
+					"letterSpacing": "-0.03em"
 				}
 			},
 			"h3": {
 				"typography": {
-					"fontSize": "20px",
-					"lineHeight": "28px",
-					"letterSpacing": "-0.5px"
+					"fontSize": "clamp(18px, 1.7vw, 24px)",
+					"lineHeight": "1.05",
+					"letterSpacing": "-0.01em"
 				}
 			},
 			"link": {
 				"color": {
-					"text": "var(--color-accent)"
+					"text": "#A8341C"
 				},
 				":hover": {
 					"color": {
-						"text": "var(--color-dark)"
+						"text": "#1F3C57"
 					}
 				}
 			},
 			"button": {
 				"typography": {
-					"fontFamily": "var(--font-button)",
-					"fontSize": "14px",
-					"fontWeight": "500"
+					"fontFamily": "'Archivo Black', sans-serif",
+					"fontSize": "13px",
+					"fontWeight": "400",
+					"textTransform": "uppercase",
+					"letterSpacing": "0.06em"
 				},
 				"color": {
-					"background": "var(--color-accent)",
-					"text": "var(--color-white)"
+					"background": "#1F3C57",
+					"text": "#F4E9D6"
 				},
 				"border": {
-					"radius": "8px"
+					"radius": "0",
+					"width": "3px",
+					"color": "#1F3C57"
 				}
 			}
 		}

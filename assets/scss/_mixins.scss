@@ -66,14 +66,28 @@
   flex-direction: column;
 }
 
-// Container
+// Container — rebranding width
 @mixin container {
   width: 100%;
   max-width: $container-max;
   margin-left: auto;
   margin-right: auto;
-  padding-left: $widget-spacing;
-  padding-right: $widget-spacing;
+  padding-left: $section-padding-x;
+  padding-right: $section-padding-x;
+}
+
+// Section padding
+@mixin section-padding {
+  padding: $section-padding-y $section-padding-x;
+}
+
+// Brutalist border
+@mixin border-bottom {
+  border-bottom: $border-style;
+}
+
+@mixin border-top {
+  border-top: $border-style;
 }
 
 // Visually hidden (accessible)

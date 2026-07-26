@@ -10,8 +10,8 @@
 }
 
 .error-404 {
-  background-color: $color-black;
-  padding: $section-padding 0;
+  background-color: $color-ink;
+  padding: $section-padding-y 0;
   min-height: 70vh;
   @include flex-center;
 
@@ -22,9 +22,9 @@
   }
 
   &__code {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: 150px;
-    font-weight: $weight-black;
+    font-weight: $weight-regular;
     color: $color-accent;
     line-height: 1;
     display: block;
@@ -36,7 +36,7 @@
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
     color: $color-cream;
@@ -50,7 +50,7 @@
   &__text {
     font-family: $font-body;
     font-size: $text-body;
-    color: $color-secondary;
+    color: $color-olive;
     line-height: $lh-body;
     margin: 0 0 32px;
   }
@@ -68,15 +68,15 @@
   &__search-input {
     flex: 1;
     padding: 12px 16px;
-    border: 1px solid rgba($hex-cream, 0.2);
-    border-radius: $button-radius;
+    border: $border-width solid rgba($hex-cream, 0.2);
+    border-radius: 0;
     background: transparent;
     color: $color-cream;
     font-family: $font-body;
     font-size: $text-body;
 
     &::placeholder {
-      color: $color-secondary;
+      color: $color-olive;
     }
 
     &:focus {
@@ -95,7 +95,7 @@
 
     &:hover {
       background-color: $color-cream;
-      color: $color-dark;
+      color: $color-ink;
     }
   }
 }

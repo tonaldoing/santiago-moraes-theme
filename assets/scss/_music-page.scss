@@ -7,14 +7,14 @@
 
 // ----- Album Hero (Featured Album) -----
 .album-hero {
-  background-color: $color-black;
-  padding: $section-padding 0;
+  background-color: $color-ink;
+  padding: $section-padding-y 0;
 
   &__inner {
     @include container;
     display: flex;
     flex-direction: column;
-    gap: $music-gap;
+    gap: 40px;
 
     @include tablet {
       flex-direction: row;
@@ -31,7 +31,7 @@
     &-img {
       width: 100%;
       height: auto;
-      border-radius: $card-radius;
+      border-radius: 0;
       display: block;
     }
   }
@@ -46,18 +46,18 @@
   }
 
   &__year {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-secondary;
+    color: $color-olive;
     text-transform: uppercase;
     letter-spacing: 2px;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-hero;
-    font-weight: $weight-black;
+    font-weight: $weight-regular;
     line-height: $lh-hero;
     letter-spacing: $ls-hero;
     color: $color-cream;
@@ -75,30 +75,28 @@
   &__description {
     font-family: $font-body;
     font-weight: $weight-regular;
-    color: $color-secondary;
+    color: $color-olive;
     line-height: $lh-body;
     margin: 0;
   }
-
-  // Platform grid inherits styles from _home.scss — same .platform-grid / .platform-card.
 }
 
 // ----- Discography Grid Section -----
 .discography {
-  padding: $section-padding 0;
-  background-color: $color-white;
+  padding: $section-padding-y 0;
+  background-color: $color-paper;
 
   &__inner {
     @include container;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
     line-height: $lh-section;
     letter-spacing: $ls-section;
-    color: $color-dark;
+    color: $color-ink;
     margin-bottom: 32px;
 
     @include mobile-only {
@@ -118,12 +116,11 @@
     }
   }
 
-  // Demos variant — smaller cards, muted.
   &--demos {
     background-color: $color-cream;
 
     .album-card__cover {
-      border-radius: $button-radius;
+      border-radius: 0;
     }
 
     .album-card__name {
@@ -160,7 +157,7 @@
   &__cover {
     position: relative;
     overflow: hidden;
-    border-radius: $card-radius;
+    border-radius: 0;
     margin-bottom: 16px;
     aspect-ratio: 1;
   }
@@ -176,22 +173,22 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background: rgba($hex-black, 0.5);
+    background: rgba($hex-ink, 0.5);
     @include flex-center;
     opacity: 0;
     @include transition(opacity);
   }
 
   &__cta {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-bold;
-    color: $color-white;
+    color: $color-paper;
     text-transform: uppercase;
     letter-spacing: 2px;
-    border: 2px solid $color-white;
+    border: $border-width solid $color-paper;
     padding: 10px 24px;
-    border-radius: $button-radius;
+    border-radius: 0;
   }
 
   &__info {
@@ -199,10 +196,10 @@
   }
 
   &__name {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-sub;
     font-weight: $weight-bold;
-    color: $color-box-heading;
+    color: $color-ink;
     margin: 0 0 4px;
     line-height: $lh-sub;
   }
@@ -211,26 +208,26 @@
     font-family: $font-body;
     font-size: $text-small;
     font-weight: $weight-regular;
-    color: $color-box-text;
+    color: $color-brown;
   }
 }
 
 // ----- Tracklist Section -----
 .tracklist {
-  padding: $section-padding 0;
-  background-color: $color-white;
+  padding: $section-padding-y 0;
+  background-color: $color-paper;
 
   &__inner {
     @include container;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
     line-height: $lh-section;
     letter-spacing: $ls-section;
-    color: $color-dark;
+    color: $color-ink;
     margin-bottom: 24px;
 
     @include mobile-only {
@@ -251,10 +248,10 @@
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid $color-border;
+  border-bottom: $border-width solid $color-border;
 
   &:first-child {
-    border-top: 1px solid $color-border;
+    border-top: $border-width solid $color-border;
   }
 
   @include mobile-only {
@@ -262,10 +259,10 @@
   }
 
   &__number {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-sub;
     font-weight: $weight-bold;
-    color: $color-secondary;
+    color: $color-olive;
     min-width: 32px;
     text-align: center;
     flex-shrink: 0;
@@ -285,10 +282,10 @@
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-sub;
     font-weight: $weight-medium;
-    color: $color-dark;
+    color: $color-ink;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -300,13 +297,13 @@
   }
 
   &__key {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: 12px;
     font-weight: $weight-medium;
-    color: $color-secondary;
-    background-color: rgba($hex-secondary, 0.1);
+    color: $color-olive;
+    background-color: rgba($hex-olive, 0.1);
     padding: 2px 8px;
-    border-radius: $tag-radius;
+    border-radius: 0;
     white-space: nowrap;
     flex-shrink: 0;
   }
@@ -345,7 +342,7 @@
     audio {
       width: 100%;
       height: 36px;
-      border-radius: $button-radius;
+      border-radius: 0;
     }
 
     &--empty {
@@ -366,9 +363,9 @@
   }
 }
 
-// ----- Compact Album Header (legacy, kept for compat) -----
+// ----- Compact Album Header -----
 .album-compact {
-  background-color: $color-black;
+  background-color: $color-ink;
   padding: 32px 0;
 
   &__inner {
@@ -389,7 +386,7 @@
     &-img {
       width: 100%;
       height: auto;
-      border-radius: $button-radius;
+      border-radius: 0;
       display: block;
     }
   }
@@ -401,7 +398,7 @@
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
     line-height: $lh-section;
@@ -417,7 +414,7 @@
 
   &__year {
     font-weight: $weight-regular;
-    color: $color-secondary;
+    color: $color-olive;
   }
 
   &__links {
@@ -440,23 +437,23 @@
   }
 }
 
-// ----- Demos Divider (legacy, kept for compat) -----
+// ----- Demos Divider -----
 .demos-divider {
   background-color: $color-cream;
   padding: 24px 0;
-  margin-top: $section-padding;
+  margin-top: $section-padding-y;
 
   &__inner {
     @include container;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
     line-height: $lh-section;
     letter-spacing: $ls-section;
-    color: $color-dark;
+    color: $color-ink;
     margin: 0;
 
     @include mobile-only {

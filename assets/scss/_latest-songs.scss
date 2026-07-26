@@ -6,28 +6,29 @@
 // ==========================================================================
 
 .latest-songs {
-  padding: $section-padding 0;
+  padding: $section-padding-y 0;
 
   &__inner {
     @include container;
   }
 
   &__title {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
   }
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 12px;
 
     @include tablet {
-      gap: 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
     }
   }
 
   &__footer {
-    margin-top: 32px;
+    margin-top: 40px;
     text-align: center;
   }
 
@@ -35,47 +36,55 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: $font-primary;
+    font-family: $font-body;
     font-size: $text-small;
-    font-weight: $weight-bold;
+    font-weight: $weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: $color-accent;
     text-decoration: none;
-    @include transition(color);
+    transition: color $transition-fast;
 
     &:hover {
-      color: $color-hover-link;
+      color: $color-cream;
     }
 
     svg {
       flex-shrink: 0;
+      transition: transform $transition-fast;
+    }
+
+    &:hover svg {
+      transform: translateX(4px);
     }
   }
 }
 
-// Song card
+// Song card — dark theme to match site palette
 .song-card {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px;
-  background-color: $color-box;
-  border: 1px solid $color-border;
-  border-radius: $card-radius;
+  gap: 16px;
+  padding: 16px;
+  background-color: rgba($hex-cream, 0.03);
+  border: $border-width solid rgba($hex-cream, 0.07);
+  border-radius: 0;
   text-decoration: none;
   color: inherit;
-  @include transition;
+  transition: all $transition-fast;
   min-width: 0;
   overflow: hidden;
 
   &:hover {
-    border-color: $color-hover-link;
-    box-shadow: 0 4px 12px rgba($hex-black, 0.06);
+    background-color: rgba($hex-cream, 0.07);
+    border-color: rgba($hex-brick, 0.25);
+    transform: translateY(-2px);
   }
 
   &__thumb {
-    width: 60px;
-    height: 60px;
-    border-radius: $button-radius;
+    width: 52px;
+    height: 52px;
+    border-radius: 0;
     overflow: hidden;
     flex-shrink: 0;
 
@@ -89,12 +98,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: $color-white;
-      color: $color-secondary;
+      background-color: rgba($hex-cream, 0.06);
+      color: rgba($hex-cream, 0.25);
 
       svg {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
       }
     }
   }
@@ -105,10 +114,10 @@
   }
 
   &__name {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-body;
-    font-weight: $weight-bold;
-    color: $color-box-heading;
+    font-weight: $weight-regular;
+    color: $color-cream;
     margin: 0 0 2px;
     white-space: nowrap;
     overflow: hidden;
@@ -119,7 +128,7 @@
     display: block;
     font-family: $font-body;
     font-size: 13px;
-    color: $color-box-text;
+    color: $color-olive;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -134,14 +143,13 @@
 
   &__key {
     display: inline-block;
-    font-family: $font-primary;
+    font-family: $font-body;
     font-size: 11px;
-    font-weight: $weight-bold;
-    color: $color-box-heading;
-    background-color: $color-white;
-    border: 1px solid $color-border;
+    font-weight: $weight-medium;
+    color: $color-cream;
+    background-color: rgba($hex-cream, 0.08);
     padding: 1px 8px;
-    border-radius: $tag-radius;
+    border-radius: 0;
     line-height: 1.4;
   }
 
@@ -161,11 +169,12 @@
 
   &__arrow {
     flex-shrink: 0;
-    color: $color-border;
-    @include transition(color);
+    color: rgba($hex-cream, 0.15);
+    transition: color $transition-fast, transform $transition-fast;
 
     .song-card:hover & {
-      color: $color-hover-link;
+      color: $color-accent;
+      transform: translateX(3px);
     }
   }
 }

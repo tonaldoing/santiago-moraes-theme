@@ -50,8 +50,17 @@ button {
 }
 
 a {
-  color: inherit;
+  color: $color-accent;
   text-decoration: none;
+
+  &:hover {
+    color: $color-ink;
+  }
+}
+
+::selection {
+  background: $color-ochre;
+  color: $color-ink;
 }
 
 ul,
@@ -82,13 +91,12 @@ table {
   overflow: hidden;
   z-index: 9999;
   padding: 8px 16px;
-  background: $color-accent;
-  color: $color-white;
-  font-family: $font-primary;
+  background: $color-ochre;
+  color: $color-ink;
+  font-family: $font-heading;
   font-size: $text-small;
-  font-weight: $weight-bold;
+  text-transform: uppercase;
   text-decoration: none;
-  border-radius: 0 0 $button-radius $button-radius;
 
   &:focus {
     position: fixed;
@@ -115,11 +123,10 @@ table {
 
 // Global focus-visible for keyboard navigation.
 :focus-visible {
-  outline: 2px solid $color-accent;
+  outline: 2px solid $color-ochre;
   outline-offset: 2px;
 }
 
-// Remove default focus outline (keyboard users get focus-visible above).
 :focus:not(:focus-visible) {
   outline: none;
 }

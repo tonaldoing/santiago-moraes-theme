@@ -19,8 +19,7 @@
 }
 
 .post-content {
-  padding: $section-padding 0;
-  background-color: $color-white;
+  padding: $section-padding-y 0;
 
   &__inner {
     @include container;
@@ -32,12 +31,12 @@
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-hero;
-    font-weight: $weight-black;
+    font-weight: $weight-regular;
     line-height: $lh-hero;
     letter-spacing: $ls-hero;
-    color: $color-dark;
+    color: $color-cream;
     margin: 0 0 12px;
 
     @include until($bp-tablet) {
@@ -52,14 +51,14 @@
   &__date {
     font-family: $font-body;
     font-size: $text-small;
-    color: $color-secondary;
+    color: rgba($hex-cream, 0.5);
   }
 
   &__body {
     h2, h3, h4 {
-      font-family: $font-primary;
+      font-family: $font-heading;
       font-weight: $weight-bold;
-      color: $color-dark;
+      color: $color-cream;
       margin: 32px 0 16px;
     }
 
@@ -70,7 +69,7 @@
       font-family: $font-body;
       font-size: $text-body;
       line-height: $lh-body;
-      color: $color-body;
+      color: rgba($hex-cream, 0.8);
       margin-bottom: 16px;
     }
 
@@ -82,20 +81,20 @@
     a {
       color: $color-accent;
       text-decoration: underline;
-      @include transition(color);
+      transition: color $transition-fast;
 
       &:hover {
-        color: $color-hover-link;
+        color: $color-cream;
         text-decoration: none;
       }
     }
 
     blockquote {
-      border-left: 4px solid $color-accent;
+      border-left: $border-width solid $color-accent;
       padding: 16px 24px;
       margin: 24px 0;
-      background-color: $color-cream;
-      border-radius: 0 $button-radius $button-radius 0;
+      background-color: rgba($hex-cream, 0.04);
+      border-radius: 0;
 
       p {
         margin: 0;
@@ -106,7 +105,7 @@
     img {
       max-width: 100%;
       height: auto;
-      border-radius: $button-radius;
+      border-radius: 0;
     }
   }
 
@@ -119,26 +118,25 @@
 }
 
 .post-tag {
-  font-family: $font-primary;
+  font-family: $font-heading;
   font-size: 12px;
   font-weight: $weight-medium;
-  color: $color-secondary;
-  background-color: rgba($hex-secondary, 0.1);
+  color: rgba($hex-cream, 0.6);
+  background-color: rgba($hex-cream, 0.06);
   padding: 4px 12px;
-  border-radius: $button-radius;
+  border-radius: 0;
   text-decoration: none;
-  @include transition(all);
+  transition: all $transition-fast;
 
   &:hover {
-    background-color: $color-dark;
-    color: $color-white;
+    background-color: $color-accent;
+    color: #fff;
   }
 }
 
 .post-nav {
-  background-color: $color-cream;
   padding: 24px 0;
-  border-top: 1px solid $color-border;
+  border-top: 1px solid rgba($hex-cream, 0.06);
 
   &__inner {
     @include container;
@@ -149,15 +147,15 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-body;
     font-weight: $weight-medium;
-    color: $color-dark;
+    color: $color-cream;
     text-decoration: none;
-    @include transition(color);
+    transition: color $transition-fast;
 
     &:hover {
-      color: $color-hover-link;
+      color: $color-accent;
     }
 
     &--next {

@@ -7,17 +7,17 @@
 
 .album-page {
 
-  // ── Hero Section (dark) ──
+  // -- Hero Section (dark) --
   &__hero {
-    background-color: $color-black;
-    padding: $section-padding 0;
+    background-color: $color-ink;
+    padding: $section-padding-y 0;
   }
 
   &__hero-inner {
     @include container;
     display: flex;
     flex-direction: column;
-    gap: $music-gap;
+    gap: 40px;
 
     @include tablet {
       flex-direction: row;
@@ -34,7 +34,7 @@
     &-img {
       width: 100%;
       height: auto;
-      border-radius: $card-radius;
+      border-radius: 0;
       display: block;
     }
   }
@@ -49,18 +49,18 @@
   }
 
   &__year {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-secondary;
+    color: $color-olive;
     text-transform: uppercase;
     letter-spacing: 2px;
   }
 
   &__title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-hero;
-    font-weight: $weight-black;
+    font-weight: $weight-regular;
     line-height: $lh-hero;
     letter-spacing: $ls-hero;
     color: $color-cream;
@@ -77,29 +77,29 @@
 
   &__badge {
     display: inline-block;
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: 12px;
     font-weight: $weight-bold;
-    color: $color-secondary;
+    color: $color-olive;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    border: 1px solid $color-secondary;
+    border: $border-width solid $color-olive;
     padding: 4px 12px;
-    border-radius: $button-radius;
+    border-radius: 0;
   }
 
   &__description {
     font-family: $font-body;
     font-weight: $weight-regular;
-    color: $color-secondary;
+    color: $color-olive;
     line-height: $lh-body;
     margin: 0;
   }
 
-  // ── Tracklist Section (light) ──
+  // -- Tracklist Section (light) --
   &__tracklist {
-    padding: $section-padding 0;
-    background-color: $color-white;
+    padding: $section-padding-y 0;
+    background-color: $color-paper;
   }
 
   &__tracklist-inner {
@@ -107,12 +107,12 @@
   }
 
   &__tracklist-title {
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
     line-height: $lh-section;
     letter-spacing: $ls-section;
-    color: $color-dark;
+    color: $color-ink;
     margin-bottom: 24px;
 
     @include mobile-only {
@@ -122,11 +122,11 @@
   }
 }
 
-// ── Album Prev/Next Navigation ──
+// -- Album Prev/Next Navigation --
 .album-nav {
   background-color: $color-cream;
   padding: 32px 0;
-  border-top: 1px solid $color-border;
+  border-top: $border-width solid $color-border;
 
   &__inner {
     @include container;
@@ -137,15 +137,15 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: $font-primary;
+    font-family: $font-heading;
     font-size: $text-body;
     font-weight: $weight-medium;
-    color: $color-dark;
+    color: $color-ink;
     text-decoration: none;
     @include transition(color);
 
     &:hover {
-      color: $color-hover-link;
+      color: $color-ochre;
     }
 
     &--next {

@@ -7,6 +7,23 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Build a cache-busted asset URL by embedding the file's mtime in the filename.
+ *
+ * Example: assets/css/style.min.css → assets/css/style.min.1721500000.css
+ *
+ * A matching RewriteRule in .htaccess strips the version number so the server
+ * serves the original file. This avoids LiteSpeed stripping ?ver= query strings.
+ */
+function sm_asset_url( $relative_path ) {
+	$full_path = SM_THEME_DIR . '/' . $relative_path;
+	$ver       = file_exists( $full_path ) ? filemtime( $full_path ) : SM_THEME_VERSION;
+
+	$url = SM_THEME_URI . '/' . preg_replace( '/\.(css|js)$/', '.' . $ver . '.$1', $relative_path );
+
+	return $url;
+}
+
 add_action( 'wp_enqueue_scripts', 'sm_enqueue_assets' );
 
 /**
@@ -26,8 +43,6 @@ function sm_enqueue_assets() {
 	}
 
 	// Main stylesheet (compiled from SCSS).
-	$css_file = SM_THEME_DIR . '/assets/css/style.css';
-	$css_ver  = file_exists( $css_file ) ? filemtime( $css_file ) : SM_THEME_VERSION;
 	$css_deps = array();
 	if ( $google_url ) {
 		$css_deps[] = 'sm-google-fonts';
@@ -38,17 +53,17 @@ function sm_enqueue_assets() {
 
 	wp_enqueue_style(
 		'sm-main',
-		SM_THEME_URI . '/assets/css/style.css',
+		sm_asset_url( 'assets/css/style.min.css' ),
 		$css_deps,
-		$css_ver
+		null
 	);
 
 	// Navigation script.
 	wp_enqueue_script(
 		'sm-navigation',
-		SM_THEME_URI . '/assets/js/navigation.js',
+		sm_asset_url( 'assets/js/navigation.min.js' ),
 		array(),
-		SM_THEME_VERSION,
+		null,
 		array( 'strategy' => 'defer' )
 	);
 
@@ -57,9 +72,9 @@ function sm_enqueue_assets() {
 	if ( file_exists( $main_js ) ) {
 		wp_enqueue_script(
 			'sm-main',
-			SM_THEME_URI . '/assets/js/main.js',
+			sm_asset_url( 'assets/js/main.js' ),
 			array(),
-			filemtime( $main_js ),
+			null,
 			array( 'strategy' => 'defer' )
 		);
 	}
@@ -85,17 +100,6 @@ function sm_enqueue_assets() {
 		wp_enqueue_script(
 			'sm-home-contact',
 			SM_THEME_URI . '/assets/js/home-contact.js',
-			array(),
-			SM_THEME_VERSION,
-			array( 'strategy' => 'defer' )
-		);
-	}
-
-	// Events toggle — only on events archive.
-	if ( is_post_type_archive( 'evento' ) ) {
-		wp_enqueue_script(
-			'sm-events-toggle',
-			SM_THEME_URI . '/assets/js/events-toggle.js',
 			array(),
 			SM_THEME_VERSION,
 			array( 'strategy' => 'defer' )
@@ -128,23 +132,30 @@ function sm_enqueue_assets() {
 	if ( is_singular( 'cancion' ) ) {
 		wp_enqueue_script(
 			'sm-chord-transpose',
-			SM_THEME_URI . '/assets/js/modules/chord-transpose.js',
+			sm_asset_url( 'assets/js/modules/chord-transpose.js' ),
 			array(),
-			SM_THEME_VERSION,
+			null,
 			array( 'strategy' => 'defer' )
 		);
 		wp_enqueue_script(
 			'sm-chord-autoscroll',
-			SM_THEME_URI . '/assets/js/modules/chord-autoscroll.js',
+			sm_asset_url( 'assets/js/modules/chord-autoscroll.js' ),
 			array(),
-			SM_THEME_VERSION,
+			null,
 			array( 'strategy' => 'defer' )
 		);
 		wp_enqueue_script(
 			'sm-chord-toggle',
-			SM_THEME_URI . '/assets/js/modules/chord-toggle.js',
+			sm_asset_url( 'assets/js/modules/chord-toggle.js' ),
 			array(),
-			SM_THEME_VERSION,
+			null,
+			array( 'strategy' => 'defer' )
+		);
+		wp_enqueue_script(
+			'sm-chord-diagrams',
+			sm_asset_url( 'assets/js/modules/chord-diagrams.js' ),
+			array(),
+			null,
 			array( 'strategy' => 'defer' )
 		);
 	}
@@ -168,14 +179,12 @@ function sm_enqueue_editor_assets() {
 		wp_enqueue_style( 'sm-adobe-fonts', $adobe_url, array(), null );
 	}
 
-	$css_file = SM_THEME_DIR . '/assets/css/style.css';
-
-	if ( file_exists( $css_file ) ) {
+	if ( file_exists( SM_THEME_DIR . '/assets/css/style.min.css' ) ) {
 		wp_enqueue_style(
 			'sm-editor',
-			SM_THEME_URI . '/assets/css/style.css',
+			sm_asset_url( 'assets/css/style.min.css' ),
 			array( 'sm-google-fonts' ),
-			filemtime( $css_file )
+			null
 		);
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * Front page template.
+ * Front page template — Rebranding.
  *
- * Section order: Hero → Shows → Música → Últimas Canciones → Contacto
+ * Section order: Hero → Marquee → Shows → Música → Canciones → Contacto
  *
  * @package Santiago_Moraes
  */
@@ -13,6 +13,8 @@ get_header();
 <main id="main" class="site-main">
 
 	<?php get_template_part( 'template-parts/home/hero' ); ?>
+
+	<?php get_template_part( 'template-parts/home/marquee' ); ?>
 
 	<?php get_template_part( 'template-parts/home/shows' ); ?>
 

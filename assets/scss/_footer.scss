@@ -2,18 +2,23 @@
 @use 'mixins' as *;
 
 // ==========================================================================
-// Footer
+// Footer — Rebranding (Brutalist Editorial)
 // ==========================================================================
 
 .site-footer {
-  background-color: $color-footer-bg;
-  padding: $widget-spacing 0;
+  background-color: $color-ink;
+  color: $color-footer-text;
+  @include border-top;
+  padding: $section-padding-y $section-padding-x;
 
   &__inner {
-    @include container;
-    @include flex-between;
+    max-width: $container-max;
+    margin: 0 auto;
+    display: flex;
     flex-wrap: wrap;
-    gap: $widget-spacing;
+    gap: 28px;
+    justify-content: space-between;
+    align-items: flex-end;
 
     @include mobile-only {
       flex-direction: column;
@@ -21,56 +26,51 @@
       text-align: center;
     }
   }
-}
 
-// Footer social icons
-.footer-social {
-  display: flex;
-  align-items: center;
-  gap: $social-gap;
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-  &__link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    color: $color-footer-text;
-    @include transition(color);
+  &__name {
+    font-family: $font-heading;
+    font-size: clamp(26px, 3.4vw, 46px);
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: $color-ochre;
+  }
 
-    &:hover {
-      color: $color-hover-link;
-    }
-
-    svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
+  &__copy {
+    font-family: $font-mono;
+    font-size: 11px;
+    letter-spacing: $ls-mono;
+    text-transform: uppercase;
+    margin: 0;
   }
 }
 
-// Copyright
-.site-copyright {
-  font-family: $font-primary;
-  font-size: $text-small;
-  font-weight: $weight-medium;
-  line-height: $lh-small;
-  color: $color-footer-text;
-  width: 100%;
-  text-align: center;
-  margin: 0;
-}
+// Footer social links (text, not icons)
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
 
-// Credits
-.site-credits {
-  font-family: $font-body;
-  font-size: 12px;
-  color: $color-footer-text;
-  width: 100%;
-  text-align: center;
-  margin: 0;
-  opacity: 0.7;
+  &__link {
+    font-family: $font-mono;
+    font-size: 11px;
+    letter-spacing: $ls-mono;
+    text-transform: uppercase;
+    color: $color-footer-text;
+    text-decoration: none;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-ochre;
+    }
+  }
 }
 
 // Scroll to top
@@ -81,12 +81,12 @@
   width: 40px;
   height: 40px;
   @include flex-center;
-  background-color: $color-dark;
-  color: $color-white;
-  border-radius: 50%;
+  background-color: $color-ink;
+  color: $color-cream;
+  border: 2px solid $hex-cream;
   opacity: 0;
   visibility: hidden;
-  @include transition;
+  transition: all $transition-fast;
   cursor: pointer;
   z-index: 50;
 
@@ -96,7 +96,9 @@
   }
 
   &:hover {
-    background-color: $color-hover-link;
+    background-color: $color-ochre;
+    border-color: $hex-ochre;
+    color: $color-ink;
   }
 
   svg {

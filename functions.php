@@ -97,6 +97,11 @@ require SM_THEME_DIR . '/inc/security.php';
 require SM_THEME_DIR . '/inc/favicon.php';
 
 /**
+ * Songkick integration.
+ */
+require SM_THEME_DIR . '/inc/songkick.php';
+
+/**
  * Custom Gutenberg Blocks.
  */
 require SM_THEME_DIR . '/inc/blocks.php';

@@ -139,31 +139,18 @@ function sm_sanitize_options( $input ) {
 		return $clean;
 	}
 
-	// Colors.
+	// Colors — rebranding palette.
 	$color_keys = array(
-		'sm_color_accent',
-		'sm_color_dark',
-		'sm_color_secondary',
-		'sm_color_black',
-		'sm_color_border',
+		'sm_color_ink',
+		'sm_color_paper',
+		'sm_color_ochre',
+		'sm_color_brick',
 		'sm_color_cream',
-		'sm_color_bg_light',
-		'sm_color_white',
-		'sm_color_box',
-		'sm_color_heading',
-		'sm_color_body',
-		'sm_color_box_heading',
-		'sm_color_box_text',
-		'sm_color_hover_link',
-		'sm_color_hover_light',
-		'sm_color_header_bg',
-		'sm_color_header_text',
-		'sm_color_header_text_scroll',
-		'sm_color_footer_bg',
+		'sm_color_warm',
+		'sm_color_muted',
+		'sm_color_brown',
+		'sm_color_olive',
 		'sm_color_footer_text',
-		'sm_color_btn_primary_bg',
-		'sm_color_btn_primary_text',
-		'sm_color_btn_primary_hover',
 	);
 	foreach ( $color_keys as $key ) {
 		$clean[ $key ] = isset( $input[ $key ] ) ? sanitize_hex_color( $input[ $key ] ) : '';
@@ -200,13 +187,16 @@ function sm_sanitize_options( $input ) {
 	}
 
 	// Hero.
-	$clean['sm_hero_line1']     = isset( $input['sm_hero_line1'] ) ? sanitize_text_field( $input['sm_hero_line1'] ) : 'Santiago';
-	$clean['sm_hero_line2']     = isset( $input['sm_hero_line2'] ) ? sanitize_text_field( $input['sm_hero_line2'] ) : 'Moraes';
-	$clean['sm_hero_image']     = isset( $input['sm_hero_image'] ) ? esc_url_raw( $input['sm_hero_image'] ) : '';
-	$clean['sm_hero_btn1_text'] = isset( $input['sm_hero_btn1_text'] ) ? sanitize_text_field( $input['sm_hero_btn1_text'] ) : '';
-	$clean['sm_hero_btn1_url']  = isset( $input['sm_hero_btn1_url'] ) ? esc_url_raw( $input['sm_hero_btn1_url'] ) : '';
-	$clean['sm_hero_btn2_text'] = isset( $input['sm_hero_btn2_text'] ) ? sanitize_text_field( $input['sm_hero_btn2_text'] ) : '';
-	$clean['sm_hero_btn2_url']  = isset( $input['sm_hero_btn2_url'] ) ? sanitize_text_field( $input['sm_hero_btn2_url'] ) : '';
+	$clean['sm_hero_tag']         = isset( $input['sm_hero_tag'] ) ? sanitize_text_field( $input['sm_hero_tag'] ) : '';
+	$clean['sm_hero_line1']       = isset( $input['sm_hero_line1'] ) ? sanitize_text_field( $input['sm_hero_line1'] ) : 'Santiago';
+	$clean['sm_hero_line2']       = isset( $input['sm_hero_line2'] ) ? sanitize_text_field( $input['sm_hero_line2'] ) : 'Moraes';
+	$clean['sm_hero_description'] = isset( $input['sm_hero_description'] ) ? sanitize_textarea_field( $input['sm_hero_description'] ) : '';
+	$clean['sm_hero_image']       = isset( $input['sm_hero_image'] ) ? esc_url_raw( $input['sm_hero_image'] ) : '';
+	$clean['sm_hero_album_label'] = isset( $input['sm_hero_album_label'] ) ? sanitize_text_field( $input['sm_hero_album_label'] ) : '';
+	$clean['sm_hero_btn1_text']   = isset( $input['sm_hero_btn1_text'] ) ? sanitize_text_field( $input['sm_hero_btn1_text'] ) : '';
+	$clean['sm_hero_btn1_url']    = isset( $input['sm_hero_btn1_url'] ) ? esc_url_raw( $input['sm_hero_btn1_url'] ) : '';
+	$clean['sm_hero_btn2_text']   = isset( $input['sm_hero_btn2_text'] ) ? sanitize_text_field( $input['sm_hero_btn2_text'] ) : '';
+	$clean['sm_hero_btn2_url']    = isset( $input['sm_hero_btn2_url'] ) ? sanitize_text_field( $input['sm_hero_btn2_url'] ) : '';
 
 	// Music.
 	$clean['sm_featured_album_id']  = isset( $input['sm_featured_album_id'] ) ? absint( $input['sm_featured_album_id'] ) : 0;
@@ -393,9 +383,9 @@ function sm_render_theme_options_page() {
 function sm_render_hidden_fields( $active_tab ) {
 	$tab_keys = array(
 		'general'    => array( 'sm_logo_type', 'sm_logo_text', 'sm_logo_image', 'sm_header_height' ),
-		'colores'    => array( 'sm_color_accent', 'sm_color_dark', 'sm_color_secondary', 'sm_color_black', 'sm_color_border', 'sm_color_cream', 'sm_color_bg_light', 'sm_color_white', 'sm_color_box', 'sm_color_heading', 'sm_color_body', 'sm_color_box_heading', 'sm_color_box_text', 'sm_color_hover_link', 'sm_color_hover_light', 'sm_color_header_bg', 'sm_color_header_text', 'sm_color_header_text_scroll', 'sm_color_footer_bg', 'sm_color_footer_text', 'sm_color_btn_primary_bg', 'sm_color_btn_primary_text', 'sm_color_btn_primary_hover' ),
+		'colores'    => array( 'sm_color_ink', 'sm_color_paper', 'sm_color_ochre', 'sm_color_brick', 'sm_color_cream', 'sm_color_warm', 'sm_color_muted', 'sm_color_brown', 'sm_color_olive', 'sm_color_footer_text' ),
 		'tipografia' => array( 'sm_font_heading', 'sm_font_body', 'sm_font_button', 'sm_font_size_base' ),
-		'hero'       => array( 'sm_hero_line1', 'sm_hero_line2', 'sm_hero_image', 'sm_hero_btn1_text', 'sm_hero_btn1_url', 'sm_hero_btn2_text', 'sm_hero_btn2_url' ),
+		'hero'       => array( 'sm_hero_tag', 'sm_hero_line1', 'sm_hero_line2', 'sm_hero_description', 'sm_hero_image', 'sm_hero_album_label', 'sm_hero_btn1_text', 'sm_hero_btn1_url', 'sm_hero_btn2_text', 'sm_hero_btn2_url' ),
 		'musica'     => array( 'sm_featured_album_id', 'sm_player_enabled', 'sm_player_homepage', 'sm_player_spotify_url' ),
 		'redes'      => array( 'sm_social_spotify', 'sm_social_instagram', 'sm_social_youtube', 'sm_social_bandcamp', 'sm_social_soundcloud', 'sm_social_facebook', 'sm_social_twitter' ),
 		'contacto'   => array( 'sm_contact_email', 'sm_contact_phone', 'sm_contact_address', 'sm_contact_maps_url' ),
@@ -472,59 +462,27 @@ function sm_tab_general() {
  * Colores tab — grouped for clarity.
  */
 function sm_tab_colores() {
-	$groups = array(
-		__( 'Identidad', 'santiago-moraes' ) => array(
-			'sm_color_accent'      => array( '#EC4913', 'Color acento / links' ),
-			'sm_color_hover_link'  => array( '#EC4913', 'Hover de links y navegacion' ),
-			'sm_color_border'      => array( '#E7D5CF', 'Bordes generales' ),
-		),
-		__( 'Fondos', 'santiago-moraes' ) => array(
-			'sm_color_white'     => array( '#FFFFFF', 'Fondo principal (paginas)' ),
-			'sm_color_black'     => array( '#010101', 'Fondo oscuro (hero, secciones dark)' ),
-			'sm_color_cream'     => array( '#F7F3F0', 'Fondo crema (secciones claras)' ),
-			'sm_color_bg_light'  => array( '#54200F', 'Fondo alternativo (secciones)' ),
-		),
-		__( 'Textos', 'santiago-moraes' ) => array(
-			'sm_color_heading'     => array( '#1B110D', 'Titulos de seccion' ),
-			'sm_color_body'        => array( '#0A0A0A', 'Texto general / parrafos' ),
-			'sm_color_secondary'   => array( '#9A5F4C', 'Texto secundario / subtitulos' ),
-			'sm_color_dark'        => array( '#1B110D', 'Texto destacado / enfasis' ),
-			'sm_color_hover_light' => array( '#1B110D', 'Hover en fondos oscuros' ),
-		),
-		__( 'Header', 'santiago-moraes' ) => array(
-			'sm_color_header_bg'           => array( '#FFFFFF', 'Fondo del header (al hacer scroll)' ),
-			'sm_color_header_text'         => array( '#F7F3F0', 'Texto en header transparente (home)' ),
-			'sm_color_header_text_scroll'  => array( '#1B110D', 'Texto del header al hacer scroll' ),
-		),
-		__( 'Footer', 'santiago-moraes' ) => array(
-			'sm_color_footer_bg'   => array( '#FFFFFF', 'Fondo del footer' ),
-			'sm_color_footer_text' => array( '#9A5F4C', 'Texto e iconos del footer' ),
-		),
-		__( 'Cards / Cajas', 'santiago-moraes' ) => array(
-			'sm_color_box'         => array( '#F7F3F0', 'Fondo de cajas' ),
-			'sm_color_box_heading' => array( '#1B110D', 'Titulos en cajas' ),
-			'sm_color_box_text'    => array( '#0A0A0A', 'Texto en cajas' ),
-		),
-		__( 'Botones', 'santiago-moraes' ) => array(
-			'sm_color_btn_primary_bg'    => array( '#EC4913', 'Fondo boton primario' ),
-			'sm_color_btn_primary_text'  => array( '#FFFFFF', 'Texto boton primario' ),
-			'sm_color_btn_primary_hover' => array( '#D33F0E', 'Hover boton primario' ),
-		),
+	$colors = array(
+		'sm_color_ink'         => array( '#1F3C57', 'Azul tinta (textos, header, bordes)' ),
+		'sm_color_paper'       => array( '#E9DCC6', 'Papel (fondo principal)' ),
+		'sm_color_ochre'       => array( '#E08B3E', 'Ocre (acentos, hero, hover)' ),
+		'sm_color_brick'       => array( '#A8341C', 'Ladrillo (links, CTA, tags)' ),
+		'sm_color_cream'       => array( '#F4E9D6', 'Crema (texto sobre oscuro)' ),
+		'sm_color_warm'        => array( '#D9CBB2', 'Gris calido (fondos secundarios)' ),
+		'sm_color_muted'       => array( '#C9B896', 'Beige apagado (bordes suaves)' ),
+		'sm_color_brown'       => array( '#3A2A1C', 'Marron (texto cuerpo)' ),
+		'sm_color_olive'       => array( '#6B573C', 'Oliva (texto secundario, metadata)' ),
+		'sm_color_footer_text' => array( '#C6B79C', 'Texto del footer' ),
 	);
 
-	foreach ( $groups as $group_label => $colors ) :
+	foreach ( $colors as $key => $data ) :
+		$val = sm_get_option( $key, $data[0] );
 		?>
-		<tr><td colspan="2"><h3 style="margin:18px 0 6px;font-size:14px;font-weight:600;color:#1d2327;border-bottom:1px solid #c3c4c7;padding-bottom:6px;"><?php echo esc_html( $group_label ); ?></h3></td></tr>
+		<tr>
+			<th scope="row"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $data[1] ); ?></label></th>
+			<td><input type="text" id="<?php echo esc_attr( $key ); ?>" name="sm_options[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $val ); ?>" class="sm-color-picker" data-default-color="<?php echo esc_attr( $data[0] ); ?>"></td>
+		</tr>
 		<?php
-		foreach ( $colors as $key => $data ) :
-			$val = sm_get_option( $key, $data[0] );
-			?>
-			<tr>
-				<th scope="row"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $data[1] ); ?></label></th>
-				<td><input type="text" id="<?php echo esc_attr( $key ); ?>" name="sm_options[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $val ); ?>" class="sm-color-picker" data-default-color="<?php echo esc_attr( $data[0] ); ?>"></td>
-			</tr>
-			<?php
-		endforeach;
 	endforeach;
 }
 
@@ -574,24 +532,41 @@ function sm_tab_tipografia() {
  * Hero tab.
  */
 function sm_tab_hero() {
-	$line1     = sm_get_option( 'sm_hero_line1', 'Santiago' );
-	$line2     = sm_get_option( 'sm_hero_line2', 'Moraes' );
-	$hero_img  = sm_get_option( 'sm_hero_image', '' );
-	$btn1_text = sm_get_option( 'sm_hero_btn1_text', 'Escuchar ahora' );
-	$btn1_url  = sm_get_option( 'sm_hero_btn1_url', '' );
-	$btn2_text = sm_get_option( 'sm_hero_btn2_text', 'Proximos Shows' );
-	$btn2_url  = sm_get_option( 'sm_hero_btn2_url', '#shows' );
+	$tag         = sm_get_option( 'sm_hero_tag', 'Canción rioplatense · Buenos Aires' );
+	$line1       = sm_get_option( 'sm_hero_line1', 'Santiago' );
+	$line2       = sm_get_option( 'sm_hero_line2', 'Moraes' );
+	$description = sm_get_option( 'sm_hero_description', '' );
+	$hero_img    = sm_get_option( 'sm_hero_image', '' );
+	$album_label = sm_get_option( 'sm_hero_album_label', 'Nuevo · Las siete menos diez' );
+	$btn1_text   = sm_get_option( 'sm_hero_btn1_text', 'Escuchar ahora' );
+	$btn1_url    = sm_get_option( 'sm_hero_btn1_url', '' );
+	$btn2_text   = sm_get_option( 'sm_hero_btn2_text', 'Proximos Shows' );
+	$btn2_url    = sm_get_option( 'sm_hero_btn2_url', '#shows' );
 	?>
 	<tr>
-		<th scope="row"><label for="sm_hero_line1"><?php esc_html_e( 'Hero titulo linea 1', 'santiago-moraes' ); ?></label></th>
+		<th scope="row"><label for="sm_hero_tag"><?php esc_html_e( 'Etiqueta superior', 'santiago-moraes' ); ?></label></th>
+		<td>
+			<input type="text" id="sm_hero_tag" name="sm_options[sm_hero_tag]" value="<?php echo esc_attr( $tag ); ?>" class="regular-text">
+			<p class="description"><?php esc_html_e( 'Ej: "Canción rioplatense · Buenos Aires"', 'santiago-moraes' ); ?></p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="sm_hero_line1"><?php esc_html_e( 'Titulo linea 1', 'santiago-moraes' ); ?></label></th>
 		<td><input type="text" id="sm_hero_line1" name="sm_options[sm_hero_line1]" value="<?php echo esc_attr( $line1 ); ?>" class="regular-text"></td>
 	</tr>
 	<tr>
-		<th scope="row"><label for="sm_hero_line2"><?php esc_html_e( 'Hero titulo linea 2 (acento)', 'santiago-moraes' ); ?></label></th>
+		<th scope="row"><label for="sm_hero_line2"><?php esc_html_e( 'Titulo linea 2 (outline)', 'santiago-moraes' ); ?></label></th>
 		<td><input type="text" id="sm_hero_line2" name="sm_options[sm_hero_line2]" value="<?php echo esc_attr( $line2 ); ?>" class="regular-text"></td>
 	</tr>
 	<tr>
-		<th scope="row"><?php esc_html_e( 'Hero imagen', 'santiago-moraes' ); ?></th>
+		<th scope="row"><label for="sm_hero_description"><?php esc_html_e( 'Descripcion', 'santiago-moraes' ); ?></label></th>
+		<td>
+			<textarea id="sm_hero_description" name="sm_options[sm_hero_description]" rows="3" class="large-text"><?php echo esc_textarea( $description ); ?></textarea>
+			<p class="description"><?php esc_html_e( 'Texto en cursiva debajo del titulo.', 'santiago-moraes' ); ?></p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Imagen del album (hero)', 'santiago-moraes' ); ?></th>
 		<td>
 			<input type="hidden" name="sm_options[sm_hero_image]" value="<?php echo esc_url( $hero_img ); ?>" class="sm-upload-input">
 			<button type="button" class="button sm-upload-btn"><?php esc_html_e( 'Seleccionar imagen', 'santiago-moraes' ); ?></button>
@@ -601,6 +576,14 @@ function sm_tab_hero() {
 					<img src="<?php echo esc_url( $hero_img ); ?>" style="max-width:200px;height:auto;margin-top:8px;">
 				<?php endif; ?>
 			</div>
+			<p class="description"><?php esc_html_e( 'Si esta vacio, usa la imagen por defecto del tema.', 'santiago-moraes' ); ?></p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="sm_hero_album_label"><?php esc_html_e( 'Etiqueta del album', 'santiago-moraes' ); ?></label></th>
+		<td>
+			<input type="text" id="sm_hero_album_label" name="sm_options[sm_hero_album_label]" value="<?php echo esc_attr( $album_label ); ?>" class="regular-text">
+			<p class="description"><?php esc_html_e( 'Ej: "Nuevo · Las siete menos diez"', 'santiago-moraes' ); ?></p>
 		</td>
 	</tr>
 	<tr>

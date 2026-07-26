@@ -120,6 +120,9 @@
 				keyDisplay.textContent = newKey;
 			}
 		}
+
+		// Notify other modules (e.g., chord diagrams) about the transposition.
+		document.dispatchEvent( new CustomEvent( 'chordsTransposed' ) );
 	}
 
 	/**

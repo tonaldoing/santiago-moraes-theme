@@ -93,34 +93,3 @@ function sm_get_contextual_spotify_url() {
 	return sm_get_default_spotify_url();
 }
 
-/**
- * Count total upcoming events (date >= today).
- *
- * @return int Number of upcoming events.
- */
-function sm_count_upcoming_events() {
-	$count = wp_cache_get( 'sm_upcoming_events_count' );
-	if ( false !== $count ) {
-		return (int) $count;
-	}
-
-	$query = new WP_Query( array(
-		'post_type'      => 'evento',
-		'posts_per_page' => -1,
-		'fields'         => 'ids',
-		'no_found_rows'  => true,
-		'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-			array(
-				'key'     => '_evento_date',
-				'value'   => gmdate( 'Y-m-d' ),
-				'compare' => '>=',
-				'type'    => 'DATE',
-			),
-		),
-	) );
-
-	$count = $query->post_count;
-	wp_cache_set( 'sm_upcoming_events_count', $count );
-
-	return $count;
-}

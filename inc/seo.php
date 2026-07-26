@@ -100,10 +100,6 @@ function sm_get_meta_description() {
 		return sprintf( '%s — Album de Santiago Moraes', $term->name );
 	}
 
-	if ( is_post_type_archive( 'evento' ) ) {
-		return 'Proximos shows y eventos de Santiago Moraes';
-	}
-
 	if ( is_post_type_archive( 'cancion' ) ) {
 		return 'Discografia completa de Santiago Moraes — acordes, letras y musica';
 	}
@@ -155,9 +151,6 @@ function sm_get_og_type() {
 	}
 	if ( is_tax( 'album' ) ) {
 		return 'music.album';
-	}
-	if ( is_singular( 'evento' ) ) {
-		return 'event';
 	}
 	if ( is_singular() ) {
 		return 'article';

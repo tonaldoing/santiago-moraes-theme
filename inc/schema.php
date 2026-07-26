@@ -39,14 +39,6 @@ function sm_schema_output() {
 		}
 	}
 
-	// MusicEvent on single event pages.
-	if ( is_singular( 'evento' ) ) {
-		$event_schema = sm_schema_music_event();
-		if ( $event_schema ) {
-			$schemas[] = $event_schema;
-		}
-	}
-
 	// Output each schema.
 	foreach ( $schemas as $schema ) {
 		if ( $schema ) {
@@ -251,91 +243,3 @@ function sm_schema_music_composition() {
 	return $schema;
 }
 
-/**
- * MusicEvent schema for single events.
- *
- * @return array|null
- */
-function sm_schema_music_event() {
-	$post = get_queried_object();
-	if ( ! $post ) {
-		return null;
-	}
-
-	$date       = get_post_meta( $post->ID, '_evento_date', true );
-	$time       = get_post_meta( $post->ID, '_evento_time', true );
-	$venue      = get_post_meta( $post->ID, '_evento_venue', true );
-	$city       = get_post_meta( $post->ID, '_evento_city', true );
-	$ticket_url = get_post_meta( $post->ID, '_evento_ticket_link', true );
-	$price      = get_post_meta( $post->ID, '_evento_price', true );
-
-	if ( ! $date ) {
-		return null;
-	}
-
-	$start_date = $date;
-	if ( $time ) {
-		$start_date .= 'T' . $time;
-	}
-
-	$schema = array(
-		'@context'  => 'https://schema.org',
-		'@type'     => 'MusicEvent',
-		'name'      => get_the_title( $post ),
-		'url'       => get_permalink( $post ),
-		'startDate' => $start_date,
-		'performer' => array(
-			'@type' => 'MusicGroup',
-			'name'  => 'Santiago Moraes',
-		),
-		'eventStatus'     => 'https://schema.org/EventScheduled',
-		'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
-	);
-
-	if ( $venue || $city ) {
-		$location = array(
-			'@type' => 'Place',
-		);
-		if ( $venue ) {
-			$location['name'] = $venue;
-		}
-		if ( $city ) {
-			$location['address'] = array(
-				'@type'           => 'PostalAddress',
-				'addressLocality' => $city,
-			);
-		}
-		$schema['location'] = $location;
-	}
-
-	// Featured image.
-	if ( has_post_thumbnail( $post ) ) {
-		$img = wp_get_attachment_image_url( get_post_thumbnail_id( $post ), 'large' );
-		if ( $img ) {
-			$schema['image'] = $img;
-		}
-	}
-
-	// Offers / tickets.
-	if ( $ticket_url ) {
-		$offer = array(
-			'@type' => 'Offer',
-			'url'   => $ticket_url,
-		);
-		if ( $price ) {
-			// Try to extract numeric price.
-			$numeric = preg_replace( '/[^0-9.]/', '', $price );
-			if ( $numeric && is_numeric( $numeric ) ) {
-				$offer['price']         = $numeric;
-				$offer['priceCurrency'] = 'ARS';
-			} else {
-				$offer['price'] = 0;
-				$offer['priceCurrency'] = 'ARS';
-			}
-			$offer['availability'] = 'https://schema.org/InStock';
-		}
-		$schema['offers'] = $offer;
-	}
-
-	return $schema;
-}

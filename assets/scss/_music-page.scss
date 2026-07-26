@@ -2,10 +2,104 @@
 @use 'mixins' as *;
 
 // ==========================================================================
-// Music Page — Album hero, discography grid, tracklists
+// Discography Page — Rebranding (Brutalist Editorial)
 // ==========================================================================
 
-// ----- Album Hero (Featured Album) -----
+// ----- Ochre Header -----
+.disco-header {
+  background-color: $color-ochre;
+  padding: $section-padding-y $section-padding-x;
+  @include border-bottom;
+
+  &__inner {
+    max-width: $container-max;
+    margin: 0 auto;
+  }
+
+  &__tag {
+    color: $color-brick;
+    margin: 0 0 18px;
+  }
+
+  &__title {
+    font-size: clamp(48px, 8vw, 124px);
+    line-height: 0.84;
+    letter-spacing: $ls-hero;
+    margin: 0;
+    color: $color-ink;
+  }
+}
+
+// ----- Album Grid -----
+.disco-grid-wrap {
+  padding: clamp(40px, 5vw, 80px) $section-padding-x;
+
+  &__inner {
+    max-width: $container-max;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(24px, 3vw, 44px);
+  }
+}
+
+// ----- Album Card (brutalist) -----
+.disco-card {
+  display: block;
+  text-decoration: none;
+  color: $color-ink;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    .disco-card__cover {
+      box-shadow: 4px 4px 0 $hex-brick;
+      transform: translate(6px, 6px);
+    }
+  }
+
+  &__cover {
+    border: $border-style;
+    background-color: $color-warm;
+    box-shadow: $shadow-ochre;
+    transition: box-shadow $transition-fast, transform $transition-fast;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  &__placeholder {
+    aspect-ratio: 1 / 1;
+    background: repeating-linear-gradient(135deg, $hex-muted 0 8px, $hex-warm 8px 16px);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 18px;
+    color: $color-olive;
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-size: 24px;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin: 20px 0 0;
+  }
+
+  &__meta {
+    color: $color-olive;
+    margin: 8px 0 0;
+  }
+}
+
+// ==========================================================================
+// Album Hero (used by taxonomy-album.php for individual album pages)
+// ==========================================================================
+
 .album-hero {
   background-color: $color-ink;
   padding: $section-padding-y 0;
@@ -31,8 +125,8 @@
     &-img {
       width: 100%;
       height: auto;
-      border-radius: 0;
       display: block;
+      border: $border-style;
     }
   }
 
@@ -46,173 +140,81 @@
   }
 
   &__year {
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: $text-small;
-    font-weight: $weight-medium;
-    color: $color-olive;
+    color: $color-ochre;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: $ls-mono;
   }
 
   &__title {
-    font-family: $font-heading;
-    font-size: $text-hero;
-    font-weight: $weight-regular;
+    font-size: clamp(36px, 6vw, 80px);
     line-height: $lh-hero;
     letter-spacing: $ls-hero;
     color: $color-cream;
     margin: 0;
-
-    @include until($bp-tablet) {
-      font-size: 50px;
-    }
-
-    @include mobile-only {
-      font-size: 36px;
-    }
   }
 
   &__description {
     font-family: $font-body;
-    font-weight: $weight-regular;
-    color: $color-olive;
+    font-style: italic;
+    color: rgba($hex-cream, 0.7);
     line-height: $lh-body;
     margin: 0;
   }
 }
 
-// ----- Discography Grid Section -----
-.discography {
-  padding: $section-padding-y 0;
-  background-color: $color-paper;
-
-  &__inner {
-    @include container;
-  }
-
-  &__title {
-    font-family: $font-heading;
-    font-size: $text-section;
-    font-weight: $weight-bold;
-    line-height: $lh-section;
-    letter-spacing: $ls-section;
-    color: $color-ink;
-    margin-bottom: 32px;
-
-    @include mobile-only {
-      font-size: 22px;
-      line-height: 28px;
-      margin-bottom: 24px;
-    }
-  }
-
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-
-    @include tablet {
-      gap: 40px;
-    }
-  }
-
-  &--demos {
-    background-color: $color-cream;
-
-    .album-card__cover {
-      border-radius: 0;
-    }
-
-    .album-card__name {
-      font-size: $text-body;
-    }
-
-    .album-card__year {
-      font-size: 12px;
-    }
-
-    .discography__grid {
-      @include tablet {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-      }
-    }
-  }
+// Platform links grid (used in album-hero and music section)
+.platform-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-// ----- Album Card -----
-.album-card {
-  display: block;
+.platform-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 2px solid $hex-cream;
   text-decoration: none;
-  color: inherit;
+  transition: all $transition-fast;
+  color: $color-cream;
 
-  &:hover .album-card__overlay {
-    opacity: 1;
+  &:hover {
+    background-color: rgba($hex-cream, 0.15);
   }
 
-  &:hover .album-card__img {
-    transform: scale(1.03);
-  }
-
-  &__cover {
-    position: relative;
-    overflow: hidden;
-    border-radius: 0;
-    margin-bottom: 16px;
-    aspect-ratio: 1;
-  }
-
-  &__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    @include transition(transform);
-  }
-
-  &__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba($hex-ink, 0.5);
+  &__icon {
     @include flex-center;
-    opacity: 0;
-    @include transition(opacity);
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
   }
 
-  &__cta {
-    font-family: $font-heading;
-    font-size: $text-small;
-    font-weight: $weight-bold;
-    color: $color-paper;
+  &__label {
+    font-family: $font-mono;
+    font-size: 11px;
+    letter-spacing: $ls-mono;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    border: $border-width solid $color-paper;
-    padding: 10px 24px;
-    border-radius: 0;
   }
 
-  &__info {
-    padding: 0 4px;
-  }
-
-  &__name {
-    font-family: $font-heading;
-    font-size: $text-sub;
-    font-weight: $weight-bold;
-    color: $color-ink;
-    margin: 0 0 4px;
-    line-height: $lh-sub;
-  }
-
-  &__year {
-    font-family: $font-body;
-    font-size: $text-small;
-    font-weight: $weight-regular;
-    color: $color-brown;
+  &__external {
+    display: none;
   }
 }
 
-// ----- Tracklist Section -----
+// ==========================================================================
+// Tracklist Section (individual album pages)
+// ==========================================================================
+
 .tracklist {
   padding: $section-padding-y 0;
   background-color: $color-paper;
@@ -222,18 +224,8 @@
   }
 
   &__title {
-    font-family: $font-heading;
     font-size: $text-section;
-    font-weight: $weight-bold;
-    line-height: $lh-section;
-    letter-spacing: $ls-section;
-    color: $color-ink;
     margin-bottom: 24px;
-
-    @include mobile-only {
-      font-size: 22px;
-      line-height: 28px;
-    }
   }
 
   &__list {
@@ -242,16 +234,15 @@
   }
 }
 
-// ----- Track Row -----
 .track-row {
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: $border-width solid $color-border;
+  border-bottom: 2px solid $color-border;
 
   &:first-child {
-    border-top: $border-width solid $color-border;
+    border-top: 2px solid $color-border;
   }
 
   @include mobile-only {
@@ -261,16 +252,10 @@
   &__number {
     font-family: $font-heading;
     font-size: $text-sub;
-    font-weight: $weight-bold;
     color: $color-olive;
     min-width: 32px;
     text-align: center;
     flex-shrink: 0;
-
-    @include mobile-only {
-      font-size: 16px;
-      min-width: 24px;
-    }
   }
 
   &__info {
@@ -284,7 +269,7 @@
   &__title {
     font-family: $font-heading;
     font-size: $text-sub;
-    font-weight: $weight-medium;
+    text-transform: uppercase;
     color: $color-ink;
     white-space: nowrap;
     overflow: hidden;
@@ -297,13 +282,10 @@
   }
 
   &__key {
-    font-family: $font-heading;
-    font-size: 12px;
-    font-weight: $weight-medium;
-    color: $color-olive;
-    background-color: rgba($hex-olive, 0.1);
-    padding: 2px 8px;
-    border-radius: 0;
+    font-family: $font-mono;
+    font-size: $text-small;
+    color: $color-brick;
+    letter-spacing: 0.12em;
     white-space: nowrap;
     flex-shrink: 0;
   }
@@ -342,7 +324,6 @@
     audio {
       width: 100%;
       height: 36px;
-      border-radius: 0;
     }
 
     &--empty {
@@ -367,6 +348,7 @@
 .album-compact {
   background-color: $color-ink;
   padding: 32px 0;
+  @include border-bottom;
 
   &__inner {
     @include container;
@@ -386,8 +368,8 @@
     &-img {
       width: 100%;
       height: auto;
-      border-radius: 0;
       display: block;
+      border: 2px solid rgba($hex-cream, 0.2);
     }
   }
 
@@ -398,23 +380,20 @@
   }
 
   &__title {
-    font-family: $font-heading;
     font-size: $text-section;
-    font-weight: $weight-bold;
-    line-height: $lh-section;
-    letter-spacing: $ls-section;
     color: $color-cream;
     margin: 0;
 
     @include mobile-only {
       font-size: 22px;
-      line-height: 28px;
     }
   }
 
   &__year {
-    font-weight: $weight-regular;
+    font-family: $font-mono;
+    font-size: $text-small;
     color: $color-olive;
+    letter-spacing: $ls-mono;
   }
 
   &__links {
@@ -437,27 +416,26 @@
   }
 }
 
-// ----- Demos Divider -----
-.demos-divider {
-  background-color: $color-cream;
-  padding: 24px 0;
-  margin-top: $section-padding-y;
+// ----- Album Navigation -----
+.album-nav {
+  padding: 32px 0;
+  @include border-top;
 
   &__inner {
     @include container;
+    display: flex;
+    justify-content: space-between;
   }
 
-  &__title {
-    font-family: $font-heading;
-    font-size: $text-section;
-    font-weight: $weight-bold;
-    line-height: $lh-section;
-    letter-spacing: $ls-section;
-    color: $color-ink;
-    margin: 0;
+  &__link {
+    font-family: $font-mono;
+    font-size: $text-small;
+    letter-spacing: $ls-mono;
+    text-transform: uppercase;
+    color: $color-brick;
 
-    @include mobile-only {
-      font-size: 22px;
+    &:hover {
+      color: $color-ink;
     }
   }
 }

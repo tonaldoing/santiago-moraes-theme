@@ -2,20 +2,16 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "sm/upcoming-shows",
-	"version": "1.0.0",
-	"title": "Próximos Shows",
+	"version": "2.0.0",
+	"title": "Próximos Shows (Songkick)",
 	"category": "santiago-moraes",
 	"icon": "calendar-alt",
-	"description": "Lista de próximos shows del CPT evento.",
+	"description": "Muestra los próximos shows del artista via Songkick.",
 	"textdomain": "santiago-moraes",
 	"attributes": {
-		"count": {
-			"type": "number",
-			"default": 4
-		},
-		"showViewAll": {
-			"type": "boolean",
-			"default": true
+		"theme": {
+			"type": "string",
+			"default": "dark"
 		}
 	},
 	"supports": {

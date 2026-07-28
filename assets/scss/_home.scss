@@ -90,11 +90,54 @@
     background-color: $color-warm;
     box-shadow: $shadow-brick-lg;
     margin-bottom: -$border-width;
+    position: relative;
 
     img {
       display: block;
       width: 100%;
       height: auto;
+    }
+
+    &--has-video {
+      cursor: pointer;
+
+      &:hover .hero__play-btn {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.08);
+      }
+    }
+
+    &--playing {
+      aspect-ratio: 16 / 9;
+      cursor: default;
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    }
+  }
+
+  &__play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: none;
+    border: none;
+    color: $color-cream;
+    opacity: 0.85;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: opacity $transition-fast, transform $transition-fast;
+    z-index: 2;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+
+    svg {
+      display: block;
     }
   }
 }

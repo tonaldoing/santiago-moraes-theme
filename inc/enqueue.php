@@ -95,6 +95,17 @@ function sm_enqueue_assets() {
 		);
 	}
 
+	// Hero video facade — front page only.
+	if ( is_front_page() && sm_get_option( 'sm_hero_video_url', '' ) ) {
+		wp_enqueue_script(
+			'sm-hero-video',
+			SM_THEME_URI . '/assets/js/hero-video.js',
+			array(),
+			SM_THEME_VERSION,
+			array( 'strategy' => 'defer' )
+		);
+	}
+
 	// Home contact form — front page only (compact inline form).
 	if ( is_front_page() ) {
 		wp_enqueue_script(

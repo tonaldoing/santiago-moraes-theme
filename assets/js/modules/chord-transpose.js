@@ -126,12 +126,45 @@
 	}
 
 	/**
+	 * Detect the key from the first chord in the viewer.
+	 *
+	 * @param {HTMLElement} viewer The chord-viewer container.
+	 * @return {string} Detected key or empty string.
+	 */
+	function detectKeyFromChords( viewer ) {
+		var firstChord = viewer.querySelector( '.chord[data-chord]' );
+		if ( firstChord ) {
+			var chord = firstChord.getAttribute( 'data-chord' );
+			// Extract root + quality (e.g., "Am7" → "Am", "G" → "G")
+			var match = chord.match( /^([A-G][#b]?m?)/ );
+			if ( match ) {
+				return match[1];
+			}
+		}
+		return '';
+	}
+
+	/**
 	 * Initialize transpose controls.
 	 */
 	function init() {
 		var viewer = document.querySelector( '.chord-viewer' );
 		if ( ! viewer ) {
 			return;
+		}
+
+		// Auto-detect key if not set in meta field.
+		if ( ! viewer.dataset.originalKey ) {
+			var detected = detectKeyFromChords( viewer );
+			if ( detected ) {
+				viewer.dataset.originalKey = detected;
+			}
+		}
+
+		// Set the initial key display.
+		var keyDisplay = viewer.querySelector( '.chord-control__key-current' );
+		if ( keyDisplay && viewer.dataset.originalKey && ! keyDisplay.textContent.trim() ) {
+			keyDisplay.textContent = viewer.dataset.originalKey;
 		}
 
 		var btnUp = viewer.querySelector( '.chord-control--transpose-up' );

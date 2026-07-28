@@ -109,15 +109,15 @@
 	var STRING_SPACING = ( GRID_RIGHT - GRID_LEFT ) / 5;
 	var FRET_SPACING = ( GRID_BOTTOM - GRID_TOP ) / NUM_FRETS;
 
-	// Colors.
-	var COLOR_STRING = 'rgba(247,243,240,0.3)';
-	var COLOR_FRET = 'rgba(247,243,240,0.2)';
-	var COLOR_NUT = 'rgba(247,243,240,0.8)';
-	var COLOR_DOT = '#EC4913';
-	var COLOR_BARRE = '#EC4913';
-	var COLOR_MARKER = 'rgba(247,243,240,0.5)';
-	var COLOR_NAME = '#F7F3F0';
-	var COLOR_FRET_NUM = 'rgba(247,243,240,0.5)';
+	// Colors — light palette (dark on warm/paper background).
+	var COLOR_STRING = 'rgba(31,60,87,0.3)';
+	var COLOR_FRET = 'rgba(31,60,87,0.2)';
+	var COLOR_NUT = 'rgba(31,60,87,0.8)';
+	var COLOR_DOT = '#A8341C';
+	var COLOR_BARRE = '#A8341C';
+	var COLOR_MARKER = 'rgba(107,87,60,0.6)';
+	var COLOR_NAME = '#1F3C57';
+	var COLOR_FRET_NUM = 'rgba(107,87,60,0.6)';
 
 	// -------------------------------------------------------
 	// SVG rendering functions.
@@ -307,7 +307,7 @@
 				continue;
 			}
 
-			html += '<div class="chord-diagrams__item">'
+			html += '<div class="chord-diagrams__item chord-diagram">'
 				+ renderDiagramSVG( name, data )
 				+ '</div>';
 		}

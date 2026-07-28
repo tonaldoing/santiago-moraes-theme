@@ -93,6 +93,16 @@
     max-width: 32em;
   }
 
+  // Platform cards on light bg: dark borders/text.
+  .platform-card {
+    color: $color-ink;
+    border-color: $hex-ink;
+
+    &:hover {
+      background-color: rgba($hex-ink, 0.08);
+    }
+  }
+
   // -- Tracklist Section --
   &__tracklist {
     padding: $section-padding-y 0;

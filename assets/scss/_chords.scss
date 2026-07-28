@@ -3,9 +3,9 @@
 
 // ==========================================================================
 // Chord Viewer — Song lyrics with inline chords + 60/40 layout
+// Rebranding: light palette (paper bg, ink text, brick accents)
 // ==========================================================================
 
-// Monospace font for chord alignment.
 $font-chord: $font-mono;
 
 // ----- 60/40 Song Layout -----
@@ -32,6 +32,8 @@ $font-chord: $font-mono;
     margin-bottom: 24px;
 
     &__title {
+      font-size: clamp(26px, 4.5vw, 64px);
+      line-height: 0.92;
       margin-bottom: 0;
     }
   }
@@ -62,9 +64,8 @@ $font-chord: $font-mono;
   flex-wrap: wrap;
   gap: 12px;
   padding: 12px 16px;
-  background-color: rgba($hex-cream, 0.06);
-  border: $border-width solid rgba($hex-cream, 0.1);
-  border-radius: 0;
+  background-color: $color-warm;
+  border: $border-width solid $color-ink;
   margin-bottom: 24px;
 }
 
@@ -87,10 +88,9 @@ $font-chord: $font-mono;
   @include flex-center;
   gap: 6px;
   padding: 6px 10px;
-  border: $border-width solid rgba($hex-cream, 0.12);
-  border-radius: 0;
-  background-color: rgba($hex-cream, 0.04);
-  color: $color-cream;
+  border: 2px solid $hex-ink;
+  background-color: transparent;
+  color: $color-ink;
   font-family: $font-heading;
   font-size: $text-small;
   font-weight: $weight-medium;
@@ -99,19 +99,19 @@ $font-chord: $font-mono;
   white-space: nowrap;
 
   &:hover {
-    border-color: rgba($hex-brick, 0.5);
+    background-color: rgba($hex-ink, 0.08);
     color: $color-accent;
   }
 
   &--active {
-    background-color: $color-accent;
-    border-color: $color-accent;
-    color: #fff;
+    background-color: $color-ink;
+    border-color: $color-ink;
+    color: $color-ochre;
 
     &:hover {
-      background-color: rgba($hex-brick, 0.8);
-      border-color: rgba($hex-brick, 0.8);
-      color: #fff;
+      background-color: rgba($hex-ink, 0.85);
+      border-color: rgba($hex-ink, 0.85);
+      color: $color-ochre;
     }
   }
 
@@ -129,9 +129,8 @@ $font-chord: $font-mono;
     @include flex-center;
     min-width: 40px;
     padding: 4px 8px;
-    background-color: rgba($hex-cream, 0.06);
-    border: $border-width solid rgba($hex-cream, 0.12);
-    border-radius: 0;
+    background-color: rgba($hex-ink, 0.06);
+    border: 2px solid $color-border;
     font-family: $font-chord;
     font-size: $text-small;
     font-weight: $weight-bold;
@@ -155,7 +154,7 @@ $font-chord: $font-mono;
   font-family: $font-chord;
   font-size: 14px;
   line-height: 1.4;
-  color: $color-cream;
+  color: $color-ink;
   overflow-x: auto;
   overflow-y: visible;
 }
@@ -177,7 +176,7 @@ $font-chord: $font-mono;
     letter-spacing: 1px;
     margin-bottom: 8px;
     padding-bottom: 4px;
-    border-bottom: 1px solid rgba($hex-cream, 0.1);
+    border-bottom: 2px solid $color-border;
   }
 }
 
@@ -245,7 +244,7 @@ $font-chord: $font-mono;
   display: block;
   font-family: $font-chord;
   font-size: 14px;
-  color: $color-cream;
+  color: $color-ink;
   white-space: pre;
   line-height: 1.4;
 }
@@ -265,9 +264,8 @@ $font-chord: $font-mono;
   }
 
   &__card {
-    background-color: rgba($hex-cream, 0.04);
-    border: $border-width solid rgba($hex-cream, 0.08);
-    border-radius: 0;
+    background-color: $color-warm;
+    border: $border-width solid $color-ink;
     padding: 20px;
   }
 
@@ -275,7 +273,7 @@ $font-chord: $font-mono;
     font-family: $font-heading;
     font-size: $text-body;
     font-weight: $weight-bold;
-    color: $color-cream;
+    color: $color-ink;
     margin: 0 0 12px;
   }
 
@@ -290,19 +288,18 @@ $font-chord: $font-mono;
     align-items: center;
     gap: 10px;
     padding: 10px 14px;
-    background-color: rgba($hex-cream, 0.04);
-    border: $border-width solid rgba($hex-cream, 0.1);
-    border-radius: 0;
+    background-color: $color-paper;
+    border: 2px solid $color-border;
     font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-cream;
+    color: $color-ink;
     text-decoration: none;
     transition: all $transition-fast;
 
     &:hover {
-      background-color: rgba($hex-cream, 0.08);
-      border-color: rgba($hex-cream, 0.2);
+      background-color: rgba($hex-ink, 0.04);
+      border-color: $color-ink;
     }
 
     svg {
@@ -334,7 +331,7 @@ $font-chord: $font-mono;
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
-    border-bottom: 1px solid rgba($hex-cream, 0.08);
+    border-bottom: 1px solid $color-border;
 
     &:last-child {
       border-bottom: 0;
@@ -344,7 +341,7 @@ $font-chord: $font-mono;
       font-family: $font-heading;
       font-size: $text-small;
       font-weight: $weight-medium;
-      color: rgba($hex-cream, 0.5);
+      color: $color-olive;
     }
 
     dd {
@@ -352,7 +349,7 @@ $font-chord: $font-mono;
       font-family: $font-heading;
       font-size: $text-small;
       font-weight: $weight-bold;
-      color: $color-cream;
+      color: $color-ink;
     }
   }
 
@@ -364,7 +361,7 @@ $font-chord: $font-mono;
   }
 
   &__track {
-    border-bottom: 1px solid rgba($hex-cream, 0.08);
+    border-bottom: 1px solid $color-border;
 
     &:last-child {
       border-bottom: 0;
@@ -389,7 +386,7 @@ $font-chord: $font-mono;
     font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-cream;
+    color: $color-ink;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -413,7 +410,7 @@ $font-chord: $font-mono;
   }
 
   &__related-item {
-    border-bottom: 1px solid rgba($hex-cream, 0.08);
+    border-bottom: 1px solid $color-border;
 
     &:last-child {
       border-bottom: 0;
@@ -437,14 +434,14 @@ $font-chord: $font-mono;
     font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
-    color: $color-cream;
+    color: $color-ink;
     transition: color $transition-fast;
   }
 
   &__related-album {
     font-family: $font-body;
     font-size: 12px;
-    color: rgba($hex-cream, 0.5);
+    color: $color-olive;
   }
 }
 
@@ -452,15 +449,14 @@ $font-chord: $font-mono;
 .song-coming-soon {
   padding: $section-padding-y 0;
   text-align: center;
-  background-color: rgba($hex-cream, 0.04);
-  border: $border-width solid rgba($hex-cream, 0.08);
-  border-radius: 0;
+  background-color: $color-warm;
+  border: $border-width solid $color-ink;
 
   &__text {
     font-family: $font-heading;
     font-size: $text-section;
     font-weight: $weight-bold;
-    color: rgba($hex-cream, 0.4);
+    color: $color-olive;
     margin: 0;
 
     @include mobile-only {
@@ -472,9 +468,8 @@ $font-chord: $font-mono;
 // ----- Chord Diagrams -----
 .chord-diagrams {
   margin-bottom: 24px;
-  background-color: rgba($hex-cream, 0.03);
-  border: $border-width solid rgba($hex-cream, 0.07);
-  border-radius: 0;
+  background-color: $color-warm;
+  border: $border-width solid $color-ink;
   overflow: hidden;
 
   &__toggle {
@@ -485,7 +480,7 @@ $font-chord: $font-mono;
     padding: 12px 16px;
     background: none;
     border: none;
-    color: $color-cream;
+    color: $color-ink;
     font-family: $font-heading;
     font-size: $text-small;
     font-weight: $weight-medium;
@@ -493,7 +488,7 @@ $font-chord: $font-mono;
     transition: background-color $transition-fast;
 
     &:hover {
-      background-color: rgba($hex-cream, 0.04);
+      background-color: rgba($hex-ink, 0.04);
     }
 
     svg {
@@ -523,15 +518,14 @@ $font-chord: $font-mono;
   align-items: center;
   cursor: pointer;
   padding: 4px;
-  border-radius: 0;
   transition: background-color $transition-fast;
 
   &:hover {
-    background-color: rgba($hex-cream, 0.06);
+    background-color: rgba($hex-ochre, 0.2);
   }
 }
 
-// ----- Chord Diagram Lightbox -----
+// ----- Chord Diagram Lightbox (stays dark — it's a modal overlay) -----
 .chord-lightbox {
   position: fixed;
   inset: 0;
@@ -559,7 +553,6 @@ $font-chord: $font-mono;
     padding: 32px;
     background-color: $hex-ink;
     border: $border-width solid rgba($hex-cream, 0.1);
-    border-radius: 0;
     max-width: 320px;
     width: 90%;
 
@@ -604,7 +597,6 @@ $font-chord: $font-mono;
 
 // ----- Print Styles (global) -----
 @media print {
-  // Hide non-content elements.
   .site-header,
   .site-footer,
   .mobile-menu,
@@ -623,7 +615,6 @@ $font-chord: $font-mono;
     display: none !important;
   }
 
-  // Reset backgrounds and colors.
   body {
     background: white !important;
     color: black !important;
@@ -653,7 +644,6 @@ $font-chord: $font-mono;
     max-width: 100% !important;
   }
 
-  // -- Single cancion (chord viewer) --
   .song-layout {
     display: block !important;
     max-width: 100%;
@@ -701,7 +691,6 @@ $font-chord: $font-mono;
     }
   }
 
-  // -- Acordes page (song list) --
   .acordes-body__inner {
     display: block !important;
   }
@@ -717,7 +706,6 @@ $font-chord: $font-mono;
     color: #333 !important;
   }
 
-  // -- Discography page --
   .disco-header,
   .album-hero {
     padding: 16pt 0 !important;
@@ -728,7 +716,6 @@ $font-chord: $font-mono;
     border-color: #ccc !important;
   }
 
-  // -- Homepage sections --
   .hero,
   .shows,
   .music,

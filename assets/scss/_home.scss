@@ -99,21 +99,39 @@
   }
 }
 
-// ----- Marquee Ticker -----
-.marquee {
+// ----- Announcement Bar -----
+.announcement {
   background-color: $color-ink;
   @include border-bottom;
-  overflow: hidden;
-  padding: 16px 0;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    max-width: $container-max;
+    margin: 0 auto;
+    padding: 14px $section-padding-x;
+    text-decoration: none;
+    color: $color-ochre;
+    @include transition(background-color);
+  }
+
+  a.announcement__inner:hover {
+    background-color: rgba($hex-ochre, 0.1);
+  }
 
   &__text {
-    font-family: $font-heading;
-    font-size: clamp(20px, 2.4vw, 34px);
+    font-family: $font-mono;
+    font-size: 12px;
+    letter-spacing: $ls-mono;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
-    margin: 0;
-    white-space: nowrap;
-    color: $color-ochre;
+    text-align: center;
+  }
+
+  &__arrow {
+    font-size: 16px;
+    flex-shrink: 0;
   }
 }
 

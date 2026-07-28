@@ -170,7 +170,9 @@ function sm_sanitize_options( $input ) {
 	$clean['sm_logo_type']     = isset( $input['sm_logo_type'] ) && in_array( $input['sm_logo_type'], array( 'text', 'image' ), true ) ? $input['sm_logo_type'] : 'text';
 	$clean['sm_logo_text']     = isset( $input['sm_logo_text'] ) ? sanitize_text_field( $input['sm_logo_text'] ) : 'Santiago Moraes';
 	$clean['sm_logo_image']    = isset( $input['sm_logo_image'] ) ? esc_url_raw( $input['sm_logo_image'] ) : '';
-	$clean['sm_header_height'] = isset( $input['sm_header_height'] ) ? absint( $input['sm_header_height'] ) : 90;
+	$clean['sm_header_height']       = isset( $input['sm_header_height'] ) ? absint( $input['sm_header_height'] ) : 90;
+	$clean['sm_announcement_text']   = isset( $input['sm_announcement_text'] ) ? sanitize_text_field( $input['sm_announcement_text'] ) : '';
+	$clean['sm_announcement_url']    = isset( $input['sm_announcement_url'] ) ? esc_url_raw( $input['sm_announcement_url'] ) : '';
 
 	// Social URLs.
 	$social_keys = array(
@@ -382,7 +384,7 @@ function sm_render_theme_options_page() {
  */
 function sm_render_hidden_fields( $active_tab ) {
 	$tab_keys = array(
-		'general'    => array( 'sm_logo_type', 'sm_logo_text', 'sm_logo_image', 'sm_header_height' ),
+		'general'    => array( 'sm_logo_type', 'sm_logo_text', 'sm_logo_image', 'sm_header_height', 'sm_announcement_text', 'sm_announcement_url' ),
 		'colores'    => array( 'sm_color_ink', 'sm_color_paper', 'sm_color_ochre', 'sm_color_brick', 'sm_color_cream', 'sm_color_warm', 'sm_color_muted', 'sm_color_brown', 'sm_color_olive', 'sm_color_footer_text' ),
 		'tipografia' => array( 'sm_font_heading', 'sm_font_body', 'sm_font_button', 'sm_font_size_base' ),
 		'hero'       => array( 'sm_hero_tag', 'sm_hero_line1', 'sm_hero_line2', 'sm_hero_description', 'sm_hero_image', 'sm_hero_album_label', 'sm_hero_btn1_text', 'sm_hero_btn1_url', 'sm_hero_btn2_text', 'sm_hero_btn2_url' ),
@@ -455,6 +457,27 @@ function sm_tab_general() {
 			<script>document.getElementById('sm_header_height').addEventListener('input',function(){document.getElementById('sm_header_height_val').textContent=this.value+'px';});</script>
 		</td>
 	</tr>
+
+	<tr><td colspan="2"><h3 style="margin:24px 0 6px;font-size:14px;font-weight:600;color:#1d2327;border-bottom:1px solid #c3c4c7;padding-bottom:6px;"><?php esc_html_e( 'Barra de anuncio (homepage)', 'santiago-moraes' ); ?></h3></td></tr>
+
+	<?php
+	$ann_text = sm_get_option( 'sm_announcement_text', '' );
+	$ann_url  = sm_get_option( 'sm_announcement_url', '' );
+	?>
+	<tr>
+		<th scope="row"><label for="sm_announcement_text"><?php esc_html_e( 'Texto del anuncio', 'santiago-moraes' ); ?></label></th>
+		<td>
+			<input type="text" id="sm_announcement_text" name="sm_options[sm_announcement_text]" value="<?php echo esc_attr( $ann_text ); ?>" class="large-text">
+			<p class="description"><?php esc_html_e( 'Ej: "Nuevo disco: Las siete menos diez — Ya disponible". Dejalo vacio para ocultar la barra.', 'santiago-moraes' ); ?></p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="sm_announcement_url"><?php esc_html_e( 'Link del anuncio (opcional)', 'santiago-moraes' ); ?></label></th>
+		<td>
+			<input type="url" id="sm_announcement_url" name="sm_options[sm_announcement_url]" value="<?php echo esc_url( $ann_url ); ?>" class="regular-text">
+			<p class="description"><?php esc_html_e( 'Si tiene link, toda la barra es clickeable.', 'santiago-moraes' ); ?></p>
+		</td>
+	</tr>
 	<?php
 }
 
@@ -490,42 +513,26 @@ function sm_tab_colores() {
  * Tipografias tab.
  */
 function sm_tab_tipografia() {
-	$font_heading = sm_get_option( 'sm_font_heading', 'Be Vietnam Pro' );
-	$font_body    = sm_get_option( 'sm_font_body', 'Montserrat' );
-	$font_button  = sm_get_option( 'sm_font_button', 'Be Vietnam Pro' );
-	$font_size    = sm_get_option( 'sm_font_size_base', 16 );
-	$choices      = sm_get_font_choices();
-
-	$font_fields = array(
-		'sm_font_heading' => array( $font_heading, __( 'Fuente de titulos', 'santiago-moraes' ) ),
-		'sm_font_body'    => array( $font_body, __( 'Fuente de cuerpo', 'santiago-moraes' ) ),
-		'sm_font_button'  => array( $font_button, __( 'Fuente de botones', 'santiago-moraes' ) ),
+	$fonts = array(
+		array( 'Archivo Black', __( 'Titulos y headings', 'santiago-moraes' ), 'sans-serif' ),
+		array( 'Newsreader', __( 'Texto editorial y descripciones', 'santiago-moraes' ), 'serif' ),
+		array( 'DM Mono', __( 'Labels, metadata y acordes', 'santiago-moraes' ), 'monospace' ),
 	);
-
-	foreach ( $font_fields as $key => $data ) :
-		?>
-		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $data[1] ); ?></label></th>
-			<td>
-				<select id="<?php echo esc_attr( $key ); ?>" name="sm_options[<?php echo esc_attr( $key ); ?>]">
-					<?php foreach ( $choices as $value => $label ) : ?>
-						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $data[0], $value ); ?>><?php echo esc_html( $label ); ?></option>
-					<?php endforeach; ?>
-				</select>
-			</td>
-		</tr>
-		<?php
-	endforeach;
 	?>
 	<tr>
-		<th scope="row"><label for="sm_font_size_base"><?php esc_html_e( 'Tamano base (px)', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="range" id="sm_font_size_base" name="sm_options[sm_font_size_base]" value="<?php echo esc_attr( $font_size ); ?>" min="14" max="20" step="1">
-			<span id="sm_font_size_val"><?php echo esc_html( $font_size ); ?>px</span>
-			<script>document.getElementById('sm_font_size_base').addEventListener('input',function(){document.getElementById('sm_font_size_val').textContent=this.value+'px';});</script>
+		<td colspan="2">
+			<p class="description" style="margin-bottom:16px;"><?php esc_html_e( 'Las fuentes del rebranding estan fijas en el tema. Se cargan automaticamente desde Google Fonts.', 'santiago-moraes' ); ?></p>
 		</td>
 	</tr>
-	<?php
+	<?php foreach ( $fonts as $font ) : ?>
+		<tr>
+			<th scope="row"><?php echo esc_html( $font[1] ); ?></th>
+			<td>
+				<code style="font-size:14px;padding:4px 10px;background:#f0f0f1;border:1px solid #c3c4c7;"><?php echo esc_html( $font[0] ); ?></code>
+				<span class="description" style="margin-left:8px;">(<?php echo esc_html( $font[2] ); ?>)</span>
+			</td>
+		</tr>
+	<?php endforeach;
 }
 
 /**

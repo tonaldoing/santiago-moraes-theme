@@ -257,7 +257,7 @@
     @include transition(all);
 
     &:hover {
-      background-color: darken($hex-brick, 8%);
+      background-color: #8C2B17;
     }
   }
 }

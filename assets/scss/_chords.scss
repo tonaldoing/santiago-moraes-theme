@@ -602,8 +602,9 @@ $font-chord: $font-mono;
   }
 }
 
-// ----- Print Styles -----
+// ----- Print Styles (global) -----
 @media print {
+  // Hide non-content elements.
   .site-header,
   .site-footer,
   .mobile-menu,
@@ -611,16 +612,48 @@ $font-chord: $font-mono;
   .chord-viewer__controls,
   .song-sidebar,
   .song-nav,
-  .admin-bar {
+  .announcement,
+  .acordes-preview,
+  .acordes-filters,
+  .album-nav,
+  .home-contact__form,
+  .admin-bar,
+  .hero__buttons,
+  .music__platforms {
     display: none !important;
   }
 
+  // Reset backgrounds and colors.
   body {
     background: white !important;
     color: black !important;
     font-size: 12pt !important;
   }
 
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    color: black !important;
+    text-decoration: underline;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+    page-break-after: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  // -- Single cancion (chord viewer) --
   .song-layout {
     display: block !important;
     max-width: 100%;
@@ -634,6 +667,7 @@ $font-chord: $font-mono;
 
   .chord-viewer__content {
     font-size: 11pt;
+    color: black !important;
   }
 
   .chord {
@@ -665,5 +699,42 @@ $font-chord: $font-mono;
     &__item {
       color: #333 !important;
     }
+  }
+
+  // -- Acordes page (song list) --
+  .acordes-body__inner {
+    display: block !important;
+  }
+
+  .acordes-row {
+    display: grid !important;
+    border-color: #ccc !important;
+    color: black !important;
+    padding: 8px 0 !important;
+  }
+
+  .acordes-row__key {
+    color: #333 !important;
+  }
+
+  // -- Discography page --
+  .disco-header,
+  .album-hero {
+    padding: 16pt 0 !important;
+    border: none !important;
+  }
+
+  .disco-card__cover {
+    border-color: #ccc !important;
+  }
+
+  // -- Homepage sections --
+  .hero,
+  .shows,
+  .music,
+  .latest-songs,
+  .home-contact {
+    padding: 16pt 0 !important;
+    border: none !important;
   }
 }

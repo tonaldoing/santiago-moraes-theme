@@ -118,6 +118,7 @@ if ( $songs->have_posts() ) {
 							   class="acordes-row<?php echo $is_first ? ' acordes-row--active' : ''; ?>"
 							   data-albums="<?php echo esc_attr( implode( ' ', $album_slugs ) ); ?>"
 							   data-title="<?php echo esc_attr( get_the_title() ); ?>"
+							   data-key="<?php echo esc_attr( $original_key ); ?>"
 							   data-meta="<?php echo esc_attr( implode( ' · ', $meta_parts ) ); ?>"
 							   data-preview="<?php echo esc_attr( $preview_snippet ); ?>"
 							   data-url="<?php the_permalink(); ?>">

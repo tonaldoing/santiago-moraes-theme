@@ -3,21 +3,23 @@
 
 // ==========================================================================
 // Album Page — taxonomy-album.php (individual album at /album/{slug}/)
+// Rebranding: compact hero, tracklist, more albums grid
 // ==========================================================================
 
 .album-page {
 
-  // -- Hero Section (dark) --
+  // -- Hero Section (compact, warm bg) --
   &__hero {
-    background-color: $color-ink;
-    padding: $section-padding-y 0;
+    background-color: $color-warm;
+    @include border-bottom;
+    padding: clamp(32px, 4vw, 56px) 0;
   }
 
   &__hero-inner {
     @include container;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: clamp(24px, 3vw, 36px);
 
     @include tablet {
       flex-direction: row;
@@ -27,79 +29,74 @@
 
   &__cover {
     @include tablet {
-      width: 40%;
+      width: 280px;
       flex-shrink: 0;
+    }
+
+    @include desktop {
+      width: 320px;
     }
 
     &-img {
       width: 100%;
       height: auto;
-      border-radius: 0;
       display: block;
+      border: $border-style;
+      box-shadow: $shadow-brick;
     }
   }
 
   &__info {
     @include flex-column;
-    gap: $widget-spacing;
+    gap: 14px;
 
     @include tablet {
-      width: 60%;
+      flex: 1;
     }
   }
 
   &__year {
-    font-family: $font-heading;
-    font-size: $text-small;
-    font-weight: $weight-medium;
-    color: $color-olive;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    color: $color-brick;
+    margin: 0;
   }
 
   &__title {
     font-family: $font-heading;
-    font-size: $text-hero;
+    font-size: clamp(32px, 5vw, 64px);
     font-weight: $weight-regular;
-    line-height: $lh-hero;
-    letter-spacing: $ls-hero;
-    color: $color-cream;
+    line-height: 0.9;
+    letter-spacing: $ls-section;
+    color: $color-ink;
     margin: 0;
-
-    @include until($bp-tablet) {
-      font-size: 50px;
-    }
-
-    @include mobile-only {
-      font-size: 36px;
-    }
+    text-transform: uppercase;
   }
 
   &__badge {
     display: inline-block;
-    font-family: $font-heading;
-    font-size: 12px;
+    font-family: $font-mono;
+    font-size: 11px;
     font-weight: $weight-bold;
     color: $color-olive;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    border: $border-width solid $color-olive;
+    letter-spacing: $ls-mono;
+    border: 2px solid $color-olive;
     padding: 4px 12px;
-    border-radius: 0;
   }
 
   &__description {
     font-family: $font-body;
-    font-weight: $weight-regular;
-    color: $color-olive;
+    font-style: italic;
+    font-size: $text-sub;
     line-height: $lh-body;
+    color: $color-brown;
     margin: 0;
+    max-width: 32em;
   }
 
-  // -- Tracklist Section (light) --
+  // -- Tracklist Section --
   &__tracklist {
     padding: $section-padding-y 0;
-    background-color: $color-paper;
+    @include border-bottom;
   }
 
   &__tracklist-inner {
@@ -114,56 +111,27 @@
     letter-spacing: $ls-section;
     color: $color-ink;
     margin-bottom: 24px;
-
-    @include mobile-only {
-      font-size: 22px;
-      line-height: 28px;
-    }
   }
-}
 
-// -- Album Prev/Next Navigation --
-.album-nav {
-  background-color: $color-cream;
-  padding: 32px 0;
-  border-top: $border-width solid $color-border;
+  // -- More Albums Section --
+  &__more {
+    padding: $section-padding-y 0;
+    background-color: $color-warm;
+  }
 
-  &__inner {
+  &__more-inner {
     @include container;
-    @include flex-between;
   }
 
-  &__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: $font-heading;
-    font-size: $text-body;
-    font-weight: $weight-medium;
+  &__more-title {
+    font-size: $text-section;
+    margin: 0 0 clamp(24px, 3vw, 40px);
     color: $color-ink;
-    text-decoration: none;
-    @include transition(color);
-
-    &:hover {
-      color: $color-ochre;
-    }
-
-    &--next {
-      margin-left: auto;
-    }
-
-    &--empty {
-      visibility: hidden;
-    }
   }
 
-  &__arrow {
-    font-size: $text-sub;
-  }
-
-  &__label {
-    @include mobile-only {
-      display: none;
-    }
+  &__more-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: clamp(20px, 3vw, 36px);
   }
 }

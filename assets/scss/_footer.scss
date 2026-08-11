@@ -52,23 +52,24 @@
   }
 }
 
-// Footer social links (text, not icons)
+// Footer social icons
 .footer-social {
   display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
+  align-items: center;
+  gap: 16px;
 
   &__link {
-    font-family: $font-mono;
-    font-size: 11px;
-    letter-spacing: $ls-mono;
-    text-transform: uppercase;
+    display: flex;
     color: $color-footer-text;
     text-decoration: none;
     transition: color $transition-fast;
 
     &:hover {
       color: $color-ochre;
+    }
+
+    svg {
+      display: block;
     }
   }
 }

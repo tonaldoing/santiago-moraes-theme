@@ -24,7 +24,7 @@
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    gap: 24px;
+    gap: 16px;
     padding: 0 $section-padding-x;
   }
 }
@@ -32,6 +32,7 @@
 // Site title link — already styled in _typography.scss
 .site-title {
   padding: 14px 0;
+  flex-shrink: 0;
 }
 
 // ==========================================================================
@@ -44,25 +45,26 @@
   @include tablet {
     display: flex;
     align-items: stretch;
-    gap: 2px;
   }
 
   &__list {
     display: flex;
     align-items: stretch;
-    gap: 2px;
+    gap: 0;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
+  // -- Top-level items --
   &__list > .menu-item {
     display: flex;
+    position: relative;
 
     > a {
       display: flex;
       align-items: center;
-      padding: 0 18px;
+      padding: 0 16px;
       font-family: $font-mono;
       font-size: $text-small;
       letter-spacing: $ls-mono;
@@ -84,8 +86,93 @@
     }
   }
 
+  // -- Parent items with children (desktop) --
+  &__list > .menu-item-has-children {
+    > a {
+      padding-right: 8px;
+    }
+
+    // Show dropdown on hover or keyboard focus
+    &:hover > .sub-menu,
+    &.menu-item--focus > .sub-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  // -- Desktop submenu toggle: visible as a small chevron --
   .submenu-toggle {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px 0 2px;
+    background: none;
+    border: none;
+    color: rgba($hex-cream, 0.5);
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-ochre;
+    }
+
+    svg {
+      width: 8px;
+      height: 8px;
+      transition: transform $transition-fast;
+    }
+  }
+
+  // -- Desktop dropdown --
+  .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 110;
+    min-width: 200px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: $hex-ink;
+    border: $border-width solid rgba($hex-cream, 0.15);
+    border-top: $border-width solid $hex-ochre;
+    box-shadow: 4px 4px 0 rgba($hex-ink, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity $transition-fast, visibility $transition-fast, transform $transition-fast;
+
+    .menu-item {
+      border-bottom: 1px solid rgba($hex-cream, 0.08);
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      a {
+        display: block;
+        padding: 12px 18px;
+        font-family: $font-mono;
+        font-size: 11px;
+        letter-spacing: $ls-mono;
+        text-transform: uppercase;
+        color: rgba($hex-cream, 0.7);
+        text-decoration: none;
+        transition: background-color $transition-fast, color $transition-fast;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: rgba($hex-ochre, 0.15);
+          color: $color-ochre;
+        }
+      }
+
+      &.current-menu-item a,
+      &.current_page_item a {
+        color: $color-ochre;
+      }
+    }
   }
 }
 
@@ -128,13 +215,14 @@
   z-index: 99;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-top: 80px;
+  padding-top: 72px;
 
   &--open {
     display: flex;
     flex-direction: column;
   }
 
+  // -- Menu list --
   &__list {
     @include flex-column;
     gap: 0;
@@ -144,16 +232,18 @@
     flex: 1;
   }
 
+  // -- Top-level items --
   &__list > .menu-item,
   &__list > li {
-    border-bottom: 2px solid rgba($hex-cream, 0.1);
+    border-bottom: 1px solid rgba($hex-cream, 0.1);
 
     > a {
       display: block;
-      padding: 18px 0;
-      font-family: $font-heading;
-      font-size: 22px;
+      padding: 16px 0;
+      font-family: $font-mono;
+      font-size: 17px;
       text-transform: uppercase;
+      letter-spacing: $ls-mono;
       color: $color-cream;
       text-decoration: none;
       transition: color $transition-fast;
@@ -169,31 +259,134 @@
     }
   }
 
+  // -- Parent items: link + toggle side by side --
+  &__list > .menu-item-has-children {
+    > a {
+      display: inline-block;
+    }
+
+    // Wrap link + toggle in a flex row
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    > a {
+      flex: 1;
+      min-width: 0;
+    }
+
+    > .submenu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin: 4px 0;
+      background: none;
+      border: 1px solid rgba($hex-cream, 0.15);
+      color: rgba($hex-cream, 0.5);
+      cursor: pointer;
+      transition: all $transition-fast;
+      flex-shrink: 0;
+
+      &:hover {
+        color: $color-ochre;
+        border-color: rgba($hex-ochre, 0.4);
+      }
+
+      &[aria-expanded='true'] {
+        color: $color-ochre;
+        border-color: rgba($hex-ochre, 0.3);
+        background-color: rgba($hex-ochre, 0.1);
+
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+
+      svg {
+        width: 12px;
+        height: 12px;
+        transition: transform $transition-fast;
+      }
+    }
+
+    // Submenu takes full width below
+    > .sub-menu {
+      width: 100%;
+    }
+  }
+
+  // -- Mobile sub-menu (accordion) --
+  .sub-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+
+    &--open {
+      border-top: 1px solid rgba($hex-cream, 0.08);
+    }
+
+    .menu-item {
+      a {
+        display: block;
+        padding: 12px 0 12px 20px;
+        font-family: $font-mono;
+        font-size: $text-small;
+        letter-spacing: $ls-mono;
+        text-transform: uppercase;
+        color: rgba($hex-cream, 0.6);
+        text-decoration: none;
+        border-bottom: 1px solid rgba($hex-cream, 0.05);
+        transition: color $transition-fast;
+
+        &:hover {
+          color: $color-ochre;
+        }
+      }
+
+      &:last-child a {
+        border-bottom: 0;
+      }
+
+      &.current-menu-item a,
+      &.current_page_item a {
+        color: $color-ochre;
+      }
+    }
+  }
+
+  // -- Social icons at bottom --
   &__social {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
     padding: 24px $section-padding-x;
-    border-top: 2px solid rgba($hex-cream, 0.1);
+    border-top: 1px solid rgba($hex-cream, 0.1);
+    margin-top: auto;
   }
 
   &__social-link {
-    font-family: $font-mono;
-    font-size: 11px;
-    letter-spacing: $ls-mono;
-    text-transform: uppercase;
-    color: rgba($hex-cream, 0.5);
+    display: flex;
+    color: rgba($hex-cream, 0.4);
     text-decoration: none;
     transition: color $transition-fast;
 
     &:hover {
       color: $color-ochre;
     }
+
+    svg {
+      display: block;
+    }
   }
 }
 
 // ==========================================================================
-// Header Social Links (text, not icons)
+// Header Social Icons
 // ==========================================================================
 
 .header-social {
@@ -202,20 +395,21 @@
   @include tablet {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
   }
 
   &__link {
-    font-family: $font-mono;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    display: flex;
     color: rgba($hex-cream, 0.5);
     text-decoration: none;
     transition: color $transition-fast;
 
     &:hover {
       color: $color-ochre;
+    }
+
+    svg {
+      display: block;
     }
   }
 }

@@ -192,7 +192,6 @@ function sm_sanitize_options( $input ) {
 	$clean['sm_hero_tag']         = isset( $input['sm_hero_tag'] ) ? sanitize_text_field( $input['sm_hero_tag'] ) : '';
 	$clean['sm_hero_line1']       = isset( $input['sm_hero_line1'] ) ? sanitize_text_field( $input['sm_hero_line1'] ) : 'Santiago';
 	$clean['sm_hero_line2']       = isset( $input['sm_hero_line2'] ) ? sanitize_text_field( $input['sm_hero_line2'] ) : 'Moraes';
-	$clean['sm_hero_description'] = isset( $input['sm_hero_description'] ) ? sanitize_textarea_field( $input['sm_hero_description'] ) : '';
 	$clean['sm_hero_image']       = isset( $input['sm_hero_image'] ) ? esc_url_raw( $input['sm_hero_image'] ) : '';
 	$clean['sm_hero_album_label'] = isset( $input['sm_hero_album_label'] ) ? sanitize_text_field( $input['sm_hero_album_label'] ) : '';
 	$clean['sm_hero_video_url']   = isset( $input['sm_hero_video_url'] ) ? esc_url_raw( $input['sm_hero_video_url'] ) : '';
@@ -388,7 +387,7 @@ function sm_render_hidden_fields( $active_tab ) {
 		'general'    => array( 'sm_logo_type', 'sm_logo_text', 'sm_logo_image', 'sm_header_height', 'sm_announcement_text', 'sm_announcement_url' ),
 		'colores'    => array( 'sm_color_ink', 'sm_color_paper', 'sm_color_ochre', 'sm_color_brick', 'sm_color_cream', 'sm_color_warm', 'sm_color_muted', 'sm_color_brown', 'sm_color_olive', 'sm_color_footer_text' ),
 		'tipografia' => array( 'sm_font_heading', 'sm_font_body', 'sm_font_button', 'sm_font_size_base' ),
-		'hero'       => array( 'sm_hero_tag', 'sm_hero_line1', 'sm_hero_line2', 'sm_hero_description', 'sm_hero_image', 'sm_hero_album_label', 'sm_hero_video_url', 'sm_hero_btn1_text', 'sm_hero_btn1_url', 'sm_hero_btn2_text', 'sm_hero_btn2_url' ),
+		'hero'       => array( 'sm_hero_tag', 'sm_hero_line1', 'sm_hero_line2', 'sm_hero_image', 'sm_hero_album_label', 'sm_hero_video_url', 'sm_hero_btn1_text', 'sm_hero_btn1_url', 'sm_hero_btn2_text', 'sm_hero_btn2_url' ),
 		'musica'     => array( 'sm_featured_album_id', 'sm_player_enabled', 'sm_player_homepage', 'sm_player_spotify_url' ),
 		'redes'      => array( 'sm_social_spotify', 'sm_social_instagram', 'sm_social_youtube', 'sm_social_bandcamp', 'sm_social_soundcloud', 'sm_social_facebook', 'sm_social_twitter' ),
 		'contacto'   => array( 'sm_contact_email', 'sm_contact_phone', 'sm_contact_address', 'sm_contact_maps_url' ),
@@ -543,7 +542,6 @@ function sm_tab_hero() {
 	$tag         = sm_get_option( 'sm_hero_tag', 'Canción rioplatense · Buenos Aires' );
 	$line1       = sm_get_option( 'sm_hero_line1', 'Santiago' );
 	$line2       = sm_get_option( 'sm_hero_line2', 'Moraes' );
-	$description = sm_get_option( 'sm_hero_description', '' );
 	$hero_img    = sm_get_option( 'sm_hero_image', '' );
 	$album_label = sm_get_option( 'sm_hero_album_label', 'Nuevo · Las siete menos diez' );
 	$video_url   = sm_get_option( 'sm_hero_video_url', '' );
@@ -566,13 +564,6 @@ function sm_tab_hero() {
 	<tr>
 		<th scope="row"><label for="sm_hero_line2"><?php esc_html_e( 'Titulo linea 2 (outline)', 'santiago-moraes' ); ?></label></th>
 		<td><input type="text" id="sm_hero_line2" name="sm_options[sm_hero_line2]" value="<?php echo esc_attr( $line2 ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_hero_description"><?php esc_html_e( 'Descripcion', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<textarea id="sm_hero_description" name="sm_options[sm_hero_description]" rows="3" class="large-text"><?php echo esc_textarea( $description ); ?></textarea>
-			<p class="description"><?php esc_html_e( 'Texto en cursiva debajo del titulo.', 'santiago-moraes' ); ?></p>
-		</td>
 	</tr>
 	<tr>
 		<th scope="row"><?php esc_html_e( 'Imagen del album (hero)', 'santiago-moraes' ); ?></th>

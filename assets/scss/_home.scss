@@ -49,16 +49,6 @@
     -webkit-text-stroke: 2px $hex-ink;
   }
 
-  &__description {
-    font-family: $font-body;
-    font-style: italic;
-    font-size: $text-sub;
-    line-height: $lh-sub;
-    max-width: 19em;
-    margin: 28px 0 0;
-    color: $hex-brown;
-  }
-
   &__buttons {
     display: flex;
     flex-wrap: wrap;
@@ -237,7 +227,7 @@
   }
 
   &__day {
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: 38px;
     color: $color-brick;
   }
@@ -498,9 +488,9 @@
   }
 
   &__submit {
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: $text-button;
-    letter-spacing: 0.06em;
+    letter-spacing: $ls-mono;
     text-transform: uppercase;
     background-color: $color-ink;
     color: $color-ochre;

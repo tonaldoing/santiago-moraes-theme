@@ -10,9 +10,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-family: $font-heading;
+  font-family: $font-mono;
   font-size: $text-button;
-  letter-spacing: 0.06em;
+  font-weight: $weight-medium;
+  letter-spacing: $ls-mono;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;

@@ -6,8 +6,9 @@
 // ==========================================================================
 
 .contact-header {
-  background-color: $color-ink;
-  padding: $section-padding-y 0;
+  background-color: $color-warm;
+  padding: clamp(44px, 6vw, 80px) 0;
+  @include border-bottom;
 
   &__inner {
     @include container;
@@ -15,15 +16,12 @@
 
   &__title {
     font-family: $font-heading;
-    font-size: $text-hero;
+    font-size: clamp(36px, 6vw, 72px);
     font-weight: $weight-regular;
-    line-height: $lh-hero;
-    letter-spacing: $ls-hero;
-    color: $color-cream;
+    line-height: 0.88;
+    letter-spacing: $ls-section;
+    color: $color-ink;
     margin: 0 0 12px;
-
-    @include until($bp-tablet) { font-size: 50px; }
-    @include mobile-only { font-size: 36px; }
   }
 
   &__intro {
@@ -69,9 +67,11 @@
 
   &__label {
     display: block;
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: $text-small;
     font-weight: $weight-medium;
+    letter-spacing: $ls-mono;
+    text-transform: uppercase;
     color: $color-ink;
     margin-bottom: 6px;
   }

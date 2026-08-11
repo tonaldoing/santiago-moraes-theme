@@ -680,20 +680,35 @@ p:last-child {
   height: auto;
 }
 
-.marquee {
+.announcement {
   background-color: var(--color-ink);
   border-bottom: 3px solid var(--color-ink);
-  overflow: hidden;
-  padding: 16px 0;
 }
-.marquee__text {
-  font-family: "Archivo Black", sans-serif;
-  font-size: clamp(20px, 2.4vw, 34px);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  margin: 0;
-  white-space: nowrap;
+.announcement__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 14px clamp(16px, 3vw, 40px);
+  text-decoration: none;
   color: var(--color-ochre);
+  transition: background-color 0.3s ease;
+}
+.announcement a.announcement__inner:hover {
+  background-color: rgba(224, 139, 62, 0.1);
+}
+.announcement__text {
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.announcement__arrow {
+  font-size: 16px;
+  flex-shrink: 0;
 }
 
 .shows {
@@ -1008,6 +1023,82 @@ p:last-child {
   overflow: hidden;
 }
 
+.disco-header {
+  background-color: var(--color-ochre);
+  padding: clamp(48px, 6vw, 96px) clamp(16px, 3vw, 40px);
+  border-bottom: 3px solid var(--color-ink);
+}
+.disco-header__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.disco-header__tag {
+  color: var(--color-brick);
+  margin: 0 0 18px;
+}
+.disco-header__title {
+  font-size: clamp(48px, 8vw, 124px);
+  line-height: 0.84;
+  letter-spacing: -0.045em;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.disco-grid-wrap {
+  padding: clamp(40px, 5vw, 80px) clamp(16px, 3vw, 40px);
+}
+.disco-grid-wrap__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(24px, 3vw, 44px);
+}
+
+.disco-card {
+  display: block;
+  text-decoration: none;
+  color: var(--color-ink);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.disco-card:hover .disco-card__cover {
+  box-shadow: 4px 4px 0 #A8341C;
+  transform: translate(6px, 6px);
+}
+.disco-card__cover {
+  border: 3px solid var(--color-ink);
+  background-color: var(--color-warm);
+  box-shadow: 10px 10px 0 #E08B3E;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.disco-card__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.disco-card__placeholder {
+  aspect-ratio: 1/1;
+  background: repeating-linear-gradient(135deg, #C9B896 0 8px, #D9CBB2 8px 16px);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 18px;
+  color: var(--color-olive);
+}
+.disco-card__name {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 24px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin: 20px 0 0;
+}
+.disco-card__meta {
+  color: var(--color-olive);
+  margin: 8px 0 0;
+}
+
 .album-hero {
   background-color: var(--color-ink);
   padding: clamp(48px, 6vw, 96px) 0;
@@ -1038,8 +1129,8 @@ p:last-child {
 .album-hero__cover-img {
   width: 100%;
   height: auto;
-  border-radius: 0;
   display: block;
+  border: 3px solid var(--color-ink);
 }
 .album-hero__info {
   display: flex;
@@ -1052,159 +1143,68 @@ p:last-child {
   }
 }
 .album-hero__year {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "DM Mono", monospace;
   font-size: 12px;
-  font-weight: 500;
-  color: var(--color-olive);
+  color: var(--color-ochre);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 0.16em;
 }
 .album-hero__title {
-  font-family: "Archivo Black", sans-serif;
-  font-size: clamp(52px, 9.5vw, 148px);
-  font-weight: 400;
+  font-size: clamp(36px, 6vw, 80px);
   line-height: 0.82;
   letter-spacing: -0.045em;
   color: var(--color-cream);
   margin: 0;
 }
-@media (max-width: 1024px) {
-  .album-hero__title {
-    font-size: 50px;
-  }
-}
-@media (max-width: 767px) {
-  .album-hero__title {
-    font-size: 36px;
-  }
-}
 .album-hero__description {
   font-family: "Newsreader", Georgia, serif;
-  font-weight: 400;
-  color: var(--color-olive);
+  font-style: italic;
+  color: rgba(244, 233, 214, 0.7);
   line-height: 1.55;
   margin: 0;
 }
 
-.discography {
-  padding: clamp(48px, 6vw, 96px) 0;
-  background-color: var(--color-paper);
-}
-.discography__inner {
-  width: 100%;
-  max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(16px, 3vw, 40px);
-  padding-right: clamp(16px, 3vw, 40px);
-}
-.discography__title {
-  font-family: "Archivo Black", sans-serif;
-  font-size: clamp(30px, 3.6vw, 52px);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  color: var(--color-ink);
-  margin-bottom: 32px;
-}
-@media (max-width: 767px) {
-  .discography__title {
-    font-size: 22px;
-    line-height: 28px;
-    margin-bottom: 24px;
-  }
-}
-.discography__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-@media (min-width: 768px) {
-  .discography__grid {
-    gap: 40px;
-  }
-}
-.discography--demos {
-  background-color: var(--color-cream);
-}
-.discography--demos .album-card__cover {
-  border-radius: 0;
-}
-.discography--demos .album-card__name {
-  font-size: 17px;
-}
-.discography--demos .album-card__year {
-  font-size: 12px;
-}
-@media (min-width: 768px) {
-  .discography--demos .discography__grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
+.platform-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.album-card {
-  display: block;
+.platform-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 2px solid #F4E9D6;
   text-decoration: none;
-  color: inherit;
+  transition: all 0.2s ease;
+  color: var(--color-cream);
 }
-.album-card:hover .album-card__overlay {
-  opacity: 1;
+.platform-card:hover {
+  background-color: rgba(244, 233, 214, 0.15);
 }
-.album-card:hover .album-card__img {
-  transform: scale(1.03);
-}
-.album-card__cover {
-  position: relative;
-  overflow: hidden;
-  border-radius: 0;
-  margin-bottom: 16px;
-  aspect-ratio: 1;
-}
-.album-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
-}
-.album-card__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(31, 60, 87, 0.5);
+.platform-card__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
-.album-card__cta {
-  font-family: "Archivo Black", sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-paper);
+.platform-card__icon svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+.platform-card__label {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  border: 3px solid var(--color-paper);
-  padding: 10px 24px;
-  border-radius: 0;
 }
-.album-card__info {
-  padding: 0 4px;
-}
-.album-card__name {
-  font-family: "Archivo Black", sans-serif;
-  font-size: clamp(19px, 2.1vw, 27px);
-  font-weight: 700;
-  color: var(--color-ink);
-  margin: 0 0 4px;
-  line-height: 1.4;
-}
-.album-card__year {
-  font-family: "Newsreader", Georgia, serif;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--color-brown);
+.platform-card__external {
+  display: none;
 }
 
 .tracklist {
@@ -1220,19 +1220,8 @@ p:last-child {
   padding-right: clamp(16px, 3vw, 40px);
 }
 .tracklist__title {
-  font-family: "Archivo Black", sans-serif;
   font-size: clamp(30px, 3.6vw, 52px);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  color: var(--color-ink);
   margin-bottom: 24px;
-}
-@media (max-width: 767px) {
-  .tracklist__title {
-    font-size: 22px;
-    line-height: 28px;
-  }
 }
 .tracklist__list {
   display: flex;
@@ -1244,10 +1233,10 @@ p:last-child {
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 3px solid var(--color-muted);
+  border-bottom: 2px solid var(--color-muted);
 }
 .track-row:first-child {
-  border-top: 3px solid var(--color-muted);
+  border-top: 2px solid var(--color-muted);
 }
 @media (max-width: 767px) {
   .track-row {
@@ -1257,17 +1246,10 @@ p:last-child {
 .track-row__number {
   font-family: "Archivo Black", sans-serif;
   font-size: clamp(19px, 2.1vw, 27px);
-  font-weight: 700;
   color: var(--color-olive);
   min-width: 32px;
   text-align: center;
   flex-shrink: 0;
-}
-@media (max-width: 767px) {
-  .track-row__number {
-    font-size: 16px;
-    min-width: 24px;
-  }
 }
 .track-row__info {
   display: flex;
@@ -1279,7 +1261,7 @@ p:last-child {
 .track-row__title {
   font-family: "Archivo Black", sans-serif;
   font-size: clamp(19px, 2.1vw, 27px);
-  font-weight: 500;
+  text-transform: uppercase;
   color: var(--color-ink);
   white-space: nowrap;
   overflow: hidden;
@@ -1292,13 +1274,10 @@ p:last-child {
   }
 }
 .track-row__key {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "DM Mono", monospace;
   font-size: 12px;
-  font-weight: 500;
-  color: var(--color-olive);
-  background-color: rgba(107, 87, 60, 0.1);
-  padding: 2px 8px;
-  border-radius: 0;
+  color: var(--color-brick);
+  letter-spacing: 0.12em;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -1333,7 +1312,6 @@ p:last-child {
 .track-row__player audio {
   width: 100%;
   height: 36px;
-  border-radius: 0;
 }
 .track-row__player--empty {
   width: 0;
@@ -1355,6 +1333,7 @@ p:last-child {
 .album-compact {
   background-color: var(--color-ink);
   padding: 32px 0;
+  border-bottom: 3px solid var(--color-ink);
 }
 .album-compact__inner {
   width: 100%;
@@ -1379,8 +1358,8 @@ p:last-child {
 .album-compact__cover-img {
   width: 100%;
   height: auto;
-  border-radius: 0;
   display: block;
+  border: 2px solid rgba(244, 233, 214, 0.2);
 }
 .album-compact__info {
   display: flex;
@@ -1389,23 +1368,20 @@ p:last-child {
   flex: 1;
 }
 .album-compact__title {
-  font-family: "Archivo Black", sans-serif;
   font-size: clamp(30px, 3.6vw, 52px);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
   color: var(--color-cream);
   margin: 0;
 }
 @media (max-width: 767px) {
   .album-compact__title {
     font-size: 22px;
-    line-height: 28px;
   }
 }
 .album-compact__year {
-  font-weight: 400;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
   color: var(--color-olive);
+  letter-spacing: 0.16em;
 }
 .album-compact__links {
   display: flex;
@@ -1423,32 +1399,29 @@ p:last-child {
   opacity: 0.7;
 }
 
-.demos-divider {
-  background-color: var(--color-cream);
-  padding: 24px 0;
-  margin-top: clamp(48px, 6vw, 96px);
+.album-nav {
+  padding: 32px 0;
+  border-top: 3px solid var(--color-ink);
 }
-.demos-divider__inner {
+.album-nav__inner {
   width: 100%;
   max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
   padding-left: clamp(16px, 3vw, 40px);
   padding-right: clamp(16px, 3vw, 40px);
+  display: flex;
+  justify-content: space-between;
 }
-.demos-divider__title {
-  font-family: "Archivo Black", sans-serif;
-  font-size: clamp(30px, 3.6vw, 52px);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
+.album-nav__link {
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-brick);
+}
+.album-nav__link:hover {
   color: var(--color-ink);
-  margin: 0;
-}
-@media (max-width: 767px) {
-  .demos-divider__title {
-    font-size: 22px;
-  }
 }
 
 .album-page__hero {
@@ -1614,108 +1587,72 @@ p:last-child {
 }
 
 .acordes-header {
-  background-color: var(--color-ink);
-  padding: clamp(48px, 6vw, 96px) 0;
+  background-color: var(--color-warm);
+  padding: clamp(44px, 6vw, 80px) clamp(16px, 3vw, 40px);
+  border-bottom: 3px solid var(--color-ink);
 }
 .acordes-header__inner {
-  width: 100%;
   max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(16px, 3vw, 40px);
-  padding-right: clamp(16px, 3vw, 40px);
+  margin: 0 auto;
+}
+.acordes-header__tag {
+  color: var(--color-brick);
+  margin: 0 0 18px;
 }
 .acordes-header__title {
-  font-family: "Archivo Black", sans-serif;
-  font-size: clamp(52px, 9.5vw, 148px);
-  font-weight: 400;
-  line-height: 0.82;
+  font-size: clamp(42px, 7vw, 110px);
+  line-height: 0.84;
   letter-spacing: -0.045em;
-  color: var(--color-cream);
-  margin: 0 0 12px;
-}
-@media (max-width: 1024px) {
-  .acordes-header__title {
-    font-size: 50px;
-  }
-}
-@media (max-width: 767px) {
-  .acordes-header__title {
-    font-size: 36px;
-  }
-}
-.acordes-header__subtitle {
-  font-family: "Newsreader", Georgia, serif;
-  font-weight: 400;
-  color: var(--color-olive);
-  line-height: 1.55;
   margin: 0;
-  font-size: clamp(19px, 2.1vw, 27px);
+  color: var(--color-ink);
+}
+
+.acordes-body {
+  padding: clamp(32px, 4vw, 60px) clamp(16px, 3vw, 40px) clamp(48px, 6vw, 96px);
+}
+.acordes-body__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
 }
 @media (max-width: 767px) {
-  .acordes-header__subtitle {
-    font-size: 17px;
+  .acordes-body__inner {
+    grid-template-columns: 1fr;
   }
 }
 
 .acordes-filters {
-  background-color: var(--color-paper);
-  padding: 24px 0;
-  border-bottom: 3px solid var(--color-muted);
-  position: sticky;
-  top: 58px;
-  z-index: 10;
-}
-@media (min-width: 1025px) {
-  .acordes-filters {
-    top: 60px;
-  }
-}
-.acordes-filters__inner {
-  width: 100%;
-  max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(16px, 3vw, 40px);
-  padding-right: clamp(16px, 3vw, 40px);
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 26px;
 }
 
 .acordes-filter {
-  font-family: "Archivo Black", sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-ink);
-  background: transparent;
-  border: 3px solid var(--color-muted);
-  border-radius: 0;
-  padding: 8px 16px;
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 11px 16px;
   cursor: pointer;
+  border: 2px solid #1F3C57;
+  background: transparent;
+  color: var(--color-ink);
   transition: all 0.3s ease;
-  white-space: nowrap;
 }
 .acordes-filter:hover {
-  border-color: var(--color-ink);
+  background-color: rgba(31, 60, 87, 0.08);
 }
 .acordes-filter--active {
   background-color: var(--color-ink);
-  border-color: var(--color-ink);
-  color: var(--color-paper);
+  color: var(--color-ochre);
 }
 
 .acordes-list {
-  padding: clamp(48px, 6vw, 96px) 0;
-  background-color: var(--color-paper);
-}
-.acordes-list__inner {
-  width: 100%;
-  max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(16px, 3vw, 40px);
-  padding-right: clamp(16px, 3vw, 40px);
+  border-top: 2px solid var(--color-ink);
 }
 .acordes-list__empty {
   font-family: "Newsreader", Georgia, serif;
@@ -1726,32 +1663,31 @@ p:last-child {
 }
 
 .acordes-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 64px 24px;
+  gap: 18px;
   align-items: center;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 3px solid var(--color-muted);
+  padding: 18px 8px;
+  border-bottom: 2px solid var(--color-muted);
   text-decoration: none;
-  color: inherit;
+  color: var(--color-ink);
   transition: background-color 0.3s ease;
 }
-.acordes-row:first-child {
-  border-top: 3px solid var(--color-muted);
-}
-.acordes-row:hover {
-  background-color: rgba(244, 233, 214, 0.5);
+.acordes-row:hover, .acordes-row--active {
+  background-color: var(--color-ochre);
 }
 @media (max-width: 767px) {
   .acordes-row {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
   }
 }
 .acordes-row__title {
   font-family: "Archivo Black", sans-serif;
-  font-size: clamp(19px, 2.1vw, 27px);
-  font-weight: 500;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
   color: var(--color-ink);
-  flex: 1;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -1759,55 +1695,132 @@ p:last-child {
 }
 @media (max-width: 767px) {
   .acordes-row__title {
-    font-size: 17px;
+    font-size: 16px;
     white-space: normal;
-    flex: unset;
-    width: calc(100% - 40px);
+    grid-column: 1/-1;
   }
 }
 .acordes-row__album {
   font-family: "Newsreader", Georgia, serif;
-  font-size: 12px;
-  font-weight: 400;
+  font-style: italic;
+  font-size: 16px;
   color: var(--color-olive);
   white-space: nowrap;
-  flex-shrink: 0;
 }
 @media (max-width: 767px) {
   .acordes-row__album {
-    order: 3;
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 .acordes-row__key {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "DM Mono", monospace;
   font-size: 12px;
-  font-weight: 500;
-  color: var(--color-olive);
-  background-color: rgba(107, 87, 60, 0.1);
-  padding: 2px 8px;
-  border-radius: 0;
+  letter-spacing: 0.12em;
+  color: var(--color-brick);
+  text-align: right;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 @media (max-width: 767px) {
   .acordes-row__key {
-    order: 2;
+    text-align: left;
   }
 }
 .acordes-row__arrow {
-  font-size: clamp(19px, 2.1vw, 27px);
-  color: var(--color-olive);
-  flex-shrink: 0;
-  transition: color 0.3s ease;
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  text-align: right;
+  color: var(--color-ink);
 }
 @media (max-width: 767px) {
   .acordes-row__arrow {
     display: none;
   }
 }
-.acordes-row:hover .acordes-row__arrow {
-  color: var(--color-ochre);
+
+.acordes-preview {
+  border: 3px solid var(--color-ink);
+  background-color: var(--color-cream);
+  padding: 26px;
+  box-shadow: 10px 10px 0 #E08B3E;
+  position: sticky;
+  top: 80px;
+}
+@media (max-width: 767px) {
+  .acordes-preview {
+    position: static;
+    box-shadow: 6px 6px 0 #E08B3E;
+  }
+}
+.acordes-preview__label {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-brick);
+  margin: 0 0 6px;
+}
+.acordes-preview__title {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin: 0 0 4px;
+}
+.acordes-preview__meta {
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-olive);
+  margin: 0 0 22px;
+}
+.acordes-preview__lyrics {
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  line-height: 2;
+  color: var(--color-ink);
+  margin: 0;
+  white-space: pre-wrap;
+  overflow: hidden;
+  max-height: 320px;
+}
+.acordes-preview__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.acordes-preview__btn {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 2px solid #1F3C57;
+  padding: 9px 13px;
+  color: var(--color-ink);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.acordes-preview__btn:hover {
+  background-color: rgba(31, 60, 87, 0.08);
+}
+.acordes-preview__cta {
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 2px solid #A8341C;
+  background-color: var(--color-brick);
+  color: var(--color-cream);
+  padding: 9px 13px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+.acordes-preview__cta:hover {
+  background-color: #8C2B17;
 }
 
 .song-coming-soon {
@@ -1818,7 +1831,6 @@ p:last-child {
 .song-coming-soon__text {
   font-family: "Archivo Black", sans-serif;
   font-size: clamp(30px, 3.6vw, 52px);
-  font-weight: 700;
   color: var(--color-olive);
   margin: 0;
 }
@@ -1832,7 +1844,6 @@ p:last-child {
   display: inline-block;
   font-family: "Archivo Black", sans-serif;
   font-size: 12px;
-  font-weight: 500;
   color: var(--color-olive);
   text-decoration: none;
   margin-bottom: 12px;
@@ -1845,7 +1856,7 @@ p:last-child {
 .song-nav {
   background-color: var(--color-cream);
   padding: 24px 0;
-  border-top: 3px solid var(--color-muted);
+  border-top: 3px solid var(--color-ink);
 }
 .song-nav__inner {
   width: 100%;
@@ -1864,7 +1875,6 @@ p:last-child {
   gap: 8px;
   font-family: "Archivo Black", sans-serif;
   font-size: 17px;
-  font-weight: 500;
   color: var(--color-ink);
   text-decoration: none;
   transition: color 0.3s ease;
@@ -2852,163 +2862,6 @@ p:last-child {
   width: 100%;
 }
 
-.latest-songs {
-  padding: clamp(48px, 6vw, 96px) 0;
-}
-.latest-songs__inner {
-  width: 100%;
-  max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(16px, 3vw, 40px);
-  padding-right: clamp(16px, 3vw, 40px);
-}
-.latest-songs__title {
-  margin-bottom: 32px;
-}
-.latest-songs__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-@media (min-width: 768px) {
-  .latest-songs__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-}
-.latest-songs__footer {
-  margin-top: 40px;
-  text-align: center;
-}
-.latest-songs__view-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: "Newsreader", Georgia, serif;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-brick);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.latest-songs__view-all:hover {
-  color: var(--color-cream);
-}
-.latest-songs__view-all svg {
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-.latest-songs__view-all:hover svg {
-  transform: translateX(4px);
-}
-
-.song-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background-color: rgba(244, 233, 214, 0.03);
-  border: 3px solid rgba(244, 233, 214, 0.07);
-  border-radius: 0;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s ease;
-  min-width: 0;
-  overflow: hidden;
-}
-.song-card:hover {
-  background-color: rgba(244, 233, 214, 0.07);
-  border-color: rgba(168, 52, 28, 0.25);
-  transform: translateY(-2px);
-}
-.song-card__thumb {
-  width: 52px;
-  height: 52px;
-  border-radius: 0;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.song-card__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.song-card__thumb--placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(244, 233, 214, 0.06);
-  color: rgba(244, 233, 214, 0.25);
-}
-.song-card__thumb--placeholder svg {
-  width: 20px;
-  height: 20px;
-}
-.song-card__body {
-  flex: 1;
-  min-width: 0;
-}
-.song-card__name {
-  font-family: "Archivo Black", sans-serif;
-  font-size: 17px;
-  font-weight: 400;
-  color: var(--color-cream);
-  margin: 0 0 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.song-card__album {
-  display: block;
-  font-family: "Newsreader", Georgia, serif;
-  font-size: 13px;
-  color: var(--color-olive);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.song-card__meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-}
-.song-card__key {
-  display: inline-block;
-  font-family: "Newsreader", Georgia, serif;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--color-cream);
-  background-color: rgba(244, 233, 214, 0.08);
-  padding: 1px 8px;
-  border-radius: 0;
-  line-height: 1.4;
-}
-.song-card__chords {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: "Newsreader", Georgia, serif;
-  font-size: 11px;
-  color: var(--color-brick);
-  font-weight: 500;
-}
-.song-card__chords svg {
-  flex-shrink: 0;
-}
-.song-card__arrow {
-  flex-shrink: 0;
-  color: rgba(244, 233, 214, 0.15);
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-.song-card:hover .song-card__arrow {
-  color: var(--color-brick);
-  transform: translateX(3px);
-}
-
 .song-layout {
   width: 100%;
   max-width: 1240px;
@@ -3543,13 +3396,39 @@ p:last-child {
   .chord-viewer__controls,
   .song-sidebar,
   .song-nav,
-  .admin-bar {
+  .announcement,
+  .acordes-preview,
+  .acordes-filters,
+  .album-nav,
+  .home-contact__form,
+  .admin-bar,
+  .hero__buttons,
+  .music__platforms {
     display: none !important;
   }
   body {
     background: white !important;
     color: black !important;
     font-size: 12pt !important;
+  }
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    color: black !important;
+    text-decoration: underline;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+    page-break-after: avoid;
+  }
+  img {
+    max-width: 100% !important;
   }
   .song-layout {
     display: block !important;
@@ -3562,6 +3441,7 @@ p:last-child {
   }
   .chord-viewer__content {
     font-size: 11pt;
+    color: black !important;
   }
   .chord {
     color: black !important;
@@ -3586,6 +3466,34 @@ p:last-child {
   }
   .song-meta__item {
     color: #333 !important;
+  }
+  .acordes-body__inner {
+    display: block !important;
+  }
+  .acordes-row {
+    display: grid !important;
+    border-color: #ccc !important;
+    color: black !important;
+    padding: 8px 0 !important;
+  }
+  .acordes-row__key {
+    color: #333 !important;
+  }
+  .disco-header,
+  .album-hero {
+    padding: 16pt 0 !important;
+    border: none !important;
+  }
+  .disco-card__cover {
+    border-color: #ccc !important;
+  }
+  .hero,
+  .shows,
+  .music,
+  .latest-songs,
+  .home-contact {
+    padding: 16pt 0 !important;
+    border: none !important;
   }
 }
 .sticky-player {

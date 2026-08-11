@@ -10,11 +10,11 @@ defined( 'ABSPATH' ) || exit;
 $logo_text = sm_get_option( 'sm_logo_text', 'Santiago Moraes' );
 
 $footer_social = array(
-	array( 'url' => sm_get_option( 'sm_social_spotify', 'https://open.spotify.com/artist/2pfLPT9ZTkPrLd8ZJiDBld' ), 'label' => 'Spotify' ),
-	array( 'url' => sm_get_option( 'sm_social_bandcamp', 'https://santiagomoraes.bandcamp.com/' ), 'label' => 'Bandcamp' ),
-	array( 'url' => sm_get_option( 'sm_social_youtube', 'https://www.youtube.com/@SantiagoMoraesMusica' ), 'label' => 'YouTube' ),
-	array( 'url' => sm_get_option( 'sm_social_instagram', 'https://www.instagram.com/santiagomoraes_' ), 'label' => 'Instagram' ),
-	array( 'url' => sm_get_option( 'sm_social_soundcloud', 'https://soundcloud.com/santiago-moraes' ), 'label' => 'SoundCloud' ),
+	'spotify'    => array( 'url' => sm_get_option( 'sm_social_spotify', 'https://open.spotify.com/artist/2pfLPT9ZTkPrLd8ZJiDBld' ), 'label' => 'Spotify' ),
+	'youtube'    => array( 'url' => sm_get_option( 'sm_social_youtube', 'https://www.youtube.com/@SantiagoMoraesMusica' ), 'label' => 'YouTube' ),
+	'bandcamp'   => array( 'url' => sm_get_option( 'sm_social_bandcamp', 'https://santiagomoraes.bandcamp.com/' ), 'label' => 'Bandcamp' ),
+	'instagram'  => array( 'url' => sm_get_option( 'sm_social_instagram', 'https://www.instagram.com/santiagomoraes_' ), 'label' => 'Instagram' ),
+	'soundcloud' => array( 'url' => sm_get_option( 'sm_social_soundcloud', 'https://soundcloud.com/santiago-moraes' ), 'label' => 'SoundCloud' ),
 );
 
 $active_social = array_filter( $footer_social, function ( $data ) {
@@ -32,9 +32,9 @@ $active_social = array_filter( $footer_social, function ( $data ) {
 
 		<?php if ( $active_social ) : ?>
 			<div class="footer-social">
-				<?php foreach ( $active_social as $data ) : ?>
-					<a href="<?php echo esc_url( $data['url'] ); ?>" class="footer-social__link" target="_blank" rel="noopener noreferrer">
-						<?php echo esc_html( $data['label'] ); ?>
+				<?php foreach ( $active_social as $key => $data ) : ?>
+					<a href="<?php echo esc_url( $data['url'] ); ?>" class="footer-social__link footer-social__link--<?php echo esc_attr( $key ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $data['label'] ); ?>">
+						<?php echo sm_social_icon( $key, 20 ); ?>
 					</a>
 				<?php endforeach; ?>
 			</div>

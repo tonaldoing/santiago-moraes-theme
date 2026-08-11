@@ -8,7 +8,7 @@
 // ----- Ochre Header -----
 .disco-header {
   background-color: $color-ochre;
-  padding: $section-padding-y $section-padding-x;
+  padding: clamp(44px, 6vw, 80px) $section-padding-x;
   @include border-bottom;
 
   &__inner {
@@ -17,14 +17,14 @@
   }
 
   &__tag {
-    color: $color-brick;
-    margin: 0 0 18px;
+    color: $color-ink;
+    margin: 0 0 14px;
   }
 
   &__title {
-    font-size: clamp(48px, 8vw, 124px);
-    line-height: 0.84;
-    letter-spacing: $ls-hero;
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 0.88;
+    letter-spacing: $ls-section;
     margin: 0;
     color: $color-ink;
   }
@@ -250,7 +250,7 @@
   }
 
   &__number {
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: $text-sub;
     color: $color-olive;
     min-width: 32px;

@@ -7,7 +7,7 @@
 
 // -- Header (warm gray bg) --
 .acordes-header {
-  background-color: $color-warm;
+  background-color: $color-brick;
   padding: clamp(44px, 6vw, 80px) $section-padding-x;
   @include border-bottom;
 
@@ -17,16 +17,16 @@
   }
 
   &__tag {
-    color: $color-brick;
-    margin: 0 0 18px;
+    color: $color-ochre;
+    margin: 0 0 14px;
   }
 
   &__title {
-    font-size: clamp(42px, 7vw, 110px);
-    line-height: 0.84;
-    letter-spacing: $ls-hero;
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 0.88;
+    letter-spacing: $ls-section;
     margin: 0;
-    color: $color-ink;
+    color: $color-cream;
   }
 }
 
@@ -269,8 +269,9 @@
   background-color: $color-cream;
 
   &__text {
-    font-family: $font-heading;
-    font-size: $text-section;
+    font-family: $font-body;
+    font-style: italic;
+    font-size: $text-sub;
     color: $color-olive;
     margin: 0;
 
@@ -283,8 +284,10 @@
 // -- Song Header album link --
 .song-header__album-link {
   display: inline-block;
-  font-family: $font-heading;
+  font-family: $font-mono;
   font-size: $text-small;
+  letter-spacing: $ls-mono;
+  text-transform: uppercase;
   color: $color-olive;
   text-decoration: none;
   margin-bottom: 12px;
@@ -310,8 +313,10 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: $font-heading;
-    font-size: $text-body;
+    font-family: $font-mono;
+    font-size: $text-small;
+    letter-spacing: $ls-mono;
+    text-transform: uppercase;
     color: $color-ink;
     text-decoration: none;
     @include transition(color);

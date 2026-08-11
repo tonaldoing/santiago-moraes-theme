@@ -9,11 +9,14 @@ defined( 'ABSPATH' ) || exit;
 
 $logo_text = sm_get_option( 'sm_logo_text', 'Santiago Moraes' );
 
-// Social URLs — text links in header (Spotify, Bandcamp, Instagram).
 $header_social = array(
 	'spotify'   => array(
 		'url'   => sm_get_option( 'sm_social_spotify', 'https://open.spotify.com/artist/2pfLPT9ZTkPrLd8ZJiDBld' ),
 		'label' => 'Spotify',
+	),
+	'youtube'   => array(
+		'url'   => sm_get_option( 'sm_social_youtube', 'https://www.youtube.com/@SantiagoMoraesMusica' ),
+		'label' => 'YouTube',
 	),
 	'bandcamp'  => array(
 		'url'   => sm_get_option( 'sm_social_bandcamp', 'https://santiagomoraes.bandcamp.com/' ),
@@ -57,7 +60,7 @@ $header_social = array(
 						'theme_location' => 'primary',
 						'container'      => false,
 						'menu_class'     => 'main-nav__list',
-						'depth'          => 1,
+						'depth'          => 2,
 						'walker'         => new SM_Nav_Walker(),
 					)
 				);
@@ -75,11 +78,11 @@ $header_social = array(
 		</nav>
 
 		<div class="header-social">
-			<?php foreach ( $header_social as $data ) :
+			<?php foreach ( $header_social as $key => $data ) :
 				if ( ! $data['url'] ) continue;
 			?>
-				<a href="<?php echo esc_url( $data['url'] ); ?>" class="header-social__link" target="_blank" rel="noopener noreferrer">
-					<?php echo esc_html( $data['label'] ); ?>
+				<a href="<?php echo esc_url( $data['url'] ); ?>" class="header-social__link header-social__link--<?php echo esc_attr( $key ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $data['label'] ); ?>">
+					<?php echo sm_social_icon( $key, 18 ); ?>
 				</a>
 			<?php endforeach; ?>
 		</div>
@@ -100,7 +103,7 @@ $header_social = array(
 				'theme_location' => 'primary',
 				'container'      => false,
 				'menu_class'     => 'mobile-menu__list',
-				'depth'          => 1,
+				'depth'          => 2,
 				'walker'         => new SM_Nav_Walker(),
 			)
 		);
@@ -117,11 +120,11 @@ $header_social = array(
 	?>
 
 	<div class="mobile-menu__social">
-		<?php foreach ( $header_social as $data ) :
+		<?php foreach ( $header_social as $key => $data ) :
 			if ( ! $data['url'] ) continue;
 		?>
-			<a href="<?php echo esc_url( $data['url'] ); ?>" class="mobile-menu__social-link" target="_blank" rel="noopener noreferrer">
-				<?php echo esc_html( $data['label'] ); ?>
+			<a href="<?php echo esc_url( $data['url'] ); ?>" class="mobile-menu__social-link" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $data['label'] ); ?>">
+				<?php echo sm_social_icon( $key, 20 ); ?>
 			</a>
 		<?php endforeach; ?>
 	</div>

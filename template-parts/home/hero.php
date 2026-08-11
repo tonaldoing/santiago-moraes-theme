@@ -14,7 +14,6 @@ defined( 'ABSPATH' ) || exit;
 $hero_tag       = sm_get_option( 'sm_hero_tag', __( 'Canción rioplatense · Buenos Aires', 'santiago-moraes' ) );
 $hero_line1     = sm_get_option( 'sm_hero_line1', 'Santiago' );
 $hero_line2     = sm_get_option( 'sm_hero_line2', 'Moraes' );
-$hero_desc      = sm_get_option( 'sm_hero_description', __( 'Canciones de patio y de vereda, con la lírica cerca del hueso y la guitarra mirando al otro lado del río.', 'santiago-moraes' ) );
 $btn1_text      = sm_get_option( 'sm_hero_btn1_text', __( 'Escuchar ahora', 'santiago-moraes' ) );
 $btn1_url       = sm_get_option( 'sm_hero_btn1_url', 'https://open.spotify.com/album/26NInlEZ66aKG9MMguyEpT' );
 $btn2_text      = sm_get_option( 'sm_hero_btn2_text', __( 'Próximos shows', 'santiago-moraes' ) );
@@ -42,10 +41,6 @@ $has_video = ! empty( $hero_video_url );
 				<?php echo esc_html( $hero_line1 ); ?><br>
 				<span class="hero__title-outline"><?php echo esc_html( $hero_line2 ); ?></span>
 			</h1>
-
-			<?php if ( $hero_desc ) : ?>
-				<p class="hero__description"><?php echo esc_html( $hero_desc ); ?></p>
-			<?php endif; ?>
 
 			<div class="hero__buttons">
 				<?php if ( $btn1_text && $btn1_url ) : ?>

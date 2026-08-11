@@ -91,7 +91,7 @@ $font-chord: $font-mono;
   border: 2px solid $hex-ink;
   background-color: transparent;
   color: $color-ink;
-  font-family: $font-heading;
+  font-family: $font-mono;
   font-size: $text-small;
   font-weight: $weight-medium;
   cursor: pointer;
@@ -290,7 +290,7 @@ $font-chord: $font-mono;
     padding: 10px 14px;
     background-color: $color-paper;
     border: 2px solid $color-border;
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: $text-small;
     font-weight: $weight-medium;
     color: $color-ink;
@@ -338,7 +338,7 @@ $font-chord: $font-mono;
     }
 
     dt {
-      font-family: $font-heading;
+      font-family: $font-mono;
       font-size: $text-small;
       font-weight: $weight-medium;
       color: $color-olive;
@@ -346,7 +346,7 @@ $font-chord: $font-mono;
 
     dd {
       margin: 0;
-      font-family: $font-heading;
+      font-family: $font-mono;
       font-size: $text-small;
       font-weight: $weight-bold;
       color: $color-ink;
@@ -383,8 +383,8 @@ $font-chord: $font-mono;
   }
 
   &__track-title {
-    font-family: $font-heading;
-    font-size: $text-small;
+    font-family: $font-body;
+    font-size: 14px;
     font-weight: $weight-medium;
     color: $color-ink;
     white-space: nowrap;
@@ -431,8 +431,8 @@ $font-chord: $font-mono;
   }
 
   &__related-title {
-    font-family: $font-heading;
-    font-size: $text-small;
+    font-family: $font-body;
+    font-size: 14px;
     font-weight: $weight-medium;
     color: $color-ink;
     transition: color $transition-fast;
@@ -453,9 +453,9 @@ $font-chord: $font-mono;
   border: $border-width solid $color-ink;
 
   &__text {
-    font-family: $font-heading;
-    font-size: $text-section;
-    font-weight: $weight-bold;
+    font-family: $font-body;
+    font-style: italic;
+    font-size: $text-sub;
     color: $color-olive;
     margin: 0;
 
@@ -481,7 +481,7 @@ $font-chord: $font-mono;
     background: none;
     border: none;
     color: $color-ink;
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: $text-small;
     font-weight: $weight-medium;
     cursor: pointer;
@@ -565,7 +565,7 @@ $font-chord: $font-mono;
   }
 
   &__name {
-    font-family: $font-heading;
+    font-family: $font-mono;
     font-size: 28px;
     font-weight: $weight-regular;
     color: $color-cream;

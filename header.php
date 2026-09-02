@@ -47,8 +47,8 @@ $header_social = array(
 
 		<div class="site-title">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-				<span class="site-title__avatar" aria-hidden="true">SM</span>
-				<?php echo esc_html( $logo_text ); ?>
+				<img class="site-title__mark" src="<?php echo esc_url( SM_THEME_URI . '/assets/images/logo-mark.png' ); ?>" alt="" width="34" height="34" aria-hidden="true">
+				<img class="site-title__wordmark" src="<?php echo esc_url( SM_THEME_URI . '/assets/images/logo-cream.svg' ); ?>" alt="<?php echo esc_attr( $logo_text ); ?>" width="137" height="30">
 			</a>
 		</div>
 

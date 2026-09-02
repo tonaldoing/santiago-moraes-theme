@@ -9,9 +9,8 @@
 .hero {
   background-color: $color-ochre;
   @include border-bottom;
+  @include banner-illustration('tex-hero.jpg');
   padding: $section-padding-y $section-padding-x 0;
-  position: relative;
-  overflow: hidden;
 
   &__inner {
     max-width: $container-max;

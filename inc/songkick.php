@@ -48,6 +48,8 @@ function sm_songkick_widget( $args = array() ) {
 		'past_events'         => 'off',
 		'past_events_offtour' => 'off',
 		'remind_me'           => 'off',
+		'button_bg_color'     => '#A8341C',
+		'button_text_color'   => '#F4E9D6',
 	);
 	$args = wp_parse_args( $args, $defaults );
 	?>
@@ -65,6 +67,8 @@ function sm_songkick_widget( $args = array() ) {
 	   data-past-events="<?php echo esc_attr( $args['past_events'] ); ?>"
 	   data-past-events-offtour="<?php echo esc_attr( $args['past_events_offtour'] ); ?>"
 	   data-remind-me="<?php echo esc_attr( $args['remind_me'] ); ?>"
+	   data-button-bg-color="<?php echo esc_attr( $args['button_bg_color'] ); ?>"
+	   data-button-text-color="<?php echo esc_attr( $args['button_text_color'] ); ?>"
 	   style="display:none;"
 	></a>
 	<?php

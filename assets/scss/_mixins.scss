@@ -107,3 +107,25 @@
 @mixin transition($properties: all) {
   transition: $properties $transition-base;
 }
+
+// Banner illustration/texture overlay at 10% opacity (Drive assets)
+@mixin banner-illustration($image, $opacity: 0.1) {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('../images/#{$image}');
+    background-size: cover;
+    background-position: center;
+    opacity: $opacity;
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}

@@ -7,6 +7,7 @@
 
 .page-header {
   background-color: $color-ink;
+  @include banner-illustration('banner-generic.jpg');
   padding: $section-padding-y 0;
 
   &__inner {

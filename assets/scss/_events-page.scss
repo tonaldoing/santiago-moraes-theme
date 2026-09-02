@@ -8,6 +8,7 @@
 // -- Shows Page Header --
 .shows-header {
   background-color: $color-ink;
+  @include banner-illustration('banner-shows.jpg');
   padding: clamp(44px, 6vw, 80px) 0;
 
   &__inner {
@@ -32,6 +33,37 @@
 
   &__inner {
     @include container;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+
+    @include tablet {
+      grid-template-columns: 0.85fr 1.15fr;
+    }
+  }
+
+  // Drive illustration at 10% opacity next to the widget
+  &__side {
+    display: none;
+
+    @include tablet {
+      display: block;
+      position: sticky;
+      top: 96px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      opacity: 0.1;
+      border: 2px solid rgba($hex-ink, 0.15);
+    }
+  }
+
+  &__widget {
+    min-width: 0;
   }
 }
 

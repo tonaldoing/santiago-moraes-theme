@@ -90,19 +90,21 @@ p {
   }
 }
 
-// Site title avatar circle
-.site-title__avatar {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  background-color: $color-ochre;
-  color: $color-ink;
-  border-radius: 50%;
-  font-size: 14px;
-  font-family: $font-heading;
-  line-height: 1;
+// Site title illustration mark (square, from Drive assets)
+.site-title__mark {
+  display: block;
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border: 1px solid rgba($hex-cream, 0.4);
   flex-shrink: 0;
+}
+
+// Site title painted wordmark (SVG)
+.site-title__wordmark {
+  display: block;
+  height: 30px;
+  width: auto;
 }
 
 // Secondary text

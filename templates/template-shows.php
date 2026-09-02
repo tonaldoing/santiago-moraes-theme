@@ -21,7 +21,12 @@ get_header();
 
 	<section class="shows-content">
 		<div class="shows-content__inner">
-			<?php sm_songkick_widget( array( 'theme' => 'light' ) ); ?>
+			<aside class="shows-content__side" aria-hidden="true">
+				<img src="<?php echo esc_url( SM_THEME_URI . '/assets/images/ilu-manos.jpg' ); ?>" alt="" width="1200" height="675" loading="lazy" decoding="async">
+			</aside>
+			<div class="shows-content__widget">
+				<?php sm_songkick_widget( array( 'theme' => 'light' ) ); ?>
+			</div>
 		</div>
 	</section>
 

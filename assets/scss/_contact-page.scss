@@ -7,6 +7,7 @@
 
 .contact-header {
   background-color: $color-warm;
+  @include banner-illustration('banner-contacto.jpg');
   padding: clamp(44px, 6vw, 80px) 0;
   @include border-bottom;
 
@@ -72,7 +73,7 @@
     font-weight: $weight-medium;
     letter-spacing: $ls-mono;
     text-transform: uppercase;
-    color: $color-ink;
+    color: $color-ochre;
     margin-bottom: 6px;
   }
 
@@ -80,7 +81,7 @@
   &__textarea {
     width: 100%;
     padding: 12px 16px;
-    border: $border-width solid $color-border;
+    border: $border-width solid $color-ink;
     border-radius: 0;
     font-family: $font-body;
     font-size: $text-body;
@@ -177,20 +178,19 @@
     width: 44px;
     height: 44px;
     @include flex-center;
-    background-color: $color-cream;
+    background-color: transparent;
     border-radius: 0;
     color: $color-ink;
     @include transition(all);
 
     svg {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       fill: currentColor;
     }
 
     &:hover {
-      background-color: $color-ink;
-      color: $color-cream;
+      color: $color-ochre;
     }
   }
 }

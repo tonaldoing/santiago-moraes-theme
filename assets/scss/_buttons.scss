@@ -20,16 +20,16 @@
   border: $border-style;
   transition: all $transition-fast;
 
-  // Primary — ink bg, beige text and shadow
+  // Primary — ink bg, cream text and shadow (the "Santiago Moraes" title cream)
   &--primary {
     background-color: $color-ink;
-    color: $color-paper;
+    color: $color-cream;
     padding: 16px 26px;
-    box-shadow: 6px 6px 0 $hex-paper;
+    box-shadow: $shadow-cream;
 
     &:hover {
       transform: translate(3px, 3px);
-      box-shadow: 3px 3px 0 $hex-paper;
+      box-shadow: 3px 3px 0 $hex-cream;
       color: $color-ochre;
     }
 

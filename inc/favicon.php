@@ -11,6 +11,20 @@
 defined( 'ABSPATH' ) || exit;
 
 add_action( 'wp_head', 'sm_theme_color_meta', 4 );
+add_action( 'wp_head', 'sm_favicon_fallback', 5 );
+
+/**
+ * Output theme favicon (Drive illustration) when no Site Icon is set in the Customizer.
+ */
+function sm_favicon_fallback() {
+	if ( has_site_icon() ) {
+		return;
+	}
+	$base = SM_THEME_URI . '/assets/images';
+	echo '<link rel="icon" href="' . esc_url( $base . '/favicon-32.png' ) . '" sizes="32x32">' . "\n";
+	echo '<link rel="icon" href="' . esc_url( $base . '/favicon-192.png' ) . '" sizes="192x192">' . "\n";
+	echo '<link rel="apple-touch-icon" href="' . esc_url( $base . '/favicon-192.png' ) . '">' . "\n";
+}
 
 /**
  * Output theme-color meta tag for mobile browsers.

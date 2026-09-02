@@ -169,6 +169,7 @@
 
 // ----- Shows -----
 .shows {
+  @include banner-illustration('ilu-manos.jpg');
   padding: $section-padding-y $section-padding-x;
   @include border-bottom;
 

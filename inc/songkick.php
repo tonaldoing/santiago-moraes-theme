@@ -78,7 +78,7 @@ function sm_songkick_widget( $args = array() ) {
  * Enqueue the Songkick widget injector script on pages that need it.
  */
 function sm_songkick_enqueue_widget() {
-	if ( is_front_page() || is_page_template( 'templates/template-shows.php' ) ) {
+	if ( is_front_page() ) {
 		wp_enqueue_script(
 			'songkick-widget',
 			SM_SONGKICK_WIDGET_JS,

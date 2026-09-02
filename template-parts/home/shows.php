@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 		<div class="shows__list">
 			<?php sm_songkick_widget( array( 'theme' => 'editorial' ) ); ?>
 
-			<a href="<?php echo esc_url( home_url( '/shows/' ) ); ?>" class="link-arrow">
+			<a href="<?php echo esc_url( SM_SONGKICK_ARTIST_URL ); ?>" class="link-arrow" target="_blank" rel="noopener noreferrer">
 				<?php esc_html_e( 'Ver todos los shows →', 'santiago-moraes' ); ?>
 			</a>
 		</div>

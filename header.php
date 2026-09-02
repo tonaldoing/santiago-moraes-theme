@@ -45,10 +45,18 @@ $header_social = array(
 <header class="site-header" id="site-header">
 	<div class="site-header__inner">
 
+		<?php
+		// Custom logo from theme options wins; otherwise the default mark + wordmark.
+		$custom_logo = 'image' === sm_get_option( 'sm_logo_type', 'text' ) ? sm_get_option( 'sm_logo_image', '' ) : '';
+		?>
 		<div class="site-title">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-				<img class="site-title__mark" src="<?php echo esc_url( SM_THEME_URI . '/assets/images/logo-mark.png' ); ?>" alt="" width="34" height="34" aria-hidden="true">
-				<img class="site-title__wordmark" src="<?php echo esc_url( SM_THEME_URI . '/assets/images/logo-cream.svg' ); ?>" alt="<?php echo esc_attr( $logo_text ); ?>" width="137" height="30">
+				<?php if ( $custom_logo ) : ?>
+					<img class="site-title__wordmark" src="<?php echo esc_url( $custom_logo ); ?>" alt="<?php echo esc_attr( $logo_text ); ?>" height="45">
+				<?php else : ?>
+					<img class="site-title__mark" src="<?php echo esc_url( SM_THEME_URI . '/assets/images/logo-mark.png' ); ?>" alt="" width="34" height="34" aria-hidden="true">
+					<img class="site-title__wordmark" src="<?php echo esc_url( SM_THEME_URI . '/assets/images/logo-cream.svg' ); ?>" alt="<?php echo esc_attr( $logo_text ); ?>" width="205" height="45">
+				<?php endif; ?>
 			</a>
 		</div>
 
@@ -68,7 +76,7 @@ $header_social = array(
 				?>
 				<ul class="main-nav__list">
 					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Inicio', 'santiago-moraes' ); ?></a></li>
-					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/shows/' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Shows', 'santiago-moraes' ); ?></a></li>
+					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/#shows' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Shows', 'santiago-moraes' ); ?></a></li>
 					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/musica/' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Discografía', 'santiago-moraes' ); ?></a></li>
 					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/acordes/' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Acordes', 'santiago-moraes' ); ?></a></li>
 				</ul>
@@ -111,7 +119,7 @@ $header_social = array(
 		?>
 		<ul class="mobile-menu__list">
 			<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Inicio', 'santiago-moraes' ); ?></a></li>
-			<li><a href="<?php echo esc_url( home_url( '/shows/' ) ); ?>"><?php esc_html_e( 'Shows', 'santiago-moraes' ); ?></a></li>
+			<li><a href="<?php echo esc_url( home_url( '/#shows' ) ); ?>"><?php esc_html_e( 'Shows', 'santiago-moraes' ); ?></a></li>
 			<li><a href="<?php echo esc_url( home_url( '/musica/' ) ); ?>"><?php esc_html_e( 'Discografía', 'santiago-moraes' ); ?></a></li>
 			<li><a href="<?php echo esc_url( home_url( '/acordes/' ) ); ?>"><?php esc_html_e( 'Acordes', 'santiago-moraes' ); ?></a></li>
 		</ul>

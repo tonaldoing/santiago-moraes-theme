@@ -85,19 +85,17 @@ function sm_serve_manifest() {
 		'icons'            => array(),
 	);
 
-	// Use WP site icon if set.
+	// Use WP site icon if set; otherwise fall back to theme icons.
 	$site_icon_id = get_option( 'site_icon' );
-	if ( $site_icon_id ) {
-		$sizes = array( 192, 512 );
-		foreach ( $sizes as $size ) {
-			$url = get_site_icon_url( $size );
-			if ( $url ) {
-				$manifest['icons'][] = array(
-					'src'   => $url,
-					'sizes' => $size . 'x' . $size,
-					'type'  => 'image/png',
-				);
-			}
+	$sizes        = array( 192, 512 );
+	foreach ( $sizes as $size ) {
+		$url = $site_icon_id ? get_site_icon_url( $size ) : SM_THEME_URI . '/assets/images/favicon-' . $size . '.png';
+		if ( $url ) {
+			$manifest['icons'][] = array(
+				'src'   => $url,
+				'sizes' => $size . 'x' . $size,
+				'type'  => 'image/png',
+			);
 		}
 	}
 

@@ -8,7 +8,7 @@
 // ----- Ochre Header -----
 .disco-header {
   background-color: $color-ochre;
-  @include banner-illustration('banner-musica.jpg');
+  @include banner-illustration('banner-musica.webp');
   padding: clamp(44px, 6vw, 80px) $section-padding-x;
   @include border-bottom;
 

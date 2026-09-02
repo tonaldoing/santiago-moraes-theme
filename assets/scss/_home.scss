@@ -9,7 +9,7 @@
 .hero {
   background-color: $color-ochre;
   @include border-bottom;
-  @include banner-illustration('tex-hero.jpg');
+  @include banner-illustration('tex-hero.webp');
   padding: $section-padding-y $section-padding-x 0;
 
   &__inner {
@@ -46,6 +46,14 @@
   &__title-outline {
     color: $color-cream;
     -webkit-text-stroke: 2px $hex-ink;
+  }
+
+  // Still emitted by the sm/hero-section block (render.php).
+  &__description {
+    font-size: $text-sub;
+    line-height: $lh-sub;
+    max-width: 19em;
+    margin: 28px 0 0;
   }
 
   &__buttons {
@@ -169,7 +177,7 @@
 
 // ----- Shows -----
 .shows {
-  @include banner-illustration('ilu-manos.jpg');
+  @include banner-illustration('ilu-manos.webp');
   padding: $section-padding-y $section-padding-x;
   @include border-bottom;
 

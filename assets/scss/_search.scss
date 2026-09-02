@@ -7,7 +7,7 @@
 
 .search-header {
   background-color: $color-ink;
-  @include banner-illustration('banner-generic.jpg');
+  @include banner-illustration('banner-generic.webp');
   padding: $section-padding-y 0;
 
   &__inner {

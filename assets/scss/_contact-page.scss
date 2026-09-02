@@ -7,7 +7,7 @@
 
 .contact-header {
   background-color: $color-warm;
-  @include banner-illustration('banner-contacto.jpg');
+  @include banner-illustration('banner-contacto.webp');
   padding: clamp(44px, 6vw, 80px) 0;
   @include border-bottom;
 

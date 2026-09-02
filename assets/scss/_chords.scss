@@ -553,8 +553,8 @@ $font-chord: $font-mono;
     align-items: center;
     gap: 16px;
     padding: 32px;
-    background-color: $hex-ink;
-    border: $border-width solid rgba($hex-cream, 0.1);
+    background-color: $color-cream;
+    border: $border-style;
     max-width: 320px;
     width: 90%;
 
@@ -568,7 +568,7 @@ $font-chord: $font-mono;
     font-family: $font-mono;
     font-size: 28px;
     font-weight: $weight-regular;
-    color: $color-cream;
+    color: $color-ink;
   }
 
   &__close {
@@ -582,12 +582,12 @@ $font-chord: $font-mono;
     justify-content: center;
     background: none;
     border: none;
-    color: rgba($hex-cream, 0.4);
+    color: rgba($hex-ink, 0.5);
     cursor: pointer;
     transition: color $transition-fast;
 
     &:hover {
-      color: $color-cream;
+      color: $color-ink;
     }
 
     svg {

@@ -32,6 +32,8 @@ define( 'SM_SONGKICK_WIDGET_JS', 'https://widget-app.songkick.com/injector/' . S
  *     @type string $past_events         Show past events. Default 'off'.
  *     @type string $past_events_offtour Past off-tour events. Default 'off'.
  *     @type string $remind_me           Remind me button. Default 'off'.
+ *     @type string $button_bg_color     Widget button background. Default brick palette color.
+ *     @type string $button_text_color   Widget button text. Default cream palette color.
  * }
  */
 function sm_songkick_widget( $args = array() ) {
@@ -48,8 +50,8 @@ function sm_songkick_widget( $args = array() ) {
 		'past_events'         => 'off',
 		'past_events_offtour' => 'off',
 		'remind_me'           => 'off',
-		'button_bg_color'     => '#A8341C',
-		'button_text_color'   => '#F4E9D6',
+		'button_bg_color'     => sm_get_option( 'sm_color_brick', '#A8341C' ),
+		'button_text_color'   => sm_get_option( 'sm_color_cream', '#F4E9D6' ),
 	);
 	$args = wp_parse_args( $args, $defaults );
 	?>
@@ -77,6 +79,17 @@ function sm_songkick_widget( $args = array() ) {
 /**
  * Enqueue the Songkick widget injector script on pages that need it.
  */
+/**
+ * Redirect the legacy /shows page (its template was removed) to the home shows section.
+ */
+function sm_redirect_legacy_shows_page() {
+	if ( is_page( 'shows' ) ) {
+		wp_safe_redirect( home_url( '/#shows' ), 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'sm_redirect_legacy_shows_page' );
+
 function sm_songkick_enqueue_widget() {
 	if ( is_front_page() ) {
 		wp_enqueue_script(

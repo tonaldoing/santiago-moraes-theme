@@ -63,6 +63,41 @@
 	}
 
 	// =====================================================================
+	// Desktop Submenu Toggle (touch / keyboard)
+	// =====================================================================
+	document.querySelectorAll( '.main-nav .submenu-toggle' ).forEach( function ( btn ) {
+		btn.addEventListener( 'click', function ( e ) {
+			e.preventDefault();
+			e.stopPropagation();
+
+			var parentLi = btn.closest( '.menu-item-has-children' );
+			if ( ! parentLi || ! parentLi.querySelector( ':scope > .sub-menu' ) ) return;
+
+			var isOpen = parentLi.classList.contains( 'menu-item--focus' );
+
+			document.querySelectorAll( '.main-nav .menu-item--focus' ).forEach( function ( item ) {
+				item.classList.remove( 'menu-item--focus' );
+				var itemBtn = item.querySelector( ':scope > .submenu-toggle' );
+				if ( itemBtn ) itemBtn.setAttribute( 'aria-expanded', 'false' );
+			} );
+
+			if ( ! isOpen ) {
+				parentLi.classList.add( 'menu-item--focus' );
+				btn.setAttribute( 'aria-expanded', 'true' );
+			}
+		} );
+	} );
+
+	document.addEventListener( 'click', function ( e ) {
+		if ( e.target.closest( '.main-nav' ) ) return;
+		document.querySelectorAll( '.main-nav .menu-item--focus' ).forEach( function ( item ) {
+			item.classList.remove( 'menu-item--focus' );
+			var itemBtn = item.querySelector( ':scope > .submenu-toggle' );
+			if ( itemBtn ) itemBtn.setAttribute( 'aria-expanded', 'false' );
+		} );
+	} );
+
+	// =====================================================================
 	// Mobile Submenu Accordion
 	// =====================================================================
 	var submenuToggles = document.querySelectorAll( '.mobile-menu .submenu-toggle' );

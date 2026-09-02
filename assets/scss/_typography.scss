@@ -12,7 +12,7 @@ body {
   line-height: $lh-body;
   color: $color-body;
   background-color: $color-paper;
-  background-image: radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.35), transparent 42%);
+  background-image: radial-gradient(circle at 18% 12%, rgba($hex-cream, 0.55), transparent 42%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

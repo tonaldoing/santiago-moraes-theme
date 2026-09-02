@@ -20,16 +20,16 @@
   border: $border-style;
   transition: all $transition-fast;
 
-  // Primary — ink bg, cream text, brick shadow
+  // Primary — ink bg, beige text and shadow
   &--primary {
     background-color: $color-ink;
-    color: $color-cream;
+    color: $color-paper;
     padding: 16px 26px;
-    box-shadow: $shadow-brick;
+    box-shadow: 6px 6px 0 $hex-paper;
 
     &:hover {
       transform: translate(3px, 3px);
-      box-shadow: 3px 3px 0 $hex-brick;
+      box-shadow: 3px 3px 0 $hex-paper;
       color: $color-ochre;
     }
 

@@ -210,7 +210,8 @@ add_action( 'admin_enqueue_scripts', 'sm_enqueue_admin_assets' );
 function sm_enqueue_admin_assets( $hook_suffix ) {
 	$screen = get_current_screen();
 
-	if ( ! $screen || 'edit-tags' !== $screen->base || 'album' !== $screen->taxonomy ) {
+	// edit-tags.php = list + add form; term.php = edit form. Both need the picker.
+	if ( ! $screen || ! in_array( $screen->base, array( 'edit-tags', 'term' ), true ) || 'album' !== $screen->taxonomy ) {
 		return;
 	}
 

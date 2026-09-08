@@ -22,8 +22,6 @@ $show_year  = $attributes['showYear'] ?? true;
 $args = array(
 	'taxonomy'   => 'album',
 	'hide_empty' => true,
-	'orderby'    => 'name',
-	'order'      => 'ASC',
 );
 
 $albums = get_terms( $args );
@@ -31,6 +29,8 @@ $albums = get_terms( $args );
 if ( is_wp_error( $albums ) || empty( $albums ) ) {
 	return;
 }
+
+$albums = sm_sort_albums( $albums );
 
 // Filter by demo status if needed.
 if ( ! $show_demos ) {

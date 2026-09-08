@@ -11,16 +11,15 @@
 
 get_header();
 
-// Get all album terms, ordered by year (most recent first).
+// Get all album terms, sorted by manual order, then by year (most recent first).
 $all_albums = get_terms(
 	array(
 		'taxonomy'   => 'album',
 		'hide_empty' => false,
-		'orderby'    => 'meta_value_num',
-		'meta_key'   => '_album_year', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-		'order'      => 'DESC',
 	)
 );
+
+$all_albums = sm_sort_albums( $all_albums );
 
 // Separate studio from demos.
 $studio_albums = array();

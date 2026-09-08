@@ -199,3 +199,39 @@ function sm_enqueue_editor_assets() {
 		);
 	}
 }
+
+add_action( 'admin_enqueue_scripts', 'sm_enqueue_admin_assets' );
+
+/**
+ * Enqueue admin assets — media uploader on the Album taxonomy screen only.
+ *
+ * @param string $hook_suffix Current admin page hook.
+ */
+function sm_enqueue_admin_assets( $hook_suffix ) {
+	$screen = get_current_screen();
+
+	if ( ! $screen || 'edit-tags' !== $screen->base || 'album' !== $screen->taxonomy ) {
+		return;
+	}
+
+	wp_enqueue_media();
+
+	wp_enqueue_script(
+		'sm-taxonomy-media',
+		SM_THEME_URI . '/assets/js/taxonomy-media.js',
+		array( 'jquery' ),
+		SM_THEME_VERSION,
+		true
+	);
+
+	wp_localize_script(
+		'sm-taxonomy-media',
+		'smTaxonomyMedia',
+		array(
+			'title'  => __( 'Seleccionar imagen de portada', 'santiago-moraes' ),
+			'button' => __( 'Usar esta imagen', 'santiago-moraes' ),
+			'upload' => __( 'Subir imagen', 'santiago-moraes' ),
+			'change' => __( 'Cambiar imagen', 'santiago-moraes' ),
+		)
+	);
+}

@@ -17,6 +17,8 @@ $is_demo       = get_query_var( 'sm_is_demo' );
 if ( empty( $albums ) ) {
 	return;
 }
+
+$albums = sm_sort_albums( $albums );
 ?>
 
 <section class="discography<?php echo $is_demo ? ' discography--demos' : ''; ?>">

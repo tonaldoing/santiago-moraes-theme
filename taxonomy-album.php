@@ -219,13 +219,11 @@ if ( $cover_id ) {
 			'taxonomy'   => 'album',
 			'hide_empty' => false,
 			'exclude'    => array( $album_term->term_id ),
-			'orderby'    => 'meta_value_num',
-			'meta_key'   => '_album_year', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'order'      => 'DESC',
 		)
 	);
 
 	if ( ! is_wp_error( $other_albums ) && ! empty( $other_albums ) ) :
+		$other_albums = sm_sort_albums( $other_albums );
 		?>
 		<section class="album-page__more">
 			<div class="album-page__more-inner">

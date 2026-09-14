@@ -76,9 +76,9 @@ $header_social = array(
 				?>
 				<ul class="main-nav__list">
 					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Inicio', 'santiago-moraes' ); ?></a></li>
+					<li class="menu-item"><a href="<?php echo esc_url( sm_cancionero_url() ); ?>" class="main-nav__link"><?php esc_html_e( 'Cancionero', 'santiago-moraes' ); ?></a></li>
 					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/#shows' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Shows', 'santiago-moraes' ); ?></a></li>
-					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/musica/' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Discografía', 'santiago-moraes' ); ?></a></li>
-					<li class="menu-item"><a href="<?php echo esc_url( home_url( '/acordes/' ) ); ?>" class="main-nav__link"><?php esc_html_e( 'Acordes', 'santiago-moraes' ); ?></a></li>
+					<li class="menu-item"><a href="<?php echo esc_url( sm_contact_url() ); ?>" class="main-nav__link"><?php esc_html_e( 'Contacto', 'santiago-moraes' ); ?></a></li>
 				</ul>
 				<?php
 			endif;
@@ -119,9 +119,9 @@ $header_social = array(
 		?>
 		<ul class="mobile-menu__list">
 			<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Inicio', 'santiago-moraes' ); ?></a></li>
+			<li><a href="<?php echo esc_url( sm_cancionero_url() ); ?>"><?php esc_html_e( 'Cancionero', 'santiago-moraes' ); ?></a></li>
 			<li><a href="<?php echo esc_url( home_url( '/#shows' ) ); ?>"><?php esc_html_e( 'Shows', 'santiago-moraes' ); ?></a></li>
-			<li><a href="<?php echo esc_url( home_url( '/musica/' ) ); ?>"><?php esc_html_e( 'Discografía', 'santiago-moraes' ); ?></a></li>
-			<li><a href="<?php echo esc_url( home_url( '/acordes/' ) ); ?>"><?php esc_html_e( 'Acordes', 'santiago-moraes' ); ?></a></li>
+			<li><a href="<?php echo esc_url( sm_contact_url() ); ?>"><?php esc_html_e( 'Contacto', 'santiago-moraes' ); ?></a></li>
 		</ul>
 		<?php
 	endif;

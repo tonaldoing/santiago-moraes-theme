@@ -102,6 +102,11 @@ require SM_THEME_DIR . '/inc/favicon.php';
 require SM_THEME_DIR . '/inc/bandsintown.php';
 
 /**
+ * Legacy redirects + one-time Cancionero migration.
+ */
+require SM_THEME_DIR . '/inc/redirects.php';
+
+/**
  * Custom Gutenberg Blocks.
  */
 require SM_THEME_DIR . '/inc/blocks.php';

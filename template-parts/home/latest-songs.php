@@ -26,7 +26,7 @@ if ( ! $latest_songs->have_posts() ) {
 
 		<div class="latest-songs__header">
 			<h2 class="latest-songs__title"><?php esc_html_e( 'Últimas canciones', 'santiago-moraes' ); ?></h2>
-			<a href="<?php echo esc_url( home_url( '/acordes/' ) ); ?>" class="link-arrow">
+			<a href="<?php echo esc_url( sm_cancionero_url() ); ?>" class="link-arrow">
 				<?php esc_html_e( 'Acordes y letras →', 'santiago-moraes' ); ?>
 			</a>
 		</div>

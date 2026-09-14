@@ -71,7 +71,7 @@ get_header();
 					<div class="search-empty__suggestions">
 						<p><?php esc_html_e( 'Sugerencias:', 'santiago-moraes' ); ?></p>
 						<ul>
-							<li><a href="<?php echo esc_url( home_url( '/musica' ) ); ?>"><?php esc_html_e( 'Discografia', 'santiago-moraes' ); ?></a></li>
+							<li><a href="<?php echo esc_url( home_url( '/#discos' ) ); ?>"><?php esc_html_e( 'Discografía', 'santiago-moraes' ); ?></a></li>
 							<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Inicio', 'santiago-moraes' ); ?></a></li>
 						</ul>
 					</div>

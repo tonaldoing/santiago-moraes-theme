@@ -1,9 +1,9 @@
 <?php
 /**
- * Template Name: Acordes y Letras
+ * Template Name: Cancionero
  * Template Post Type: page
  *
- * Lists only songs that have lyrics/chords, with album filter buttons
+ * Songbook: lists only songs that have lyrics/chords, with album filter buttons
  * and a brutalist preview panel (aside).
  *
  * @package Santiago_Moraes
@@ -53,8 +53,8 @@ if ( $songs->have_posts() ) {
 
 	<section class="acordes-header">
 		<div class="acordes-header__inner">
-			<p class="mono-label acordes-header__tag"><?php esc_html_e( 'Para tocar en casa', 'santiago-moraes' ); ?></p>
-			<h1 class="acordes-header__title"><?php esc_html_e( 'Acordes', 'santiago-moraes' ); ?><br><?php esc_html_e( 'y letras', 'santiago-moraes' ); ?></h1>
+			<p class="mono-label acordes-header__tag"><?php esc_html_e( 'Letras y acordes · para tocar en casa', 'santiago-moraes' ); ?></p>
+			<h1 class="acordes-header__title"><?php esc_html_e( 'Cancionero', 'santiago-moraes' ); ?></h1>
 		</div>
 	</section>
 

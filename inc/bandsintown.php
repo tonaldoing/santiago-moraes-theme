@@ -213,14 +213,3 @@ function sm_bandsintown_flush_cache() {
 	delete_transient( 'sm_bandsintown_events' );
 }
 add_action( 'update_option_sm_options', 'sm_bandsintown_flush_cache' );
-
-/**
- * Redirect the legacy /shows page to the home shows widget.
- */
-function sm_redirect_legacy_shows_page() {
-	if ( is_page( 'shows' ) ) {
-		wp_safe_redirect( home_url( '/#shows' ), 301 );
-		exit;
-	}
-}
-add_action( 'template_redirect', 'sm_redirect_legacy_shows_page' );

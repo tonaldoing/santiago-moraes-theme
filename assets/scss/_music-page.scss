@@ -330,9 +330,11 @@
     font-size: $text-sub;
     text-transform: uppercase;
     color: $color-ink;
+    text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: color $transition-fast;
 
     @include mobile-only {
       font-size: 16px;
@@ -399,6 +401,40 @@
 
     @include mobile-only {
       margin-left: auto;
+    }
+  }
+
+  &__secondary {
+    color: $color-olive;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color $transition-fast, border-color $transition-fast;
+
+    &:hover {
+      color: $color-ink;
+      border-bottom-color: $hex-ink;
+    }
+  }
+
+  // Song without chords: secondary presence, still reachable.
+  &--no-chords {
+    .track-row__title {
+      color: $color-olive;
+      font-family: $font-body;
+      font-style: italic;
+      font-size: $text-sub;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .track-row__number {
+      color: rgba($hex-olive, 0.6);
+    }
+  }
+
+  &--chords {
+    .track-row__title:hover {
+      color: $color-brick;
     }
   }
 }

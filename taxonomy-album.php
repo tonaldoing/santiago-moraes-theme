@@ -60,8 +60,21 @@ if ( $cover_id ) {
 
 				<h1 class="album-page__title"><?php echo esc_html( $album_term->name ); ?></h1>
 
-				<?php if ( $is_demo ) : ?>
-					<span class="album-page__badge"><?php esc_html_e( 'Demo / Descarte', 'santiago-moraes' ); ?></span>
+				<?php
+				$chords_in_album = sm_get_albums_with_chords()[ $album_term->term_id ] ?? 0;
+				$hero_meta       = array();
+				if ( $album_term->count ) {
+					$hero_meta[] = sprintf( _n( '%d tema', '%d temas', $album_term->count, 'santiago-moraes' ), $album_term->count );
+				}
+				if ( $chords_in_album ) {
+					$hero_meta[] = sprintf( _n( '%d con acordes', '%d con acordes', $chords_in_album, 'santiago-moraes' ), $chords_in_album );
+				}
+				if ( $is_demo ) {
+					$hero_meta[] = __( 'Demos / Descartes', 'santiago-moraes' );
+				}
+				?>
+				<?php if ( $hero_meta ) : ?>
+					<p class="album-page__meta mono-label"><?php echo esc_html( implode( ' · ', $hero_meta ) ); ?></p>
 				<?php endif; ?>
 
 				<?php if ( $description ) : ?>
@@ -153,12 +166,12 @@ if ( $cover_id ) {
 						$song_bc      = get_post_meta( get_the_ID(), '_cancion_soundcloud_url', true );
 						?>
 
-						<div class="track-row">
+						<div class="track-row<?php echo $has_lyrics ? ' track-row--chords' : ' track-row--no-chords'; ?>">
 							<span class="track-row__number"><?php echo esc_html( str_pad( $track_num, 2, '0', STR_PAD_LEFT ) ); ?></span>
 
 							<div class="track-row__info">
-								<span class="track-row__title"><?php the_title(); ?></span>
-								<?php if ( $original_key ) : ?>
+								<a href="<?php the_permalink(); ?>" class="track-row__title"><?php the_title(); ?></a>
+								<?php if ( $has_lyrics && $original_key ) : ?>
 									<span class="track-row__key"><?php echo esc_html( $original_key ); ?></span>
 								<?php endif; ?>
 							</div>
@@ -190,12 +203,12 @@ if ( $cover_id ) {
 
 							<div class="track-row__actions">
 								<?php if ( $has_lyrics ) : ?>
-									<a href="<?php the_permalink(); ?>" class="btn btn--outline btn--sm">
-										<?php esc_html_e( 'Ver letra y acordes', 'santiago-moraes' ); ?>
+									<a href="<?php the_permalink(); ?>" class="btn btn--brick btn--sm">
+										<?php esc_html_e( 'Letra y acordes', 'santiago-moraes' ); ?>
 									</a>
 								<?php else : ?>
-									<a href="<?php the_permalink(); ?>" class="btn btn--outline btn--sm">
-										<?php esc_html_e( 'Ver cancion', 'santiago-moraes' ); ?>
+									<a href="<?php the_permalink(); ?>" class="track-row__secondary mono-label">
+										<?php esc_html_e( 'Ver canción', 'santiago-moraes' ); ?>
 									</a>
 								<?php endif; ?>
 							</div>
@@ -230,31 +243,11 @@ if ( $cover_id ) {
 				<h2 class="album-page__more-title"><?php esc_html_e( 'Mas discografia', 'santiago-moraes' ); ?></h2>
 
 				<div class="album-page__more-grid">
-					<?php foreach ( $other_albums as $other ) :
-						$other_link     = get_term_link( $other );
-						$other_cover_id = get_term_meta( $other->term_id, '_album_cover_id', true );
-						$other_year     = get_term_meta( $other->term_id, '_album_year', true );
-
-						if ( is_wp_error( $other_link ) ) {
-							continue;
-						}
-						?>
-						<a href="<?php echo esc_url( $other_link ); ?>" class="disco-card">
-							<div class="disco-card__cover">
-								<?php if ( $other_cover_id ) : ?>
-									<?php echo wp_get_attachment_image( (int) $other_cover_id, 'medium', false, array( 'class' => 'disco-card__img' ) ); ?>
-								<?php else : ?>
-									<div class="disco-card__placeholder">
-										<span><?php echo esc_html( $other->name ); ?></span>
-									</div>
-								<?php endif; ?>
-							</div>
-							<p class="disco-card__name"><?php echo esc_html( $other->name ); ?></p>
-							<?php if ( $other_year ) : ?>
-								<p class="disco-card__meta mono-label"><?php echo esc_html( $other_year ); ?></p>
-							<?php endif; ?>
-						</a>
-					<?php endforeach; ?>
+					<?php
+					foreach ( $other_albums as $other ) {
+						get_template_part( 'template-parts/music/album-card', null, array( 'term' => $other ) );
+					}
+					?>
 				</div>
 			</div>
 		</section>

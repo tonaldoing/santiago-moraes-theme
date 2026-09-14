@@ -71,6 +71,11 @@
     text-transform: uppercase;
   }
 
+  &__meta {
+    color: $color-olive;
+    margin: 0;
+  }
+
   &__badge {
     display: inline-block;
     font-family: $font-mono;
@@ -141,7 +146,7 @@
 
   &__more-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: clamp(20px, 3vw, 36px);
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: clamp(18px, 2.5vw, 28px) clamp(12px, 1.6vw, 20px);
   }
 }

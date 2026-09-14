@@ -95,6 +95,64 @@
     color: $color-olive;
     margin: 8px 0 0;
   }
+
+  // "Acordes" ink stamp over the cover
+  &__stamp {
+    position: absolute;
+    left: 8px;
+    bottom: 10px;
+    transform: rotate(-8deg);
+    font-family: $font-mono;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: $color-brick;
+    border: 2px solid $hex-brick;
+    padding: 4px 7px;
+    background-color: rgba($hex-cream, 0.86);
+    pointer-events: none;
+    transition: transform $transition-fast;
+  }
+
+  // Compact variant (home grid)
+  &--compact {
+    .disco-card__cover {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      border-width: 2px;
+      box-shadow: 4px 4px 0 $hex-ochre;
+    }
+
+    &:hover .disco-card__cover {
+      box-shadow: 2px 2px 0 $hex-brick;
+      transform: translate(3px, 3px);
+    }
+
+    &:hover .disco-card__stamp {
+      transform: rotate(-3deg);
+    }
+
+    .disco-card__name {
+      display: block;
+      font-size: 13px;
+      line-height: 1.1;
+      margin: 12px 0 0;
+    }
+
+    .disco-card__meta {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      margin: 4px 0 0;
+    }
+
+    .disco-card__placeholder {
+      padding: 10px;
+      font-size: 10px;
+    }
+  }
 }
 
 // ==========================================================================

@@ -14,14 +14,18 @@ defined( 'ABSPATH' ) || exit;
  *
  * A matching RewriteRule in .htaccess strips the version number so the server
  * serves the original file. This avoids LiteSpeed stripping ?ver= query strings.
+ *
+ * Outside production (Local runs nginx without that rule) a plain ?ver= query is used.
  */
 function sm_asset_url( $relative_path ) {
 	$full_path = SM_THEME_DIR . '/' . $relative_path;
 	$ver       = file_exists( $full_path ) ? filemtime( $full_path ) : SM_THEME_VERSION;
 
-	$url = SM_THEME_URI . '/' . preg_replace( '/\.(css|js)$/', '.' . $ver . '.$1', $relative_path );
+	if ( 'production' !== wp_get_environment_type() ) {
+		return add_query_arg( 'ver', $ver, SM_THEME_URI . '/' . $relative_path );
+	}
 
-	return $url;
+	return SM_THEME_URI . '/' . preg_replace( '/\.(css|js)$/', '.' . $ver . '.$1', $relative_path );
 }
 
 add_action( 'wp_enqueue_scripts', 'sm_enqueue_assets' );
@@ -79,8 +83,8 @@ function sm_enqueue_assets() {
 		);
 	}
 
-	// Contact form — on contact page template, front page, or pages with the contact-form block.
-	if ( is_page_template( 'templates/template-contact.php' ) || is_front_page() || ( is_singular() && has_block( 'sm/contact-form' ) ) ) {
+	// Contact form — on contact page template or pages with the contact-form block.
+	if ( is_page_template( 'templates/template-contact.php' ) || ( is_singular() && has_block( 'sm/contact-form' ) ) ) {
 		wp_enqueue_script(
 			'sm-contact-form',
 			SM_THEME_URI . '/assets/js/contact-form.js',
@@ -92,28 +96,6 @@ function sm_enqueue_assets() {
 			'sm-contact-form',
 			'smContactData',
 			array( 'ajaxUrl' => admin_url( 'admin-ajax.php' ) )
-		);
-	}
-
-	// Hero video facade — front page only.
-	if ( is_front_page() && sm_get_option( 'sm_hero_video_url', '' ) ) {
-		wp_enqueue_script(
-			'sm-hero-video',
-			SM_THEME_URI . '/assets/js/hero-video.js',
-			array(),
-			SM_THEME_VERSION,
-			array( 'strategy' => 'defer' )
-		);
-	}
-
-	// Home contact form — front page only (compact inline form).
-	if ( is_front_page() ) {
-		wp_enqueue_script(
-			'sm-home-contact',
-			SM_THEME_URI . '/assets/js/home-contact.js',
-			array(),
-			SM_THEME_VERSION,
-			array( 'strategy' => 'defer' )
 		);
 	}
 

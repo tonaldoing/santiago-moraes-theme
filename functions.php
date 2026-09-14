@@ -99,7 +99,7 @@ require SM_THEME_DIR . '/inc/favicon.php';
 /**
  * Songkick integration.
  */
-require SM_THEME_DIR . '/inc/songkick.php';
+require SM_THEME_DIR . '/inc/bandsintown.php';
 
 /**
  * Custom Gutenberg Blocks.

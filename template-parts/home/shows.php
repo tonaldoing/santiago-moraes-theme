@@ -1,8 +1,8 @@
 <?php
 /**
- * Homepage Shows section — Rebranding.
+ * Full-width Shows section (Bandsintown).
  *
- * 2-column layout with title left, Songkick widget right.
+ * Not used on the front page (the sidebar widget is), kept for reuse in other templates.
  *
  * @package Santiago_Moraes
  */
@@ -15,13 +15,13 @@ defined( 'ABSPATH' ) || exit;
 
 		<div class="shows__header">
 			<h2 class="shows__title"><?php esc_html_e( 'Próximos', 'santiago-moraes' ); ?><br><?php esc_html_e( 'shows', 'santiago-moraes' ); ?></h2>
-			<p class="shows__meta mono-label"><?php esc_html_e( 'Agenda 2026 · Songkick', 'santiago-moraes' ); ?></p>
+			<p class="shows__meta mono-label"><?php esc_html_e( 'Agenda · Bandsintown', 'santiago-moraes' ); ?></p>
 		</div>
 
 		<div class="shows__list">
-			<?php sm_songkick_widget( array( 'theme' => 'editorial' ) ); ?>
+			<?php sm_bandsintown_list( array( 'limit' => 0 ) ); ?>
 
-			<a href="<?php echo esc_url( SM_SONGKICK_ARTIST_URL ); ?>" class="link-arrow" target="_blank" rel="noopener noreferrer">
+			<a href="<?php echo esc_url( sm_bandsintown_artist_url() ); ?>" class="link-arrow" target="_blank" rel="noopener noreferrer">
 				<?php esc_html_e( 'Ver todos los shows →', 'santiago-moraes' ); ?>
 			</a>
 		</div>

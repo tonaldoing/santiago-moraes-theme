@@ -120,3 +120,185 @@ function sm_get_contextual_spotify_url() {
 	return sm_get_default_spotify_url();
 }
 
+// =========================================================================
+// Albums & chords.
+// =========================================================================
+
+/**
+ * Map of album term IDs to the number of published songs with chords/lyrics loaded.
+ *
+ * Runs two queries once per request; every call afterwards is served from the static cache.
+ *
+ * @return array<int,int> term_id => song count.
+ */
+function sm_get_albums_with_chords() {
+	static $map = null;
+
+	if ( null !== $map ) {
+		return $map;
+	}
+
+	$map      = array();
+	$song_ids = sm_get_song_ids_with_chords();
+
+	if ( empty( $song_ids ) ) {
+		return $map;
+	}
+
+	$terms = wp_get_object_terms( $song_ids, 'album', array( 'fields' => 'all_with_object_id' ) );
+
+	if ( is_wp_error( $terms ) ) {
+		return $map;
+	}
+
+	foreach ( $terms as $term ) {
+		$map[ $term->term_id ] = ( $map[ $term->term_id ] ?? 0 ) + 1;
+	}
+
+	return $map;
+}
+
+/**
+ * IDs of published songs with chords/lyrics loaded (cached per request).
+ *
+ * @return int[]
+ */
+function sm_get_song_ids_with_chords() {
+	static $ids = null;
+
+	if ( null !== $ids ) {
+		return $ids;
+	}
+
+	$ids = get_posts(
+		array(
+			'post_type'      => 'cancion',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'     => '_cancion_lyrics',
+					'value'   => '',
+					'compare' => '!=',
+				),
+			),
+		)
+	);
+
+	return $ids;
+}
+
+/**
+ * Whether an album has at least one song with chords loaded.
+ *
+ * @param int $term_id Album term ID.
+ * @return bool
+ */
+function sm_album_has_chords( $term_id ) {
+	$map = sm_get_albums_with_chords();
+	return ! empty( $map[ (int) $term_id ] );
+}
+
+/**
+ * Total number of published songs with chords loaded.
+ *
+ * @return int
+ */
+function sm_count_songs_with_chords() {
+	return count( sm_get_song_ids_with_chords() );
+}
+
+// =========================================================================
+// Page lookups by template (slug-independent URLs).
+// =========================================================================
+
+/**
+ * Permalink of the first published page using a given template file.
+ *
+ * @param string $template Template path relative to the theme, e.g. 'templates/template-acordes.php'.
+ * @param string $fallback URL returned when no page uses the template.
+ * @return string
+ */
+function sm_get_page_url_by_template( $template, $fallback = '' ) {
+	static $cache = array();
+
+	if ( isset( $cache[ $template ] ) ) {
+		return $cache[ $template ];
+	}
+
+	$pages = get_posts(
+		array(
+			'post_type'      => 'page',
+			'post_status'    => 'publish',
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+			'meta_key'       => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_value'     => $template, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+		)
+	);
+
+	$cache[ $template ] = ! empty( $pages ) ? get_permalink( $pages[0] ) : $fallback;
+
+	return $cache[ $template ];
+}
+
+/**
+ * URL of the Cancionero page (songs with chords).
+ *
+ * @return string
+ */
+function sm_cancionero_url() {
+	return sm_get_page_url_by_template( 'templates/template-acordes.php', home_url( '/cancionero/' ) );
+}
+
+/**
+ * URL of the Contact page.
+ *
+ * @return string
+ */
+function sm_contact_url() {
+	return sm_get_page_url_by_template( 'templates/template-contact.php', home_url( '/contacto/' ) );
+}
+
+// =========================================================================
+// Shop.
+// =========================================================================
+
+/**
+ * Shop URL: Theme Options value, else the first album that has a vinyl link.
+ *
+ * @return string Empty when nothing is configured.
+ */
+function sm_get_shop_url() {
+	$url = sm_get_option( 'sm_shop_url', '' );
+
+	if ( $url ) {
+		return $url;
+	}
+
+	$albums = get_terms(
+		array(
+			'taxonomy'   => 'album',
+			'hide_empty' => false,
+			'fields'     => 'ids',
+			'meta_key'   => '_album_vinyl_url', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+		)
+	);
+
+	if ( is_wp_error( $albums ) ) {
+		return '';
+	}
+
+	foreach ( $albums as $term_id ) {
+		$vinyl = get_term_meta( $term_id, '_album_vinyl_url', true );
+		if ( $vinyl ) {
+			return $vinyl;
+		}
+	}
+
+	return '';
+}
+

@@ -2,41 +2,29 @@
 @use 'mixins' as *;
 
 // ==========================================================================
-// Homepage — Rebranding (Brutalist Editorial)
+// Homepage — Songbook-first layout (Brutalist Editorial)
 // ==========================================================================
 
-// ----- Hero -----
+// ----- Hero (compact band) -----
 .hero {
   background-color: $color-ochre;
   @include border-bottom;
   @include banner-illustration('tex-hero.webp');
-  padding: $section-padding-y $section-padding-x 0;
+  padding: clamp(28px, 4vw, 52px) $section-padding-x;
 
   &__inner {
     max-width: $container-max;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(24px, 4vw, 64px);
-    align-items: end;
-
-    @include tablet {
-      grid-template-columns: 1.15fr 0.85fr;
-    }
-  }
-
-  &__text {
-    padding-bottom: clamp(32px, 5vw, 72px);
-  }
-
-  &__tag {
-    color: $color-brick;
-    margin: 0 0 22px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px clamp(24px, 4vw, 64px);
   }
 
   &__title {
-    font-size: $text-hero;
-    line-height: $lh-hero;
+    font-size: clamp(40px, 5.6vw, 76px);
+    line-height: 0.85;
     letter-spacing: $ls-hero;
     text-transform: uppercase;
     margin: 0;
@@ -48,94 +36,24 @@
     -webkit-text-stroke: 2px $hex-ink;
   }
 
+  &__tag {
+    color: $color-brick;
+    margin: 16px 0 0;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 4px;
+  }
+
   // Still emitted by the sm/hero-section block (render.php).
   &__description {
     font-size: $text-sub;
     line-height: $lh-sub;
     max-width: 19em;
     margin: 28px 0 0;
-  }
-
-  &__buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 34px;
-  }
-
-  // Album art
-  &__album {
-    position: relative;
-    align-self: end;
-  }
-
-  &__album-tag {
-    position: absolute;
-    top: -34px;
-    left: 0;
-    color: $color-ink;
-    margin: 0;
-
-    @include mobile-only {
-      position: static;
-      margin-bottom: 12px;
-    }
-  }
-
-  &__album-frame {
-    border: $border-style;
-    background-color: $color-warm;
-    box-shadow: $shadow-brick-lg;
-    margin-bottom: -$border-width;
-    position: relative;
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    &--has-video {
-      cursor: pointer;
-
-      &:hover .hero__play-btn {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.08);
-      }
-    }
-
-    &--playing {
-      aspect-ratio: 1 / 1;
-      cursor: default;
-
-      iframe {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border: 0;
-      }
-    }
-  }
-
-  &__play-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: none;
-    border: none;
-    color: $color-cream;
-    opacity: 0.85;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    transition: opacity $transition-fast, transform $transition-fast;
-    z-index: 2;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
-
-    svg {
-      display: block;
-    }
   }
 }
 
@@ -175,7 +93,354 @@
   }
 }
 
-// ----- Shows -----
+// ----- Two-column layout: discography + sidebar -----
+.home-layout {
+  padding: clamp(32px, 4vw, 56px) $section-padding-x clamp(56px, 7vw, 110px);
+
+  &__inner {
+    max-width: $container-max;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 5vw, 64px);
+    align-items: start;
+
+    @include desktop {
+      grid-template-columns: minmax(0, 1fr) 300px;
+    }
+
+    @include from($bp-wide) {
+      grid-template-columns: minmax(0, 1fr) 320px;
+    }
+  }
+
+  &__main {
+    min-width: 0;
+  }
+}
+
+// ----- Discography (main column) -----
+.discos {
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 16px;
+    margin-bottom: clamp(20px, 3vw, 32px);
+    @include border-bottom;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__meta {
+    color: $color-olive;
+    margin: 10px 0 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(18px, 2.5vw, 28px) clamp(12px, 1.6vw, 20px);
+
+    @include from($bp-xs + 1) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @include tablet {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    @include from(1200px) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+}
+
+// ----- Cancionero: latest songs with chords (main column) -----
+.recent {
+  margin-top: clamp(48px, 6vw, 80px);
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 4px;
+    @include border-bottom;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__meta {
+    color: $color-olive;
+    margin: 10px 0 0;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: clamp(24px, 3vw, 40px);
+
+    @include tablet {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__item {
+    border-bottom: 2px solid $hex-muted;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 4px;
+    text-decoration: none;
+    color: $color-ink;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: rgba($hex-warm, 0.5);
+
+      .recent__arrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-size: 16px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  &__album {
+    font-family: $font-body;
+    font-style: italic;
+    font-size: 15px;
+    color: $color-olive;
+  }
+
+  &__key {
+    color: $color-brick;
+    flex-shrink: 0;
+  }
+
+  &__arrow {
+    font-family: $font-mono;
+    color: $color-brick;
+    flex-shrink: 0;
+    transition: transform $transition-fast;
+  }
+}
+
+// ----- Sidebar -----
+.home-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3vw, 36px);
+  padding-top: 32px;
+  @include border-top;
+
+  @include desktop {
+    padding-top: 0;
+    padding-left: clamp(24px, 2.5vw, 32px);
+    border-top: 0;
+    border-left: $border-style;
+  }
+}
+
+.widget {
+  &__title {
+    display: block;
+    font-family: $font-heading;
+    font-size: 15px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: $color-ink;
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid $hex-ink;
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.45;
+    color: $color-olive;
+    margin: 0 0 14px;
+  }
+
+  &__more {
+    display: inline-block;
+    margin-top: 14px;
+    text-decoration: none;
+  }
+
+  &__email {
+    display: block;
+    color: $color-brick;
+    text-decoration: none;
+    word-break: break-all;
+    margin-bottom: 4px;
+
+    &:hover {
+      color: $color-ink;
+    }
+  }
+
+  &--shows {
+    @include banner-illustration('ilu-manos.webp', 0.12);
+  }
+}
+
+// Search
+.widget-search {
+  &__row {
+    display: flex;
+    border: 2px solid $hex-ink;
+    background-color: $color-cream;
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    padding: 11px 12px;
+    font-family: $font-body;
+    font-size: 16px;
+    color: $color-ink;
+
+    &::placeholder {
+      color: $color-olive;
+      font-style: italic;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__btn {
+    width: 44px;
+    border: 0;
+    border-left: 2px solid $hex-ink;
+    background-color: $color-ink;
+    color: $color-ochre;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-cream;
+    }
+  }
+}
+
+// Shows list inside the widget
+.widget-shows__list {
+  border-top: 2px solid $hex-ink;
+}
+
+// Song list (Recién agregadas)
+.widget-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  &__item {
+    border-bottom: 2px solid $hex-muted;
+
+    &:first-child {
+      border-top: 2px solid $hex-ink;
+    }
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 0;
+    text-decoration: none;
+    color: $color-ink;
+
+    &:hover .widget-list__name {
+      color: $color-brick;
+    }
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-size: 14px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    transition: color $transition-fast;
+  }
+
+  &__meta {
+    color: $color-olive;
+    font-size: 10px;
+  }
+}
+
+// Streaming links (Escuchar)
+.widget-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid $hex-ink;
+    padding: 9px 14px;
+    font-family: $font-mono;
+    font-size: 11px;
+    letter-spacing: $ls-mono;
+    text-transform: uppercase;
+    color: $color-ink;
+    text-decoration: none;
+    transition: background-color $transition-fast, color $transition-fast;
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background-color: $color-ink;
+      color: $color-ochre;
+    }
+  }
+}
+
+// ----- Shows (full-width section, used by the sm/upcoming-shows block) -----
 .shows {
   @include banner-illustration('ilu-manos.webp');
   padding: $section-padding-y $section-padding-x;
@@ -212,9 +477,17 @@
   &__list {
     border-top: 2px solid $hex-ink;
   }
+
+  &__empty {
+    font-family: $font-body;
+    font-style: italic;
+    color: $color-olive;
+    padding: 14px 0;
+    margin: 0;
+  }
 }
 
-// Show row (used by Songkick widget output)
+// Show row (Bandsintown list)
 .show-row {
   display: grid;
   grid-template-columns: 96px 1fr auto;
@@ -222,6 +495,7 @@
   align-items: center;
   padding: 22px 6px;
   border-bottom: 2px solid $hex-muted;
+  text-decoration: none;
   transition: background-color $transition-fast;
 
   &:hover {
@@ -251,6 +525,8 @@
 
   &__info {
     min-width: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   &__venue {
@@ -269,9 +545,46 @@
     color: $color-olive;
     margin: 5px 0 0;
   }
+
+  &__cta {
+    color: $color-brick;
+    white-space: nowrap;
+  }
+
+  // Sidebar variant
+  &--compact {
+    grid-template-columns: 44px 1fr;
+    gap: 6px 12px;
+    align-items: start;
+    padding: 12px 0;
+
+    .show-row__day {
+      font-size: 26px;
+    }
+
+    .show-row__month {
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .show-row__venue {
+      font-size: 14px;
+      line-height: 1.15;
+    }
+
+    .show-row__city {
+      font-size: 14px;
+      margin-top: 3px;
+    }
+
+    .show-row__cta {
+      grid-column: 2;
+      font-size: 10px;
+    }
+  }
 }
 
-// ----- Music / Latest Album -----
+// ----- Music / Latest Album (kept for template-parts/home/music.php) -----
 .music {
   background-color: $color-warm;
   @include border-bottom;
@@ -347,7 +660,7 @@
   }
 }
 
-// ----- Latest Songs -----
+// ----- Latest Songs (sm/latest-songs block) -----
 .latest-songs {
   padding: $section-padding-y $section-padding-x;
   @include border-bottom;
@@ -423,7 +736,7 @@
   }
 }
 
-// ----- Home Contact -----
+// ----- Home Contact (kept for template-parts/home/contact.php) -----
 .home-contact {
   background-color: $color-brick;
   color: $color-cream;

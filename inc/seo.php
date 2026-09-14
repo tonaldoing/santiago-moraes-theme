@@ -265,3 +265,16 @@ function sm_sitemap_force_200() {
 	status_header( 200 );
 }
 add_action( 'template_redirect', 'sm_sitemap_force_200', 9 );
+
+/**
+ * Drop the users sitemap: author archives are redirected (see inc/redirects.php)
+ * and listing them would only expose WordPress usernames.
+ *
+ * @param WP_Sitemaps_Provider $provider Provider instance.
+ * @param string               $name     Provider name.
+ * @return WP_Sitemaps_Provider|false
+ */
+function sm_sitemap_remove_users_provider( $provider, $name ) {
+	return 'users' === $name ? false : $provider;
+}
+add_filter( 'wp_sitemaps_add_provider', 'sm_sitemap_remove_users_provider', 10, 2 );

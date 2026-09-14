@@ -21,12 +21,6 @@ function sm_legacy_redirects() {
 		return;
 	}
 
-	// Author archives only expose usernames on a single-artist site.
-	if ( is_author() ) {
-		wp_safe_redirect( home_url( '/' ), 301 );
-		exit;
-	}
-
 	if ( is_page( 'shows' ) || is_page( 'musica' ) ) {
 		wp_safe_redirect( home_url( is_page( 'shows' ) ? '/#shows' : '/#discos' ), 301 );
 		exit;

@@ -50,7 +50,7 @@ function sm_register_cancion_cpt() {
 		array(
 			'labels'        => $labels,
 			'public'        => true,
-			'has_archive'   => true,
+			'has_archive'   => false, // /canciones/ redirects to the Cancionero page (inc/redirects.php).
 			'rewrite'       => array( 'slug' => 'canciones' ),
 			'menu_icon'     => 'dashicons-format-audio',
 			'menu_position' => 5,

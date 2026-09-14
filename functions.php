@@ -106,12 +106,4 @@ require SM_THEME_DIR . '/inc/bandsintown.php';
  */
 require SM_THEME_DIR . '/inc/redirects.php';
 
-/**
- * Custom Gutenberg Blocks.
- */
-require SM_THEME_DIR . '/inc/blocks.php';
 
-/**
- * Block Patterns.
- */
-require SM_THEME_DIR . '/inc/patterns.php';

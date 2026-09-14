@@ -92,18 +92,14 @@ function sm_tracking_head() {
 // =====================================================================
 
 /**
- * Build a Google Fonts CSS URL for the rebranding fonts.
+ * Google Fonts are no longer used: Archivo Black, Newsreader and DM Mono are
+ * self-hosted (assets/fonts + assets/scss/_fonts.scss). Kept for backwards
+ * compatibility with callers; always returns an empty string.
  *
- * Archivo Black + Newsreader (with italic) + DM Mono.
+ * @return string
  */
 function sm_google_fonts_url() {
-	$families = array(
-		'family=Archivo+Black',
-		'family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400',
-		'family=DM+Mono:wght@400;500',
-	);
-
-	return 'https://fonts.googleapis.com/css2?' . implode( '&', $families ) . '&display=swap';
+	return '';
 }
 
 /**

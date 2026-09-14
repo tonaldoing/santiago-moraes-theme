@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * - /shows   → home shows widget
  * - /musica  → home discography
  * - /acordes → Cancionero page (once its slug has changed)
+ * - /canciones (former CPT archive) → Cancionero page
  */
 function sm_legacy_redirects() {
 	if ( is_admin() ) {
@@ -29,7 +30,7 @@ function sm_legacy_redirects() {
 	if ( is_404() ) {
 		$path = trim( (string) wp_parse_url( add_query_arg( array() ), PHP_URL_PATH ), '/' );
 
-		if ( 'acordes' === $path ) {
+		if ( 'acordes' === $path || 'canciones' === $path ) {
 			$target = sm_cancionero_url();
 			if ( $target && false === strpos( $target, '/acordes/' ) ) {
 				wp_safe_redirect( $target, 301 );
@@ -128,3 +129,15 @@ function sm_migrate_cancionero() {
 	update_option( 'sm_migration_cancionero', time(), false );
 }
 add_action( 'init', 'sm_migrate_cancionero', 20 );
+
+/**
+ * Flush rewrite rules once per rules version (has_archive changed for "cancion").
+ * Runs after every CPT/taxonomy is registered.
+ */
+function sm_maybe_flush_rewrites() {
+	if ( '2' !== get_option( 'sm_rewrite_version' ) ) {
+		flush_rewrite_rules( false );
+		update_option( 'sm_rewrite_version', '2', false );
+	}
+}
+add_action( 'init', 'sm_maybe_flush_rewrites', 99 );

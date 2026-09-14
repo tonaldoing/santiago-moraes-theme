@@ -6,6 +6,7 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 @use 'reset';
+@use 'fonts';
 
 // Base
 @use 'typography';
@@ -31,5 +32,4 @@
 @use 'latest-songs';
 @use 'chords';
 @use 'player';
-@use 'blocks';
 // @use 'components/cards';

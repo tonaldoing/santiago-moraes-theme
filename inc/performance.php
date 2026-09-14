@@ -73,16 +73,6 @@ add_filter( 'wp_resource_hints', 'sm_resource_hints', 10, 2 );
  */
 function sm_resource_hints( $hints, $relation_type ) {
 	if ( 'preconnect' === $relation_type ) {
-		// Google Fonts (if loaded).
-		$hints[] = array(
-			'href'        => 'https://fonts.googleapis.com',
-			'crossorigin' => '',
-		);
-		$hints[] = array(
-			'href'        => 'https://fonts.gstatic.com',
-			'crossorigin' => 'anonymous',
-		);
-
 		// Google Analytics.
 		$ga_id = sm_get_option( 'sm_ga_id', '' );
 		if ( $ga_id ) {

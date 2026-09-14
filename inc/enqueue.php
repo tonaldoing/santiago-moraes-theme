@@ -34,31 +34,11 @@ add_action( 'wp_enqueue_scripts', 'sm_enqueue_assets' );
  * Enqueue front-end styles and scripts.
  */
 function sm_enqueue_assets() {
-	// Google Fonts — dynamic based on Theme Options.
-	$google_url = sm_google_fonts_url();
-	if ( $google_url ) {
-		wp_enqueue_style( 'sm-google-fonts', $google_url, array(), null );
-	}
-
-	// Adobe Fonts (Typekit) — only when an Adobe font is selected.
-	$adobe_url = sm_needs_adobe_fonts();
-	if ( $adobe_url ) {
-		wp_enqueue_style( 'sm-adobe-fonts', $adobe_url, array(), null );
-	}
-
-	// Main stylesheet (compiled from SCSS).
-	$css_deps = array();
-	if ( $google_url ) {
-		$css_deps[] = 'sm-google-fonts';
-	}
-	if ( $adobe_url ) {
-		$css_deps[] = 'sm-adobe-fonts';
-	}
-
+	// Main stylesheet (compiled from SCSS; fonts are self-hosted via _fonts.scss).
 	wp_enqueue_style(
 		'sm-main',
 		sm_asset_url( 'assets/css/style.min.css' ),
-		$css_deps,
+		array(),
 		null
 	);
 
@@ -71,25 +51,13 @@ function sm_enqueue_assets() {
 		array( 'strategy' => 'defer' )
 	);
 
-	// Main script.
-	$main_js = SM_THEME_DIR . '/assets/js/main.js';
-	if ( file_exists( $main_js ) ) {
-		wp_enqueue_script(
-			'sm-main',
-			sm_asset_url( 'assets/js/main.js' ),
-			array(),
-			null,
-			array( 'strategy' => 'defer' )
-		);
-	}
-
-	// Contact form — on contact page template or pages with the contact-form block.
-	if ( is_page_template( 'templates/template-contact.php' ) || ( is_singular() && has_block( 'sm/contact-form' ) ) ) {
+	// Contact form — contact page template only.
+	if ( is_page_template( 'templates/template-contact.php' ) ) {
 		wp_enqueue_script(
 			'sm-contact-form',
-			SM_THEME_URI . '/assets/js/contact-form.js',
+			sm_asset_url( 'assets/js/contact-form.min.js' ),
 			array(),
-			SM_THEME_VERSION,
+			null,
 			array( 'strategy' => 'defer' )
 		);
 		wp_localize_script(
@@ -103,7 +71,7 @@ function sm_enqueue_assets() {
 	if ( sm_get_option( 'sm_ga_id', '' ) ) {
 		wp_enqueue_script(
 			'sm-analytics',
-			sm_asset_url( 'assets/js/analytics.js' ),
+			sm_asset_url( 'assets/js/analytics.min.js' ),
 			array(),
 			null,
 			array( 'strategy' => 'defer' )
@@ -114,9 +82,9 @@ function sm_enqueue_assets() {
 	if ( is_page_template( 'templates/template-acordes.php' ) ) {
 		wp_enqueue_script(
 			'sm-acordes-filter',
-			SM_THEME_URI . '/assets/js/acordes-filter.js',
+			sm_asset_url( 'assets/js/acordes-filter.min.js' ),
 			array(),
-			SM_THEME_VERSION,
+			null,
 			array( 'strategy' => 'defer' )
 		);
 	}
@@ -125,7 +93,7 @@ function sm_enqueue_assets() {
 	// if ( sm_get_option( 'sm_player_enabled', true ) ) {
 	// 	wp_enqueue_script(
 	// 		'sm-sticky-player',
-	// 		SM_THEME_URI . '/assets/js/modules/sticky-player.js',
+	// 		SM_THEME_URI . '/assets/js/modules/sticky-player.min.js',
 	// 		array(),
 	// 		SM_THEME_VERSION,
 	// 		array( 'strategy' => 'defer' )
@@ -136,28 +104,28 @@ function sm_enqueue_assets() {
 	if ( is_singular( 'cancion' ) ) {
 		wp_enqueue_script(
 			'sm-chord-transpose',
-			sm_asset_url( 'assets/js/modules/chord-transpose.js' ),
+			sm_asset_url( 'assets/js/modules/chord-transpose.min.js' ),
 			array(),
 			null,
 			array( 'strategy' => 'defer' )
 		);
 		wp_enqueue_script(
 			'sm-chord-autoscroll',
-			sm_asset_url( 'assets/js/modules/chord-autoscroll.js' ),
+			sm_asset_url( 'assets/js/modules/chord-autoscroll.min.js' ),
 			array(),
 			null,
 			array( 'strategy' => 'defer' )
 		);
 		wp_enqueue_script(
 			'sm-chord-toggle',
-			sm_asset_url( 'assets/js/modules/chord-toggle.js' ),
+			sm_asset_url( 'assets/js/modules/chord-toggle.min.js' ),
 			array(),
 			null,
 			array( 'strategy' => 'defer' )
 		);
 		wp_enqueue_script(
 			'sm-chord-diagrams',
-			sm_asset_url( 'assets/js/modules/chord-diagrams.js' ),
+			sm_asset_url( 'assets/js/modules/chord-diagrams.min.js' ),
 			array(),
 			null,
 			array( 'strategy' => 'defer' )
@@ -171,23 +139,11 @@ add_action( 'enqueue_block_editor_assets', 'sm_enqueue_editor_assets' );
  * Enqueue editor-specific styles.
  */
 function sm_enqueue_editor_assets() {
-	// Google Fonts for the editor too.
-	$google_url = sm_google_fonts_url();
-	if ( $google_url ) {
-		wp_enqueue_style( 'sm-google-fonts', $google_url, array(), null );
-	}
-
-	// Adobe Fonts for the editor.
-	$adobe_url = sm_needs_adobe_fonts();
-	if ( $adobe_url ) {
-		wp_enqueue_style( 'sm-adobe-fonts', $adobe_url, array(), null );
-	}
-
 	if ( file_exists( SM_THEME_DIR . '/assets/css/style.min.css' ) ) {
 		wp_enqueue_style(
 			'sm-editor',
 			sm_asset_url( 'assets/css/style.min.css' ),
-			array( 'sm-google-fonts' ),
+			array(),
 			null
 		);
 	}
@@ -212,9 +168,9 @@ function sm_enqueue_admin_assets( $hook_suffix ) {
 
 	wp_enqueue_script(
 		'sm-taxonomy-media',
-		SM_THEME_URI . '/assets/js/taxonomy-media.js',
+		sm_asset_url( 'assets/js/taxonomy-media.min.js' ),
 		array( 'jquery' ),
-		SM_THEME_VERSION,
+		null,
 		true
 	);
 

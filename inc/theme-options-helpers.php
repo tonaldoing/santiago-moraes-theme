@@ -102,16 +102,4 @@ function sm_google_fonts_url() {
 	return '';
 }
 
-/**
- * External (non-Google) font keys and their stylesheet URLs.
- */
-function sm_get_external_font_keys() {
-	return array();
-}
 
-/**
- * Check whether any selected theme font needs an external stylesheet.
- */
-function sm_needs_adobe_fonts() {
-	return false;
-}

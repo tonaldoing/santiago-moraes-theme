@@ -1,9 +1,10 @@
 <?php
 /**
- * Theme Options admin page.
+ * Theme Options admin page (Apariencia > Santiago Moraes).
  *
- * Replaces the Customizer settings with a dedicated dashboard page
- * under Apariencia > Santiago Moraes.
+ * Every field lives once in sm_theme_options_schema(); sanitization, the
+ * hidden inputs that preserve other tabs on save, and the form markup are all
+ * derived from it. To add an option, add one entry to the schema.
  *
  * @package Santiago_Moraes
  */
@@ -11,11 +12,249 @@
 defined( 'ABSPATH' ) || exit;
 
 // =====================================================================
-// Sanitize helpers (moved from customizer.php).
+// Schema.
 // =====================================================================
 
 /**
- * Build the choices array for the featured album dropdown.
+ * Tabs and fields.
+ *
+ * Field keys:
+ *   type        text | url | link | email | number | range | textarea | code | checkbox | radio | select | color | image | heading | note
+ *               ("link" is a text field that accepts anchors like "#shows"; "code" is stored unfiltered, admin-only)
+ *   label       Row label.
+ *   default     Value shown when nothing is stored (also passed to sm_get_option by templates).
+ *   description Help text under the control.
+ *   choices     radio/select: value => label (or a callable returning that array).
+ *   class       Input CSS class (regular-text, large-text, small-text…).
+ *   placeholder / min / max / step / rows
+ *   sanitize    Optional callable overriding the type's sanitizer.
+ *
+ * @return array
+ */
+function sm_theme_options_schema() {
+	return array(
+		'general'  => array(
+			'label'  => __( 'General', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_logo_type'         => array(
+					'type'    => 'radio',
+					'label'   => __( 'Logo tipo', 'santiago-moraes' ),
+					'default' => 'text',
+					'choices' => array(
+						'text'  => __( 'Texto', 'santiago-moraes' ),
+						'image' => __( 'Imagen', 'santiago-moraes' ),
+					),
+				),
+				'sm_logo_text'         => array(
+					'type'    => 'text',
+					'label'   => __( 'Logo texto', 'santiago-moraes' ),
+					'default' => 'Santiago Moraes',
+				),
+				'sm_logo_image'        => array(
+					'type'  => 'image',
+					'label' => __( 'Logo imagen', 'santiago-moraes' ),
+				),
+				'sm_header_height'     => array(
+					'type'    => 'range',
+					'label'   => __( 'Altura del header (px)', 'santiago-moraes' ),
+					'default' => 90,
+					'min'     => 60,
+					'max'     => 120,
+					'step'    => 5,
+					'unit'    => 'px',
+				),
+				'_announcement'        => array(
+					'type'  => 'heading',
+					'label' => __( 'Barra de anuncio (homepage)', 'santiago-moraes' ),
+				),
+				'sm_announcement_text' => array(
+					'type'        => 'text',
+					'label'       => __( 'Texto del anuncio', 'santiago-moraes' ),
+					'class'       => 'large-text',
+					'description' => __( 'Ej: "Nuevo disco: Las siete menos diez — Ya disponible". Dejalo vacio para ocultar la barra.', 'santiago-moraes' ),
+				),
+				'sm_announcement_url'  => array(
+					'type'        => 'url',
+					'label'       => __( 'Link del anuncio (opcional)', 'santiago-moraes' ),
+					'description' => __( 'Si tiene link, toda la barra es clickeable.', 'santiago-moraes' ),
+				),
+			),
+		),
+
+		'colores'  => array(
+			'label'  => __( 'Colores', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_color_ink'         => array( 'type' => 'color', 'default' => '#1F3C57', 'label' => __( 'Azul tinta (textos, header, bordes)', 'santiago-moraes' ) ),
+				'sm_color_paper'       => array( 'type' => 'color', 'default' => '#E9DCC6', 'label' => __( 'Papel (fondo principal)', 'santiago-moraes' ) ),
+				'sm_color_ochre'       => array( 'type' => 'color', 'default' => '#E08B3E', 'label' => __( 'Ocre (acentos, hero, hover)', 'santiago-moraes' ) ),
+				'sm_color_brick'       => array( 'type' => 'color', 'default' => '#A8341C', 'label' => __( 'Ladrillo (links, CTA, tags)', 'santiago-moraes' ) ),
+				'sm_color_cream'       => array( 'type' => 'color', 'default' => '#F4E9D6', 'label' => __( 'Crema (texto sobre oscuro)', 'santiago-moraes' ) ),
+				'sm_color_warm'        => array( 'type' => 'color', 'default' => '#D9CBB2', 'label' => __( 'Gris calido (fondos secundarios)', 'santiago-moraes' ) ),
+				'sm_color_muted'       => array( 'type' => 'color', 'default' => '#C9B896', 'label' => __( 'Beige apagado (bordes suaves)', 'santiago-moraes' ) ),
+				'sm_color_brown'       => array( 'type' => 'color', 'default' => '#3A2A1C', 'label' => __( 'Marron (texto cuerpo)', 'santiago-moraes' ) ),
+				'sm_color_olive'       => array( 'type' => 'color', 'default' => '#6B573C', 'label' => __( 'Oliva (texto secundario, metadata)', 'santiago-moraes' ) ),
+				'sm_color_footer_text' => array( 'type' => 'color', 'default' => '#C6B79C', 'label' => __( 'Texto del footer', 'santiago-moraes' ) ),
+			),
+		),
+
+		'hero'     => array(
+			'label'  => __( 'Hero', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_hero_line1'     => array( 'type' => 'text', 'label' => __( 'Titulo linea 1', 'santiago-moraes' ), 'default' => 'Santiago' ),
+				'sm_hero_line2'     => array( 'type' => 'text', 'label' => __( 'Titulo linea 2 (outline)', 'santiago-moraes' ), 'default' => 'Moraes' ),
+				'sm_hero_tag'       => array(
+					'type'        => 'text',
+					'label'       => __( 'Etiqueta (debajo del nombre)', 'santiago-moraes' ),
+					'default'     => __( 'Letras y acordes de todas las canciones', 'santiago-moraes' ),
+					'description' => __( 'Ej: "Letras y acordes de todas las canciones"', 'santiago-moraes' ),
+				),
+				'sm_hero_btn1_text' => array( 'type' => 'text', 'label' => __( 'Boton primario texto', 'santiago-moraes' ), 'default' => __( 'Cancionero', 'santiago-moraes' ) ),
+				'sm_hero_btn1_url'  => array( 'type' => 'link', 'label' => __( 'Boton primario URL', 'santiago-moraes' ), 'description' => __( 'Vacio = pagina del Cancionero.', 'santiago-moraes' ) ),
+				'sm_hero_btn2_text' => array( 'type' => 'text', 'label' => __( 'Boton secundario texto', 'santiago-moraes' ), 'default' => __( 'Escuchar', 'santiago-moraes' ) ),
+				'sm_hero_btn2_url'  => array( 'type' => 'link', 'label' => __( 'Boton secundario URL', 'santiago-moraes' ), 'description' => __( 'Vacio = Spotify del artista. Acepta anclas como #shows.', 'santiago-moraes' ) ),
+				'sm_hero_image'     => array(
+					'type'        => 'image',
+					'label'       => __( 'Imagen para redes (og:image)', 'santiago-moraes' ),
+					'description' => __( 'Imagen que se usa al compartir la home en redes. Si esta vacia, usa la imagen por defecto del tema.', 'santiago-moraes' ),
+				),
+			),
+		),
+
+		'musica'   => array(
+			'label'  => __( 'Musica', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_featured_album_id'  => array(
+					'type'    => 'select',
+					'label'   => __( 'Album destacado', 'santiago-moraes' ),
+					'default' => 0,
+					'choices' => 'sm_get_album_choices',
+				),
+				'_shop'                 => array( 'type' => 'heading', 'label' => __( 'Tienda (widget en la home)', 'santiago-moraes' ) ),
+				'sm_shop_url'           => array(
+					'type'        => 'url',
+					'label'       => __( 'URL de la tienda', 'santiago-moraes' ),
+					'description' => __( 'Vacio = usa el link de vinilo del primer album que lo tenga cargado. Si ningun album lo tiene, el widget no se muestra.', 'santiago-moraes' ),
+				),
+				'sm_shop_label'         => array( 'type' => 'text', 'label' => __( 'Texto del boton', 'santiago-moraes' ), 'placeholder' => 'Vinilo' ),
+				'sm_shop_text'          => array( 'type' => 'text', 'label' => __( 'Texto descriptivo', 'santiago-moraes' ), 'placeholder' => 'Discos físicos y merch.' ),
+				'_player'               => array( 'type' => 'heading', 'label' => __( 'Reproductor Spotify (deshabilitado por ahora)', 'santiago-moraes' ) ),
+				'sm_player_enabled'     => array( 'type' => 'checkbox', 'label' => __( 'Mostrar sticky player', 'santiago-moraes' ), 'default' => true ),
+				'sm_player_homepage'    => array( 'type' => 'checkbox', 'label' => __( 'Player en homepage (embed grande)', 'santiago-moraes' ), 'default' => true ),
+				'sm_player_spotify_url' => array(
+					'type'        => 'url',
+					'label'       => __( 'Spotify URL del player', 'santiago-moraes' ),
+					'description' => __( 'Album, playlist, track o artista. Vacio = usa el album destacado.', 'santiago-moraes' ),
+				),
+			),
+		),
+
+		'shows'    => array(
+			'label'  => __( 'Shows', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_bandsintown_artist' => array(
+					'type'        => 'text',
+					'label'       => __( 'Artista en Bandsintown', 'santiago-moraes' ),
+					'default'     => SM_BANDSINTOWN_DEFAULT_ARTIST,
+					'description' => __( 'Formato "id_NUMERO" (recomendado, tomado de la URL bandsintown.com/a/NUMERO) o el nombre exacto del artista.', 'santiago-moraes' ),
+				),
+				'sm_shows_limit'        => array(
+					'type'    => 'number',
+					'label'   => __( 'Cantidad de shows en la home', 'santiago-moraes' ),
+					'default' => 5,
+					'min'     => 1,
+					'max'     => 20,
+					'class'   => 'small-text',
+				),
+				'_shows_cache'          => array(
+					'type'  => 'note',
+					'label' => __( 'Cache', 'santiago-moraes' ),
+					'text'  => __( 'Las fechas se actualizan cada 6 horas. Guardar esta pagina fuerza una actualizacion inmediata.', 'santiago-moraes' ),
+				),
+			),
+		),
+
+		'redes'    => array(
+			'label'  => __( 'Redes Sociales', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_social_spotify'    => array( 'type' => 'url', 'label' => 'Spotify URL' ),
+				'sm_social_instagram'  => array( 'type' => 'url', 'label' => 'Instagram URL' ),
+				'sm_social_youtube'    => array( 'type' => 'url', 'label' => 'YouTube URL' ),
+				'sm_social_bandcamp'   => array( 'type' => 'url', 'label' => 'Bandcamp URL' ),
+				'sm_social_soundcloud' => array( 'type' => 'url', 'label' => 'SoundCloud URL' ),
+				'sm_social_facebook'   => array( 'type' => 'url', 'label' => 'Facebook URL' ),
+				'sm_social_twitter'    => array( 'type' => 'url', 'label' => 'Twitter/X URL' ),
+			),
+		),
+
+		'contacto' => array(
+			'label'  => __( 'Contacto', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_contact_email'    => array( 'type' => 'email', 'label' => __( 'Email de contacto', 'santiago-moraes' ) ),
+				'sm_contact_phone'    => array( 'type' => 'text', 'label' => __( 'Telefono', 'santiago-moraes' ) ),
+				'sm_contact_address'  => array( 'type' => 'text', 'label' => __( 'Direccion', 'santiago-moraes' ) ),
+				'sm_contact_maps_url' => array( 'type' => 'url', 'label' => __( 'Google Maps embed URL', 'santiago-moraes' ) ),
+			),
+		),
+
+		'footer'   => array(
+			'label'  => __( 'Footer', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_footer_copyright'  => array( 'type' => 'text', 'label' => __( 'Texto de copyright', 'santiago-moraes' ) ),
+				'sm_footer_credits'    => array( 'type' => 'text', 'label' => __( 'Creditos adicionales', 'santiago-moraes' ), 'default' => 'Designed with FeeloLab' ),
+				'sm_footer_scroll_top' => array( 'type' => 'checkbox', 'label' => __( 'Mostrar scroll-to-top', 'santiago-moraes' ), 'default' => true ),
+			),
+		),
+
+		'tracking' => array(
+			'label'  => __( 'Tracking', 'santiago-moraes' ),
+			'fields' => array(
+				'sm_ga_id'            => array(
+					'type'        => 'text',
+					'label'       => __( 'Google Analytics 4 — Measurement ID', 'santiago-moraes' ),
+					'placeholder' => 'G-XXXXXXXXXX',
+					'sanitize'    => fn( $v ) => strtoupper( sanitize_text_field( $v ) ),
+					'description' => __( 'Con el ID cargado se envian pageviews y eventos propios del sitio: album_click, song_open, song_transpose, song_autoscroll, song_chords_toggle, song_print, cancionero_filter, show_click, shop_click, platform_click, contact_submit. Los usuarios logueados con permiso de edicion no se rastrean.', 'santiago-moraes' ),
+				),
+				'sm_gsc_verification' => array(
+					'type'        => 'text',
+					'label'       => __( 'Google Search Console — codigo de verificacion', 'santiago-moraes' ),
+					'description' => __( 'Solo el valor de "content" de la etiqueta meta google-site-verification que da Search Console.', 'santiago-moraes' ),
+				),
+				'sm_custom_head_code' => array(
+					'type'        => 'code',
+					'label'       => __( 'Codigo personalizado en head', 'santiago-moraes' ),
+					'rows'        => 6,
+					'description' => __( 'Facebook Pixel, etc. Se inserta en <head>.', 'santiago-moraes' ),
+				),
+			),
+		),
+	);
+}
+
+/**
+ * Flat key => field map of every stored option (headings and notes excluded).
+ *
+ * @return array
+ */
+function sm_theme_options_fields() {
+	static $fields = null;
+
+	if ( null === $fields ) {
+		$fields = array();
+		foreach ( sm_theme_options_schema() as $tab ) {
+			foreach ( $tab['fields'] as $key => $field ) {
+				if ( ! in_array( $field['type'], array( 'heading', 'note' ), true ) ) {
+					$fields[ $key ] = $field;
+				}
+			}
+		}
+	}
+
+	return $fields;
+}
+
+/**
+ * Choices for the featured album dropdown.
  *
  * @return array
  */
@@ -37,56 +276,22 @@ function sm_get_album_choices() {
 
 	if ( ! is_wp_error( $albums ) ) {
 		foreach ( $albums as $album ) {
-			$year  = get_term_meta( $album->term_id, '_album_year', true );
-			$label = $album->name;
-			if ( $year ) {
-				$label .= ' (' . $year . ')';
-			}
-			$choices[ $album->term_id ] = $label;
+			$year = get_term_meta( $album->term_id, '_album_year', true );
+			$choices[ $album->term_id ] = $album->name . ( $year ? ' (' . $year . ')' : '' );
 		}
 	}
 
 	return $choices;
 }
 
-/**
- * Curated font catalog available in the Tipografias tab.
- *
- * Keys = stored value (font name), used to build Google Fonts URL.
- *
- * @return array
- */
-function sm_get_font_choices() {
-	return array(
-		'Be Vietnam Pro'   => 'Be Vietnam Pro',
-		'Montserrat'       => 'Montserrat',
-		'Poppins'          => 'Poppins',
-		'Inter'            => 'Inter',
-		'DM Sans'          => 'DM Sans',
-		'Raleway'          => 'Raleway',
-		'Lato'             => 'Lato',
-		'Open Sans'        => 'Open Sans',
-		'Nunito'           => 'Nunito',
-		'Roboto'           => 'Roboto',
-		'Space Grotesk'    => 'Space Grotesk',
-		'Outfit'           => 'Outfit',
-		'Work Sans'        => 'Work Sans',
-		'Source Sans 3'    => 'Source Sans 3',
-		'Playfair Display'    => 'Playfair Display',
-		'Lora'                => 'Lora',
-		'Averia Sans Libre'   => 'Averia Sans Libre',
-		'avenir-lt-pro'       => 'Avenir LT Pro (Adobe)',
-	);
-}
-
 // =====================================================================
-// Register the admin page.
+// Registration + sanitization.
 // =====================================================================
 
 add_action( 'admin_menu', 'sm_add_theme_options_page' );
 
 /**
- * Add Theme Options page under Apariencia.
+ * Add the page under Apariencia.
  */
 function sm_add_theme_options_page() {
 	add_theme_page(
@@ -98,14 +303,10 @@ function sm_add_theme_options_page() {
 	);
 }
 
-// =====================================================================
-// Register settings.
-// =====================================================================
-
 add_action( 'admin_init', 'sm_register_theme_options' );
 
 /**
- * Register the sm_options setting with the Settings API.
+ * Register the single sm_options setting.
  */
 function sm_register_theme_options() {
 	register_setting( 'sm_options_group', 'sm_options', array(
@@ -113,24 +314,72 @@ function sm_register_theme_options() {
 	) );
 }
 
-/**
- * Purge LiteSpeed Cache when theme options are saved.
- */
 add_action( 'update_option_sm_options', 'sm_purge_cache_on_save' );
+
+/**
+ * Purge LiteSpeed Cache and the object cache when options are saved.
+ */
 function sm_purge_cache_on_save() {
-	// LiteSpeed Cache plugin purge.
 	if ( class_exists( 'LiteSpeed\Purge' ) ) {
 		do_action( 'litespeed_purge_all' );
 	}
-	// Also clear WordPress object cache.
 	wp_cache_flush();
 }
 
 /**
- * Sanitize the full options array on save.
+ * Sanitize one value according to its field type.
+ *
+ * @param mixed $value Raw value.
+ * @param array $field Schema entry.
+ * @return mixed
+ */
+function sm_sanitize_field( $value, $field ) {
+	if ( ! empty( $field['sanitize'] ) && is_callable( $field['sanitize'] ) ) {
+		return call_user_func( $field['sanitize'], $value );
+	}
+
+	switch ( $field['type'] ) {
+		case 'checkbox':
+			return ! empty( $value );
+		case 'number':
+		case 'range':
+			if ( '' === $value || null === $value ) {
+				return ''; // Keep empty so templates fall back to their own default.
+			}
+			$n = absint( $value );
+			if ( isset( $field['min'] ) ) {
+				$n = max( (int) $field['min'], $n );
+			}
+			if ( isset( $field['max'] ) ) {
+				$n = min( (int) $field['max'], $n );
+			}
+			return $n;
+		case 'select':
+			$choices = is_callable( $field['choices'] ) ? call_user_func( $field['choices'] ) : $field['choices'];
+			return array_key_exists( $value, $choices ) ? ( is_int( array_key_first( $choices ) ) ? absint( $value ) : $value ) : ( $field['default'] ?? '' );
+		case 'radio':
+			return array_key_exists( $value, $field['choices'] ) ? $value : ( $field['default'] ?? '' );
+		case 'color':
+			return (string) sanitize_hex_color( $value );
+		case 'url':
+		case 'image':
+			return esc_url_raw( $value );
+		case 'email':
+			return sanitize_email( $value );
+		case 'textarea':
+			return sanitize_textarea_field( $value );
+		case 'code':
+			return (string) $value; // Admin-controlled raw HTML (tracking snippets).
+		default:
+			return sanitize_text_field( $value );
+	}
+}
+
+/**
+ * Sanitize the whole options array on save.
  *
  * @param array $input Raw form values.
- * @return array Sanitized values.
+ * @return array
  */
 function sm_sanitize_options( $input ) {
 	$clean = array();
@@ -139,107 +388,25 @@ function sm_sanitize_options( $input ) {
 		return $clean;
 	}
 
-	// Colors — rebranding palette.
-	$color_keys = array(
-		'sm_color_ink',
-		'sm_color_paper',
-		'sm_color_ochre',
-		'sm_color_brick',
-		'sm_color_cream',
-		'sm_color_warm',
-		'sm_color_muted',
-		'sm_color_brown',
-		'sm_color_olive',
-		'sm_color_footer_text',
-	);
-	foreach ( $color_keys as $key ) {
-		$clean[ $key ] = isset( $input[ $key ] ) ? sanitize_hex_color( $input[ $key ] ) : '';
+	foreach ( sm_theme_options_fields() as $key => $field ) {
+		$raw = $input[ $key ] ?? ( 'checkbox' === $field['type'] ? false : '' );
+		if ( is_string( $raw ) ) {
+			$raw = wp_unslash( $raw );
+		}
+		$clean[ $key ] = sm_sanitize_field( $raw, $field );
 	}
-
-	// Typography — validate against font catalog.
-	$valid_fonts = array_keys( sm_get_font_choices() );
-	$clean['sm_font_heading'] = isset( $input['sm_font_heading'] ) && in_array( $input['sm_font_heading'], $valid_fonts, true )
-		? $input['sm_font_heading'] : 'Be Vietnam Pro';
-	$clean['sm_font_body'] = isset( $input['sm_font_body'] ) && in_array( $input['sm_font_body'], $valid_fonts, true )
-		? $input['sm_font_body'] : 'Montserrat';
-	$clean['sm_font_button'] = isset( $input['sm_font_button'] ) && in_array( $input['sm_font_button'], $valid_fonts, true )
-		? $input['sm_font_button'] : 'Be Vietnam Pro';
-	$clean['sm_font_size_base'] = isset( $input['sm_font_size_base'] ) ? absint( $input['sm_font_size_base'] ) : 16;
-
-	// Header / Logo.
-	$clean['sm_logo_type']     = isset( $input['sm_logo_type'] ) && in_array( $input['sm_logo_type'], array( 'text', 'image' ), true ) ? $input['sm_logo_type'] : 'text';
-	$clean['sm_logo_text']     = isset( $input['sm_logo_text'] ) ? sanitize_text_field( $input['sm_logo_text'] ) : 'Santiago Moraes';
-	$clean['sm_logo_image']    = isset( $input['sm_logo_image'] ) ? esc_url_raw( $input['sm_logo_image'] ) : '';
-	$clean['sm_header_height']       = isset( $input['sm_header_height'] ) ? absint( $input['sm_header_height'] ) : 90;
-	$clean['sm_announcement_text']   = isset( $input['sm_announcement_text'] ) ? sanitize_text_field( $input['sm_announcement_text'] ) : '';
-	$clean['sm_announcement_url']    = isset( $input['sm_announcement_url'] ) ? esc_url_raw( $input['sm_announcement_url'] ) : '';
-
-	// Social URLs.
-	$social_keys = array(
-		'sm_social_spotify',
-		'sm_social_instagram',
-		'sm_social_youtube',
-		'sm_social_bandcamp',
-		'sm_social_soundcloud',
-		'sm_social_facebook',
-		'sm_social_twitter',
-	);
-	foreach ( $social_keys as $key ) {
-		$clean[ $key ] = isset( $input[ $key ] ) ? esc_url_raw( $input[ $key ] ) : '';
-	}
-
-	// Hero.
-	$clean['sm_hero_tag']         = isset( $input['sm_hero_tag'] ) ? sanitize_text_field( $input['sm_hero_tag'] ) : '';
-	$clean['sm_hero_line1']       = isset( $input['sm_hero_line1'] ) ? sanitize_text_field( $input['sm_hero_line1'] ) : 'Santiago';
-	$clean['sm_hero_line2']       = isset( $input['sm_hero_line2'] ) ? sanitize_text_field( $input['sm_hero_line2'] ) : 'Moraes';
-	$clean['sm_hero_image']       = isset( $input['sm_hero_image'] ) ? esc_url_raw( $input['sm_hero_image'] ) : '';
-	$clean['sm_hero_btn1_text']   = isset( $input['sm_hero_btn1_text'] ) ? sanitize_text_field( $input['sm_hero_btn1_text'] ) : '';
-	$clean['sm_hero_btn1_url']    = isset( $input['sm_hero_btn1_url'] ) ? esc_url_raw( $input['sm_hero_btn1_url'] ) : '';
-	$clean['sm_hero_btn2_text']   = isset( $input['sm_hero_btn2_text'] ) ? sanitize_text_field( $input['sm_hero_btn2_text'] ) : '';
-	$clean['sm_hero_btn2_url']    = isset( $input['sm_hero_btn2_url'] ) ? sanitize_text_field( $input['sm_hero_btn2_url'] ) : '';
-
-	// Music.
-	$clean['sm_featured_album_id']  = isset( $input['sm_featured_album_id'] ) ? absint( $input['sm_featured_album_id'] ) : 0;
-	$clean['sm_player_enabled']     = ! empty( $input['sm_player_enabled'] );
-	$clean['sm_player_homepage']    = ! empty( $input['sm_player_homepage'] );
-	$clean['sm_player_spotify_url'] = isset( $input['sm_player_spotify_url'] ) ? esc_url_raw( $input['sm_player_spotify_url'] ) : '';
-
-	// Shop.
-	$clean['sm_shop_url']   = isset( $input['sm_shop_url'] ) ? esc_url_raw( $input['sm_shop_url'] ) : '';
-	$clean['sm_shop_label'] = isset( $input['sm_shop_label'] ) ? sanitize_text_field( $input['sm_shop_label'] ) : '';
-	$clean['sm_shop_text']  = isset( $input['sm_shop_text'] ) ? sanitize_text_field( $input['sm_shop_text'] ) : '';
-
-	// Shows (Bandsintown).
-	$clean['sm_bandsintown_artist'] = isset( $input['sm_bandsintown_artist'] ) ? sanitize_text_field( $input['sm_bandsintown_artist'] ) : '';
-	$clean['sm_shows_limit']        = isset( $input['sm_shows_limit'] ) ? absint( $input['sm_shows_limit'] ) : 5;
-
-	// Footer.
-	$clean['sm_footer_copyright']  = isset( $input['sm_footer_copyright'] ) ? sanitize_text_field( $input['sm_footer_copyright'] ) : '';
-	$clean['sm_footer_credits']    = isset( $input['sm_footer_credits'] ) ? sanitize_text_field( $input['sm_footer_credits'] ) : '';
-	$clean['sm_footer_scroll_top'] = ! empty( $input['sm_footer_scroll_top'] );
-
-	// Contact.
-	$clean['sm_contact_email']    = isset( $input['sm_contact_email'] ) ? sanitize_email( $input['sm_contact_email'] ) : '';
-	$clean['sm_contact_phone']    = isset( $input['sm_contact_phone'] ) ? sanitize_text_field( $input['sm_contact_phone'] ) : '';
-	$clean['sm_contact_address']  = isset( $input['sm_contact_address'] ) ? sanitize_text_field( $input['sm_contact_address'] ) : '';
-	$clean['sm_contact_maps_url'] = isset( $input['sm_contact_maps_url'] ) ? esc_url_raw( $input['sm_contact_maps_url'] ) : '';
-
-	// Tracking.
-	$clean['sm_ga_id']            = isset( $input['sm_ga_id'] ) ? strtoupper( sanitize_text_field( $input['sm_ga_id'] ) ) : '';
-	$clean['sm_gsc_verification'] = isset( $input['sm_gsc_verification'] ) ? sanitize_text_field( $input['sm_gsc_verification'] ) : '';
-	$clean['sm_custom_head_code'] = isset( $input['sm_custom_head_code'] ) ? $input['sm_custom_head_code'] : '';
 
 	return $clean;
 }
 
 // =====================================================================
-// Enqueue admin assets on our page only.
+// Admin assets.
 // =====================================================================
 
 add_action( 'admin_enqueue_scripts', 'sm_theme_options_enqueue' );
 
 /**
- * Enqueue color picker + media uploader on the Theme Options page.
+ * Color picker, media uploader and small helpers, on our page only.
  *
  * @param string $hook Current admin page hook.
  */
@@ -252,71 +419,56 @@ function sm_theme_options_enqueue( $hook ) {
 	wp_enqueue_media();
 	wp_enqueue_script( 'wp-color-picker' );
 
-	// Inline JS for color pickers + media uploaders.
-	$js = "
-	jQuery(document).ready(function($){
-		$('.sm-color-picker').wpColorPicker();
+	$js = <<<'JS'
+jQuery(function ($) {
+	$('.sm-color-picker').wpColorPicker();
 
-		$('.sm-upload-btn').on('click',function(e){
-			e.preventDefault();
-			var btn = $(this);
-			var input = btn.siblings('.sm-upload-input');
-			var preview = btn.siblings('.sm-upload-preview');
-			var frame = wp.media({
-				title: 'Seleccionar imagen',
-				button: { text: 'Usar imagen' },
-				multiple: false
-			});
-			frame.on('select',function(){
-				var attachment = frame.state().get('selection').first().toJSON();
-				input.val(attachment.url);
-				preview.html('<img src=\"'+attachment.url+'\" style=\"max-width:200px;height:auto;margin-top:8px;\">');
-			});
-			frame.open();
+	$('.sm-upload-btn').on('click', function (e) {
+		e.preventDefault();
+		var wrap = $(this).closest('.sm-image-field');
+		var frame = wp.media({ title: 'Seleccionar imagen', button: { text: 'Usar imagen' }, multiple: false });
+		frame.on('select', function () {
+			var url = frame.state().get('selection').first().toJSON().url;
+			wrap.find('.sm-upload-input').val(url);
+			wrap.find('.sm-upload-preview').html('<img src="' + url + '" style="max-width:200px;height:auto;margin-top:8px;">');
 		});
-
-		$('.sm-remove-btn').on('click',function(e){
-			e.preventDefault();
-			var btn = $(this);
-			btn.siblings('.sm-upload-input').val('');
-			btn.siblings('.sm-upload-preview').html('');
-		});
+		frame.open();
 	});
-	";
+
+	$('.sm-remove-btn').on('click', function (e) {
+		e.preventDefault();
+		var wrap = $(this).closest('.sm-image-field');
+		wrap.find('.sm-upload-input').val('');
+		wrap.find('.sm-upload-preview').empty();
+	});
+
+	$('.sm-range').on('input', function () {
+		$(this).next('.sm-range-value').text(this.value + ($(this).data('unit') || ''));
+	});
+});
+JS;
 	wp_add_inline_script( 'wp-color-picker', $js );
 }
 
 // =====================================================================
-// Render the admin page.
+// Page.
 // =====================================================================
 
 /**
- * Render Theme Options page with tabs.
+ * Render the tabbed options page.
  */
 function sm_render_theme_options_page() {
 	if ( ! current_user_can( 'edit_theme_options' ) ) {
 		return;
 	}
 
-	$tabs = array(
-		'general'  => __( 'General', 'santiago-moraes' ),
-		'colores'  => __( 'Colores', 'santiago-moraes' ),
-		'tipografia' => __( 'Tipografias', 'santiago-moraes' ),
-		'hero'     => __( 'Hero', 'santiago-moraes' ),
-		'musica'   => __( 'Musica', 'santiago-moraes' ),
-		'shows'    => __( 'Shows', 'santiago-moraes' ),
-		'redes'    => __( 'Redes Sociales', 'santiago-moraes' ),
-		'contacto' => __( 'Contacto', 'santiago-moraes' ),
-		'footer'   => __( 'Footer', 'santiago-moraes' ),
-		'tracking' => __( 'Tracking', 'santiago-moraes' ),
-	);
+	$schema = sm_theme_options_schema();
 
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$active_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'general';
-	if ( ! array_key_exists( $active_tab, $tabs ) ) {
+	if ( ! array_key_exists( $active_tab, $schema ) ) {
 		$active_tab = 'general';
 	}
-
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'Santiago Moraes — Opciones del Tema', 'santiago-moraes' ); ?></h1>
@@ -324,56 +476,24 @@ function sm_render_theme_options_page() {
 		<?php settings_errors( 'sm_options' ); ?>
 
 		<h2 class="nav-tab-wrapper">
-			<?php foreach ( $tabs as $slug => $label ) : ?>
+			<?php foreach ( $schema as $slug => $tab ) : ?>
 				<a href="<?php echo esc_url( add_query_arg( 'tab', $slug, admin_url( 'themes.php?page=sm-theme-options' ) ) ); ?>"
 				   class="nav-tab <?php echo $active_tab === $slug ? 'nav-tab-active' : ''; ?>">
-					<?php echo esc_html( $label ); ?>
+					<?php echo esc_html( $tab['label'] ); ?>
 				</a>
 			<?php endforeach; ?>
 		</h2>
 
 		<form method="post" action="options.php">
-			<?php settings_fields( 'sm_options_group' ); ?>
-
 			<?php
-			// Render hidden fields for tabs we're NOT editing so their
-			// values don't get wiped on save.
+			settings_fields( 'sm_options_group' );
 			sm_render_hidden_fields( $active_tab );
 			?>
 
 			<table class="form-table" role="presentation">
 				<?php
-				switch ( $active_tab ) {
-					case 'general':
-						sm_tab_general();
-						break;
-					case 'colores':
-						sm_tab_colores();
-						break;
-					case 'tipografia':
-						sm_tab_tipografia();
-						break;
-					case 'hero':
-						sm_tab_hero();
-						break;
-					case 'musica':
-						sm_tab_musica();
-						break;
-					case 'shows':
-						sm_tab_shows();
-						break;
-					case 'redes':
-						sm_tab_redes();
-						break;
-					case 'contacto':
-						sm_tab_contacto();
-						break;
-					case 'footer':
-						sm_tab_footer();
-						break;
-					case 'tracking':
-						sm_tab_tracking();
-						break;
+				foreach ( $schema[ $active_tab ]['fields'] as $key => $field ) {
+					sm_render_field( $key, $field );
 				}
 				?>
 			</table>
@@ -384,40 +504,23 @@ function sm_render_theme_options_page() {
 	<?php
 }
 
-// =====================================================================
-// Hidden fields — preserve values from other tabs on save.
-// =====================================================================
-
 /**
- * Render hidden inputs for all keys NOT in the current tab,
- * so saving one tab doesn't erase the others.
+ * Hidden inputs for every field outside the active tab, so saving one tab
+ * never wipes the others.
  *
- * @param string $active_tab Current tab slug.
+ * @param string $active_tab Tab slug being edited.
  */
 function sm_render_hidden_fields( $active_tab ) {
-	$tab_keys = array(
-		'general'    => array( 'sm_logo_type', 'sm_logo_text', 'sm_logo_image', 'sm_header_height', 'sm_announcement_text', 'sm_announcement_url' ),
-		'colores'    => array( 'sm_color_ink', 'sm_color_paper', 'sm_color_ochre', 'sm_color_brick', 'sm_color_cream', 'sm_color_warm', 'sm_color_muted', 'sm_color_brown', 'sm_color_olive', 'sm_color_footer_text' ),
-		'tipografia' => array( 'sm_font_heading', 'sm_font_body', 'sm_font_button', 'sm_font_size_base' ),
-		'hero'       => array( 'sm_hero_tag', 'sm_hero_line1', 'sm_hero_line2', 'sm_hero_image', 'sm_hero_btn1_text', 'sm_hero_btn1_url', 'sm_hero_btn2_text', 'sm_hero_btn2_url' ),
-		'musica'     => array( 'sm_featured_album_id', 'sm_player_enabled', 'sm_player_homepage', 'sm_player_spotify_url', 'sm_shop_url', 'sm_shop_label', 'sm_shop_text' ),
-		'shows'      => array( 'sm_bandsintown_artist', 'sm_shows_limit' ),
-		'redes'     => array( 'sm_social_spotify', 'sm_social_instagram', 'sm_social_youtube', 'sm_social_bandcamp', 'sm_social_soundcloud', 'sm_social_facebook', 'sm_social_twitter' ),
-		'contacto'   => array( 'sm_contact_email', 'sm_contact_phone', 'sm_contact_address', 'sm_contact_maps_url' ),
-		'footer'     => array( 'sm_footer_copyright', 'sm_footer_credits', 'sm_footer_scroll_top' ),
-		'tracking'   => array( 'sm_ga_id', 'sm_gsc_verification', 'sm_custom_head_code' ),
-	);
-
-	$checkbox_keys = array( 'sm_player_enabled', 'sm_player_homepage', 'sm_footer_scroll_top' );
-
-	foreach ( $tab_keys as $tab => $keys ) {
-		if ( $tab === $active_tab ) {
+	foreach ( sm_theme_options_schema() as $slug => $tab ) {
+		if ( $slug === $active_tab ) {
 			continue;
 		}
-		foreach ( $keys as $key ) {
-			$value = sm_get_option( $key, '' );
-			// Checkboxes: output "1" if truthy so the sanitizer preserves them.
-			if ( in_array( $key, $checkbox_keys, true ) ) {
+		foreach ( $tab['fields'] as $key => $field ) {
+			if ( in_array( $field['type'], array( 'heading', 'note' ), true ) ) {
+				continue;
+			}
+			$value = sm_get_option( $key, $field['default'] ?? '' );
+			if ( 'checkbox' === $field['type'] ) {
 				$value = $value ? '1' : '';
 			}
 			echo '<input type="hidden" name="sm_options[' . esc_attr( $key ) . ']" value="' . esc_attr( $value ) . '">';
@@ -425,382 +528,115 @@ function sm_render_hidden_fields( $active_tab ) {
 	}
 }
 
-// =====================================================================
-// Tab renderers.
-// =====================================================================
-
 /**
- * General tab — Logo & Header.
+ * Render one form-table row for a schema field.
+ *
+ * @param string $key   Option key.
+ * @param array  $field Schema entry.
  */
-function sm_tab_general() {
-	$logo_type     = sm_get_option( 'sm_logo_type', 'text' );
-	$logo_text     = sm_get_option( 'sm_logo_text', 'Santiago Moraes' );
-	$logo_image    = sm_get_option( 'sm_logo_image', '' );
-	$header_height = sm_get_option( 'sm_header_height', 90 );
+function sm_render_field( $key, $field ) {
+	$type = $field['type'];
+
+	if ( 'heading' === $type ) {
+		echo '<tr><td colspan="2"><h3 style="margin:24px 0 6px;font-size:14px;font-weight:600;color:#1d2327;border-bottom:1px solid #c3c4c7;padding-bottom:6px;">' . esc_html( $field['label'] ) . '</h3></td></tr>';
+		return;
+	}
+
+	if ( 'note' === $type ) {
+		echo '<tr><th scope="row">' . esc_html( $field['label'] ) . '</th><td><p class="description">' . esc_html( $field['text'] ) . '</p></td></tr>';
+		return;
+	}
+
+	$name    = 'sm_options[' . $key . ']';
+	$value   = sm_get_option( $key, $field['default'] ?? '' );
+	$class   = $field['class'] ?? 'regular-text';
+	$has_for = ! in_array( $type, array( 'radio', 'checkbox', 'image' ), true );
 	?>
 	<tr>
-		<th scope="row"><?php esc_html_e( 'Logo tipo', 'santiago-moraes' ); ?></th>
+		<th scope="row">
+			<?php if ( $has_for ) : ?>
+				<label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ); ?></label>
+			<?php else : ?>
+				<?php echo esc_html( $field['label'] ); ?>
+			<?php endif; ?>
+		</th>
 		<td>
-			<label><input type="radio" name="sm_options[sm_logo_type]" value="text" <?php checked( $logo_type, 'text' ); ?>> <?php esc_html_e( 'Texto', 'santiago-moraes' ); ?></label><br>
-			<label><input type="radio" name="sm_options[sm_logo_type]" value="image" <?php checked( $logo_type, 'image' ); ?>> <?php esc_html_e( 'Imagen', 'santiago-moraes' ); ?></label>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_logo_text"><?php esc_html_e( 'Logo texto', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_logo_text" name="sm_options[sm_logo_text]" value="<?php echo esc_attr( $logo_text ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Logo imagen', 'santiago-moraes' ); ?></th>
-		<td>
-			<input type="hidden" name="sm_options[sm_logo_image]" value="<?php echo esc_url( $logo_image ); ?>" class="sm-upload-input">
-			<button type="button" class="button sm-upload-btn"><?php esc_html_e( 'Seleccionar imagen', 'santiago-moraes' ); ?></button>
-			<button type="button" class="button sm-remove-btn"><?php esc_html_e( 'Quitar', 'santiago-moraes' ); ?></button>
-			<div class="sm-upload-preview">
-				<?php if ( $logo_image ) : ?>
-					<img src="<?php echo esc_url( $logo_image ); ?>" style="max-width:200px;height:auto;margin-top:8px;">
-				<?php endif; ?>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_header_height"><?php esc_html_e( 'Altura del header (px)', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="range" id="sm_header_height" name="sm_options[sm_header_height]" value="<?php echo esc_attr( $header_height ); ?>" min="60" max="120" step="5">
-			<span id="sm_header_height_val"><?php echo esc_html( $header_height ); ?>px</span>
-			<script>document.getElementById('sm_header_height').addEventListener('input',function(){document.getElementById('sm_header_height_val').textContent=this.value+'px';});</script>
-		</td>
-	</tr>
+			<?php
+			switch ( $type ) {
+				case 'checkbox':
+					?>
+					<label><input type="checkbox" name="<?php echo esc_attr( $name ); ?>" value="1" <?php checked( (bool) $value ); ?>> <?php esc_html_e( 'Activar', 'santiago-moraes' ); ?></label>
+					<?php
+					break;
 
-	<tr><td colspan="2"><h3 style="margin:24px 0 6px;font-size:14px;font-weight:600;color:#1d2327;border-bottom:1px solid #c3c4c7;padding-bottom:6px;"><?php esc_html_e( 'Barra de anuncio (homepage)', 'santiago-moraes' ); ?></h3></td></tr>
+				case 'radio':
+					foreach ( $field['choices'] as $val => $label ) :
+						?>
+						<label><input type="radio" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $val ); ?>" <?php checked( $value, $val ); ?>> <?php echo esc_html( $label ); ?></label><br>
+						<?php
+					endforeach;
+					break;
 
-	<?php
-	$ann_text = sm_get_option( 'sm_announcement_text', '' );
-	$ann_url  = sm_get_option( 'sm_announcement_url', '' );
-	?>
-	<tr>
-		<th scope="row"><label for="sm_announcement_text"><?php esc_html_e( 'Texto del anuncio', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="text" id="sm_announcement_text" name="sm_options[sm_announcement_text]" value="<?php echo esc_attr( $ann_text ); ?>" class="large-text">
-			<p class="description"><?php esc_html_e( 'Ej: "Nuevo disco: Las siete menos diez — Ya disponible". Dejalo vacio para ocultar la barra.', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_announcement_url"><?php esc_html_e( 'Link del anuncio (opcional)', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="url" id="sm_announcement_url" name="sm_options[sm_announcement_url]" value="<?php echo esc_url( $ann_url ); ?>" class="regular-text">
-			<p class="description"><?php esc_html_e( 'Si tiene link, toda la barra es clickeable.', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<?php
-}
+				case 'select':
+					$choices = is_callable( $field['choices'] ) ? call_user_func( $field['choices'] ) : $field['choices'];
+					?>
+					<select id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $name ); ?>">
+						<?php foreach ( $choices as $val => $label ) : ?>
+							<option value="<?php echo esc_attr( $val ); ?>" <?php selected( (string) $value, (string) $val ); ?>><?php echo esc_html( $label ); ?></option>
+						<?php endforeach; ?>
+					</select>
+					<?php
+					break;
 
-/**
- * Colores tab — grouped for clarity.
- */
-function sm_tab_colores() {
-	$colors = array(
-		'sm_color_ink'         => array( '#1F3C57', 'Azul tinta (textos, header, bordes)' ),
-		'sm_color_paper'       => array( '#E9DCC6', 'Papel (fondo principal)' ),
-		'sm_color_ochre'       => array( '#E08B3E', 'Ocre (acentos, hero, hover)' ),
-		'sm_color_brick'       => array( '#A8341C', 'Ladrillo (links, CTA, tags)' ),
-		'sm_color_cream'       => array( '#F4E9D6', 'Crema (texto sobre oscuro)' ),
-		'sm_color_warm'        => array( '#D9CBB2', 'Gris calido (fondos secundarios)' ),
-		'sm_color_muted'       => array( '#C9B896', 'Beige apagado (bordes suaves)' ),
-		'sm_color_brown'       => array( '#3A2A1C', 'Marron (texto cuerpo)' ),
-		'sm_color_olive'       => array( '#6B573C', 'Oliva (texto secundario, metadata)' ),
-		'sm_color_footer_text' => array( '#C6B79C', 'Texto del footer' ),
-	);
+				case 'color':
+					?>
+					<input type="text" id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" class="sm-color-picker" data-default-color="<?php echo esc_attr( $field['default'] ?? '' ); ?>">
+					<?php
+					break;
 
-	foreach ( $colors as $key => $data ) :
-		$val = sm_get_option( $key, $data[0] );
-		?>
-		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $data[1] ); ?></label></th>
-			<td><input type="text" id="<?php echo esc_attr( $key ); ?>" name="sm_options[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $val ); ?>" class="sm-color-picker" data-default-color="<?php echo esc_attr( $data[0] ); ?>"></td>
-		</tr>
-		<?php
-	endforeach;
-}
+				case 'image':
+					?>
+					<div class="sm-image-field">
+						<input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_url( $value ); ?>" class="sm-upload-input">
+						<button type="button" class="button sm-upload-btn"><?php esc_html_e( 'Seleccionar imagen', 'santiago-moraes' ); ?></button>
+						<button type="button" class="button sm-remove-btn"><?php esc_html_e( 'Quitar', 'santiago-moraes' ); ?></button>
+						<div class="sm-upload-preview">
+							<?php if ( $value ) : ?>
+								<img src="<?php echo esc_url( $value ); ?>" style="max-width:200px;height:auto;margin-top:8px;">
+							<?php endif; ?>
+						</div>
+					</div>
+					<?php
+					break;
 
-/**
- * Tipografias tab.
- */
-function sm_tab_tipografia() {
-	$fonts = array(
-		array( 'Archivo Black', __( 'Titulos y headings', 'santiago-moraes' ), 'sans-serif' ),
-		array( 'Newsreader', __( 'Texto editorial y descripciones', 'santiago-moraes' ), 'serif' ),
-		array( 'DM Mono', __( 'Labels, metadata y acordes', 'santiago-moraes' ), 'monospace' ),
-	);
-	?>
-	<tr>
-		<td colspan="2">
-			<p class="description" style="margin-bottom:16px;"><?php esc_html_e( 'Las fuentes del rebranding estan fijas en el tema. Se cargan automaticamente desde Google Fonts.', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<?php foreach ( $fonts as $font ) : ?>
-		<tr>
-			<th scope="row"><?php echo esc_html( $font[1] ); ?></th>
-			<td>
-				<code style="font-size:14px;padding:4px 10px;background:#f0f0f1;border:1px solid #c3c4c7;"><?php echo esc_html( $font[0] ); ?></code>
-				<span class="description" style="margin-left:8px;">(<?php echo esc_html( $font[2] ); ?>)</span>
-			</td>
-		</tr>
-	<?php endforeach;
-}
+				case 'range':
+					?>
+					<input type="range" id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" min="<?php echo esc_attr( $field['min'] ); ?>" max="<?php echo esc_attr( $field['max'] ); ?>" step="<?php echo esc_attr( $field['step'] ?? 1 ); ?>" class="sm-range" data-unit="<?php echo esc_attr( $field['unit'] ?? '' ); ?>">
+					<span class="sm-range-value"><?php echo esc_html( $value . ( $field['unit'] ?? '' ) ); ?></span>
+					<?php
+					break;
 
-/**
- * Hero tab.
- */
-function sm_tab_hero() {
-	$tag         = sm_get_option( 'sm_hero_tag', 'Letras y acordes de todas las canciones' );
-	$line1       = sm_get_option( 'sm_hero_line1', 'Santiago' );
-	$line2       = sm_get_option( 'sm_hero_line2', 'Moraes' );
-	$hero_img    = sm_get_option( 'sm_hero_image', '' );
-	$btn1_text   = sm_get_option( 'sm_hero_btn1_text', 'Cancionero' );
-	$btn1_url    = sm_get_option( 'sm_hero_btn1_url', '' );
-	$btn2_text   = sm_get_option( 'sm_hero_btn2_text', 'Escuchar' );
-	$btn2_url    = sm_get_option( 'sm_hero_btn2_url', '' );
-	?>
-	<tr>
-		<th scope="row"><label for="sm_hero_tag"><?php esc_html_e( 'Etiqueta (debajo del nombre)', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="text" id="sm_hero_tag" name="sm_options[sm_hero_tag]" value="<?php echo esc_attr( $tag ); ?>" class="regular-text">
-			<p class="description"><?php esc_html_e( 'Ej: "Letras y acordes de todas las canciones"', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_hero_line1"><?php esc_html_e( 'Titulo linea 1', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_hero_line1" name="sm_options[sm_hero_line1]" value="<?php echo esc_attr( $line1 ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_hero_line2"><?php esc_html_e( 'Titulo linea 2 (outline)', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_hero_line2" name="sm_options[sm_hero_line2]" value="<?php echo esc_attr( $line2 ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Imagen para redes (og:image)', 'santiago-moraes' ); ?></th>
-		<td>
-			<input type="hidden" name="sm_options[sm_hero_image]" value="<?php echo esc_url( $hero_img ); ?>" class="sm-upload-input">
-			<button type="button" class="button sm-upload-btn"><?php esc_html_e( 'Seleccionar imagen', 'santiago-moraes' ); ?></button>
-			<button type="button" class="button sm-remove-btn"><?php esc_html_e( 'Quitar', 'santiago-moraes' ); ?></button>
-			<div class="sm-upload-preview">
-				<?php if ( $hero_img ) : ?>
-					<img src="<?php echo esc_url( $hero_img ); ?>" style="max-width:200px;height:auto;margin-top:8px;">
-				<?php endif; ?>
-			</div>
-			<p class="description"><?php esc_html_e( 'Imagen que se usa al compartir la home en redes. Si esta vacia, usa la imagen por defecto del tema.', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_hero_btn1_text"><?php esc_html_e( 'Boton primario texto', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_hero_btn1_text" name="sm_options[sm_hero_btn1_text]" value="<?php echo esc_attr( $btn1_text ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_hero_btn1_url"><?php esc_html_e( 'Boton primario URL', 'santiago-moraes' ); ?></label></th>
-		<td><input type="url" id="sm_hero_btn1_url" name="sm_options[sm_hero_btn1_url]" value="<?php echo esc_url( $btn1_url ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_hero_btn2_text"><?php esc_html_e( 'Boton secundario texto', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_hero_btn2_text" name="sm_options[sm_hero_btn2_text]" value="<?php echo esc_attr( $btn2_text ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_hero_btn2_url"><?php esc_html_e( 'Boton secundario URL', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_hero_btn2_url" name="sm_options[sm_hero_btn2_url]" value="<?php echo esc_attr( $btn2_url ); ?>" class="regular-text"></td>
-	</tr>
-	<?php
-}
+				case 'textarea':
+				case 'code':
+					?>
+					<textarea id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $name ); ?>" rows="<?php echo esc_attr( $field['rows'] ?? 4 ); ?>" class="large-text<?php echo 'code' === $type ? ' code' : ''; ?>"><?php echo esc_textarea( $value ); ?></textarea>
+					<?php
+					break;
 
-/**
- * Musica tab.
- */
-function sm_tab_musica() {
-	$album_id    = sm_get_option( 'sm_featured_album_id', 0 );
-	$enabled     = sm_get_option( 'sm_player_enabled', true );
-	$homepage    = sm_get_option( 'sm_player_homepage', true );
-	$spotify_url = sm_get_option( 'sm_player_spotify_url', '' );
-	$choices     = sm_get_album_choices();
-	$shop_url    = sm_get_option( 'sm_shop_url', '' );
-	$shop_label  = sm_get_option( 'sm_shop_label', '' );
-	$shop_text   = sm_get_option( 'sm_shop_text', '' );
-	?>
-	<tr>
-		<th scope="row"><label for="sm_featured_album_id"><?php esc_html_e( 'Album Destacado', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<select id="sm_featured_album_id" name="sm_options[sm_featured_album_id]">
-				<?php foreach ( $choices as $val => $label ) : ?>
-					<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $album_id, $val ); ?>><?php echo esc_html( $label ); ?></option>
-				<?php endforeach; ?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Mostrar sticky player', 'santiago-moraes' ); ?></th>
-		<td><label><input type="checkbox" name="sm_options[sm_player_enabled]" value="1" <?php checked( $enabled ); ?>> <?php esc_html_e( 'Activar', 'santiago-moraes' ); ?></label></td>
-	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Player en homepage (embed grande)', 'santiago-moraes' ); ?></th>
-		<td><label><input type="checkbox" name="sm_options[sm_player_homepage]" value="1" <?php checked( $homepage ); ?>> <?php esc_html_e( 'Activar', 'santiago-moraes' ); ?></label></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_player_spotify_url"><?php esc_html_e( 'Spotify URL del player', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="url" id="sm_player_spotify_url" name="sm_options[sm_player_spotify_url]" value="<?php echo esc_url( $spotify_url ); ?>" class="regular-text">
-			<p class="description"><?php esc_html_e( 'Album, playlist, track o artista. Vacio = usa el album destacado.', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row" colspan="2"><h3 style="margin:24px 0 0;"><?php esc_html_e( 'Tienda (widget en la home)', 'santiago-moraes' ); ?></h3></th>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_shop_url"><?php esc_html_e( 'URL de la tienda', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="url" id="sm_shop_url" name="sm_options[sm_shop_url]" value="<?php echo esc_url( $shop_url ); ?>" class="regular-text">
-			<p class="description"><?php esc_html_e( 'Vacio = usa el link de vinilo del primer album que lo tenga cargado. Si ningun album lo tiene, el widget no se muestra.', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_shop_label"><?php esc_html_e( 'Texto del boton', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_shop_label" name="sm_options[sm_shop_label]" value="<?php echo esc_attr( $shop_label ); ?>" class="regular-text" placeholder="Vinilo"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_shop_text"><?php esc_html_e( 'Texto descriptivo', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_shop_text" name="sm_options[sm_shop_text]" value="<?php echo esc_attr( $shop_text ); ?>" class="regular-text" placeholder="Discos físicos y merch."></td>
-	</tr>
-	<?php
-}
+				default:
+					$input_type = in_array( $type, array( 'url', 'email', 'number' ), true ) ? $type : 'text';
+					?>
+					<input type="<?php echo esc_attr( $input_type ); ?>" id="<?php echo esc_attr( $key ); ?>" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" class="<?php echo esc_attr( $class ); ?>"
+						<?php echo isset( $field['placeholder'] ) ? 'placeholder="' . esc_attr( $field['placeholder'] ) . '"' : ''; ?>
+						<?php echo isset( $field['min'] ) ? 'min="' . esc_attr( $field['min'] ) . '"' : ''; ?>
+						<?php echo isset( $field['max'] ) ? 'max="' . esc_attr( $field['max'] ) . '"' : ''; ?>>
+					<?php
+			}
 
-/**
- * Shows tab (Bandsintown).
- */
-function sm_tab_shows() {
-	$artist = sm_get_option( 'sm_bandsintown_artist', SM_BANDSINTOWN_DEFAULT_ARTIST );
-	$limit  = sm_get_option( 'sm_shows_limit', 5 );
-	?>
-	<tr>
-		<th scope="row"><label for="sm_bandsintown_artist"><?php esc_html_e( 'Artista en Bandsintown', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="text" id="sm_bandsintown_artist" name="sm_options[sm_bandsintown_artist]" value="<?php echo esc_attr( $artist ); ?>" class="regular-text">
-			<p class="description">
-				<?php esc_html_e( 'Formato "id_NUMERO" (recomendado, tomado de la URL bandsintown.com/a/NUMERO) o el nombre exacto del artista.', 'santiago-moraes' ); ?>
-				<br><a href="<?php echo esc_url( sm_bandsintown_artist_url() ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( sm_bandsintown_artist_url() ); ?></a>
-			</p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_shows_limit"><?php esc_html_e( 'Cantidad de shows en la home', 'santiago-moraes' ); ?></label></th>
-		<td><input type="number" id="sm_shows_limit" name="sm_options[sm_shows_limit]" value="<?php echo esc_attr( $limit ); ?>" min="1" max="20" class="small-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Cache', 'santiago-moraes' ); ?></th>
-		<td><p class="description"><?php esc_html_e( 'Las fechas se actualizan cada 6 horas. Guardar esta pagina fuerza una actualizacion inmediata.', 'santiago-moraes' ); ?></p></td>
-	</tr>
-	<?php
-}
-
-/**
- * Redes Sociales tab.
- */
-function sm_tab_redes() {
-	$social = array(
-		'sm_social_spotify'    => 'Spotify URL',
-		'sm_social_instagram'  => 'Instagram URL',
-		'sm_social_youtube'    => 'YouTube URL',
-		'sm_social_bandcamp'   => 'Bandcamp URL',
-		'sm_social_soundcloud' => 'SoundCloud URL',
-		'sm_social_facebook'   => 'Facebook URL',
-		'sm_social_twitter'    => 'Twitter/X URL',
-	);
-
-	foreach ( $social as $key => $label ) :
-		$val = sm_get_option( $key, '' );
-		?>
-		<tr>
-			<th scope="row"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?></label></th>
-			<td><input type="url" id="<?php echo esc_attr( $key ); ?>" name="sm_options[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_url( $val ); ?>" class="regular-text"></td>
-		</tr>
-		<?php
-	endforeach;
-}
-
-/**
- * Contacto tab.
- */
-function sm_tab_contacto() {
-	$email   = sm_get_option( 'sm_contact_email', '' );
-	$phone   = sm_get_option( 'sm_contact_phone', '' );
-	$address = sm_get_option( 'sm_contact_address', '' );
-	$maps    = sm_get_option( 'sm_contact_maps_url', '' );
-	?>
-	<tr>
-		<th scope="row"><label for="sm_contact_email"><?php esc_html_e( 'Email de contacto', 'santiago-moraes' ); ?></label></th>
-		<td><input type="email" id="sm_contact_email" name="sm_options[sm_contact_email]" value="<?php echo esc_attr( $email ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_contact_phone"><?php esc_html_e( 'Telefono', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_contact_phone" name="sm_options[sm_contact_phone]" value="<?php echo esc_attr( $phone ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_contact_address"><?php esc_html_e( 'Direccion', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_contact_address" name="sm_options[sm_contact_address]" value="<?php echo esc_attr( $address ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_contact_maps_url"><?php esc_html_e( 'Google Maps embed URL', 'santiago-moraes' ); ?></label></th>
-		<td><input type="url" id="sm_contact_maps_url" name="sm_options[sm_contact_maps_url]" value="<?php echo esc_url( $maps ); ?>" class="regular-text"></td>
-	</tr>
-	<?php
-}
-
-/**
- * Footer tab.
- */
-function sm_tab_footer() {
-	$copyright  = sm_get_option( 'sm_footer_copyright', '' );
-	$credits    = sm_get_option( 'sm_footer_credits', 'Designed with FeeloLab' );
-	$scroll_top = sm_get_option( 'sm_footer_scroll_top', true );
-	?>
-	<tr>
-		<th scope="row"><label for="sm_footer_copyright"><?php esc_html_e( 'Texto de copyright', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_footer_copyright" name="sm_options[sm_footer_copyright]" value="<?php echo esc_attr( $copyright ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_footer_credits"><?php esc_html_e( 'Creditos adicionales', 'santiago-moraes' ); ?></label></th>
-		<td><input type="text" id="sm_footer_credits" name="sm_options[sm_footer_credits]" value="<?php echo esc_attr( $credits ); ?>" class="regular-text"></td>
-	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Mostrar scroll-to-top', 'santiago-moraes' ); ?></th>
-		<td><label><input type="checkbox" name="sm_options[sm_footer_scroll_top]" value="1" <?php checked( $scroll_top ); ?>> <?php esc_html_e( 'Activar', 'santiago-moraes' ); ?></label></td>
-	</tr>
-	<?php
-}
-
-/**
- * Tracking tab.
- */
-function sm_tab_tracking() {
-	$ga_id   = sm_get_option( 'sm_ga_id', '' );
-	$gsc     = sm_get_option( 'sm_gsc_verification', '' );
-	$custom  = sm_get_option( 'sm_custom_head_code', '' );
-	?>
-	<tr>
-		<th scope="row"><label for="sm_ga_id"><?php esc_html_e( 'Google Analytics 4 — Measurement ID', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="text" id="sm_ga_id" name="sm_options[sm_ga_id]" value="<?php echo esc_attr( $ga_id ); ?>" class="regular-text" placeholder="G-XXXXXXXXXX">
-			<p class="description">
-				<?php esc_html_e( 'Con el ID cargado se envian pageviews y eventos propios del sitio: album_click, song_open, song_transpose, song_autoscroll, song_chords_toggle, song_print, cancionero_filter, show_click, shop_click, platform_click, contact_submit. Los usuarios logueados con permiso de edicion no se rastrean.', 'santiago-moraes' ); ?>
-			</p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_gsc_verification"><?php esc_html_e( 'Google Search Console — codigo de verificacion', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<input type="text" id="sm_gsc_verification" name="sm_options[sm_gsc_verification]" value="<?php echo esc_attr( $gsc ); ?>" class="regular-text">
-			<p class="description"><?php esc_html_e( 'Solo el valor de "content" de la etiqueta meta google-site-verification que da Search Console.', 'santiago-moraes' ); ?></p>
-		</td>
-	</tr>
-	<tr>
-		<th scope="row"><label for="sm_custom_head_code"><?php esc_html_e( 'Codigo personalizado en head', 'santiago-moraes' ); ?></label></th>
-		<td>
-			<textarea id="sm_custom_head_code" name="sm_options[sm_custom_head_code]" rows="6" class="large-text code"><?php echo esc_textarea( $custom ); ?></textarea>
-			<p class="description"><?php esc_html_e( 'Facebook Pixel, etc. Se inserta en <head>.', 'santiago-moraes' ); ?></p>
+			if ( ! empty( $field['description'] ) ) {
+				echo '<p class="description">' . esc_html( $field['description'] ) . '</p>';
+			}
+			?>
 		</td>
 	</tr>
 	<?php

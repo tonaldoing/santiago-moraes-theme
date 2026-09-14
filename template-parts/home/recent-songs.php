@@ -51,11 +51,13 @@ if ( ! $recent->have_posts() ) {
 			$capo   = (int) get_post_meta( get_the_ID(), '_cancion_capo', true );
 			$albums = get_the_terms( get_the_ID(), 'album' );
 			$album  = ( $albums && ! is_wp_error( $albums ) ) ? $albums[0]->name : '';
+			// Slug, not name: data-album feeds the analytics "album" dimension.
+			$album_slug = ( $albums && ! is_wp_error( $albums ) ) ? $albums[0]->slug : '';
 
 			$meta = array_filter( array( $album, $capo > 0 ? 'Capo ' . $capo : '' ) );
 			?>
 			<li class="recent__item">
-				<a href="<?php the_permalink(); ?>" class="recent__link" data-album="<?php echo esc_attr( $album ); ?>">
+				<a href="<?php the_permalink(); ?>" class="recent__link" data-album="<?php echo esc_attr( $album_slug ); ?>">
 					<span class="recent__body">
 						<span class="recent__name"><?php the_title(); ?></span>
 						<?php if ( $meta ) : ?>

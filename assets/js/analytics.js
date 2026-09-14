@@ -11,9 +11,13 @@
  *   Pending     key, direction, label, speed
  *   Ignored     url (high cardinality, redundant with the Pages report)
  *
- * song and album are always slugs (lowercase, no accents, hyphenated), taken
- * from a URL or a data attribute — never from visible text, which editors can
- * change. source uses a single closed vocabulary (see SOURCE).
+ * song and album are always real slugs, read from a URL path or from a data
+ * attribute that already holds one. They are never derived from visible text:
+ * WordPress slugs are editable independently of the name, so a slugified title
+ * would be plausible and wrong. When no slug is available the parameter is
+ * omitted — a gap is detectable, a wrong value is not.
+ *
+ * source uses a single closed vocabulary (see SOURCE).
  *
  * Events (all custom events in GA4):
  *   album_click           { album, source }
@@ -101,31 +105,15 @@
 	}
 
 	// -------------------------------------------------------------
-	// Slugs — the single normalization used by every call site.
+	// Slugs — only two sources are trusted: a URL path and a data
+	// attribute that already carries the slug WordPress generated.
 	// -------------------------------------------------------------
 
 	/**
-	 * Normalize a value to a slug: lowercase, unaccented, hyphenated.
-	 *
-	 * @param {string} value Raw value.
-	 * @return {string} Slug, or '' when there is nothing to normalize.
-	 */
-	function slugify( value ) {
-		if ( ! value ) {
-			return '';
-		}
-
-		var slug = String( value ).toLowerCase();
-
-		if ( typeof slug.normalize === 'function' ) {
-			slug = slug.normalize( 'NFD' ).replace( /[\u0300-\u036f]/g, '' );
-		}
-
-		return slug.replace( /[^a-z0-9]+/g, '-' ).replace( /^-+|-+$/g, '' );
-	}
-
-	/**
 	 * Slug of a URL sitting under a known base path.
+	 *
+	 * The path segment is the slug itself, so it is returned verbatim (decoded
+	 * and lowercased) rather than re-derived.
 	 *
 	 * @param {string} url  Absolute or relative URL.
 	 * @param {string} base Path segment before the slug ("canciones", "album").
@@ -136,65 +124,33 @@
 			return '';
 		}
 
-		var path;
-
 		try {
-			path = new URL( url, window.location.href ).pathname;
+			var path = new URL( url, window.location.href ).pathname;
+			var match = path.match( new RegExp( '/' + base + '/([^/]+)' ) );
+
+			return match ? decodeURIComponent( match[ 1 ] ).toLowerCase() : '';
 		} catch ( err ) {
 			return '';
 		}
-
-		var match = path.match( new RegExp( '/' + base + '/([^/]+)' ) );
-
-		return match ? slugify( decodeURIComponent( match[ 1 ] ) ) : '';
 	}
 
 	/**
-	 * First slug of a space-separated list ("hogar caprichos" → "hogar").
+	 * Slug held by a data attribute. data-albums carries a space-separated
+	 * list, whose first entry is the song's primary album.
 	 *
-	 * @param {string} list Space-separated slugs.
-	 * @return {string} First slug.
+	 * @param {string} value Attribute value.
+	 * @return {string} Slug, or '' when the attribute is empty.
 	 */
-	function firstSlug( list ) {
-		if ( ! list ) {
+	function slugFromAttr( value ) {
+		if ( ! value ) {
 			return '';
 		}
 
-		var parts = String( list ).trim().split( /\s+/ );
-
-		return parts[ 0 ] ? slugify( parts[ 0 ] ) : '';
+		return String( value ).trim().split( /\s+/ )[ 0 ].toLowerCase();
 	}
 
 	function songSlugFromHref( el ) {
 		return el ? slugFromUrl( el.href, 'canciones' ) : '';
-	}
-
-	// Album names shown on the page mapped to their real slug, read off the
-	// album cards. WP slugs can be edited independently of the name, so this
-	// lookup is preferred over slugifying the name.
-	var albumSlugByName = null;
-
-	function albumSlugFromName( name ) {
-		if ( ! name ) {
-			return '';
-		}
-
-		if ( ! albumSlugByName ) {
-			albumSlugByName = {};
-
-			var cards = document.querySelectorAll( '.disco-card' );
-
-			for ( var i = 0; i < cards.length; i++ ) {
-				var cardName = text( cards[ i ].querySelector( '.disco-card__name' ) ).toLowerCase();
-				var cardSlug = slugFromUrl( cards[ i ].href, 'album' );
-
-				if ( cardName && cardSlug ) {
-					albumSlugByName[ cardName ] = cardSlug;
-				}
-			}
-		}
-
-		return albumSlugByName[ String( name ).trim().toLowerCase() ] || slugify( name );
 	}
 
 	// -------------------------------------------------------------
@@ -208,7 +164,7 @@
 
 	// Song of the current /canciones/{slug}/ page, if any.
 	function currentSongSlug() {
-		return slugFromUrl( window.location.href, 'canciones' ) || slugify( text( document.querySelector( '.song-header__title' ) ) );
+		return slugFromUrl( window.location.href, 'canciones' );
 	}
 
 	var schemaAlbumSlug;
@@ -348,7 +304,7 @@
 			}
 		}
 
-		var title = slugify( el.getAttribute( 'title' ) || '' );
+		var title = ( el.getAttribute( 'title' ) || '' ).trim().toLowerCase();
 
 		return PLATFORMS.indexOf( title ) !== -1 ? title : '';
 	}
@@ -431,7 +387,7 @@
 		// Album cover cards.
 		if ( el.classList.contains( 'disco-card' ) ) {
 			track( 'album_click', {
-				album: slugFromUrl( el.href, 'album' ) || albumSlugFromName( text( el.querySelector( '.disco-card__name' ) ) || el.getAttribute( 'aria-label' ) ),
+				album: slugFromUrl( el.href, 'album' ),
 				source: sectionSource( el ),
 			} );
 			return;
@@ -441,7 +397,7 @@
 		if ( el.classList.contains( 'acordes-row' ) ) {
 			track( 'song_open', {
 				song: songSlugFromHref( el ),
-				album: firstSlug( el.dataset.albums ),
+				album: slugFromAttr( el.dataset.albums ),
 				source: SOURCE.CANCIONERO,
 			} );
 			return;
@@ -450,7 +406,7 @@
 			var activeRow = document.querySelector( '.acordes-row--active' );
 			track( 'song_open', {
 				song: songSlugFromHref( el ) || ( activeRow ? songSlugFromHref( activeRow ) : '' ),
-				album: activeRow ? firstSlug( activeRow.dataset.albums ) : '',
+				album: activeRow ? slugFromAttr( activeRow.dataset.albums ) : '',
 				source: SOURCE.CANCIONERO,
 			} );
 			return;
@@ -458,7 +414,7 @@
 		if ( el.classList.contains( 'recent__link' ) ) {
 			track( 'song_open', {
 				song: songSlugFromHref( el ),
-				album: albumSlugFromName( el.dataset.album ),
+				album: slugFromAttr( el.dataset.album ),
 				source: SOURCE.HOME,
 			} );
 			return;
@@ -474,10 +430,12 @@
 			return;
 		}
 
-		// Cancionero album filters.
+		// Cancionero album filters. "Todas" (data-album="all") is not an album,
+		// so it counts as filter usage without entering the album dimension.
 		if ( el.classList.contains( 'acordes-filter' ) ) {
+			var filtered = slugFromAttr( el.dataset.album );
 			track( 'cancionero_filter', {
-				album: slugify( el.dataset.album || text( el ) ),
+				album: 'all' === filtered ? '' : filtered,
 				source: SOURCE.CANCIONERO,
 			} );
 			return;

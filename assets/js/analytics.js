@@ -39,15 +39,15 @@
 ( function () {
 	'use strict';
 
-	// Closed vocabulary for the "source" (Origen) dimension. The song_open
-	// values home / cancionero / album / album_chords predate this file and are
-	// kept verbatim so historical series stay whole.
+	// Closed vocabulary for the "source" (Origen) dimension. Page-level values
+	// are named ficha_* after the page they describe, so a report row reads
+	// "Origen: ficha_disco, Disco: hogar" instead of repeating the dimension.
 	var SOURCE = {
 		HOME: 'home',
 		CANCIONERO: 'cancionero',
 		SONG: 'ficha_cancion',
-		ALBUM: 'album',
-		ALBUM_CHORDS: 'album_chords',
+		ALBUM: 'ficha_disco',
+		ALBUM_CHORDS: 'ficha_disco_acordes',
 		SHOWS: 'shows',
 		HEADER: 'header',
 		FOOTER: 'footer',

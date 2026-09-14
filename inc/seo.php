@@ -201,3 +201,44 @@ function sm_get_og_image() {
 	// Final fallback: placeholder.
 	return SM_THEME_URI . '/assets/images/hero-placeholder.webp';
 }
+
+// =====================================================================
+// XML sitemaps: never let the main query 404 a sitemap request.
+// =====================================================================
+
+/**
+ * Whether the current main query is a core sitemap (or its stylesheet) request.
+ *
+ * @return bool
+ */
+function sm_is_sitemap_request() {
+	return (bool) ( get_query_var( 'sitemap' ) || get_query_var( 'sitemap-stylesheet' ) );
+}
+
+/**
+ * Short-circuit WP::handle_404() for sitemap requests. The sitemap renderer
+ * does its own 404 handling for unknown sitemaps, so a 404 here is always wrong.
+ *
+ * @param bool $preempt Whether to skip default 404 handling.
+ * @return bool
+ */
+function sm_sitemap_pre_handle_404( $preempt ) {
+	return sm_is_sitemap_request() ? true : $preempt;
+}
+add_filter( 'pre_handle_404', 'sm_sitemap_pre_handle_404' );
+
+/**
+ * Force a 200 right before the core renderer runs (template_redirect, priority 10)
+ * in case a plugin already flagged the request as 404.
+ */
+function sm_sitemap_force_200() {
+	global $wp_query;
+
+	if ( ! sm_is_sitemap_request() || ! wp_sitemaps_get_server()->sitemaps_enabled() ) {
+		return;
+	}
+
+	$wp_query->is_404 = false;
+	status_header( 200 );
+}
+add_action( 'template_redirect', 'sm_sitemap_force_200', 9 );

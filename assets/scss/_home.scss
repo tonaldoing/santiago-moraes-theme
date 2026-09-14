@@ -584,82 +584,6 @@
   }
 }
 
-// ----- Music / Latest Album (kept for template-parts/home/music.php) -----
-.music {
-  background-color: $color-warm;
-  @include border-bottom;
-  padding: $section-padding-y $section-padding-x;
-
-  &__inner {
-    max-width: $container-max;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(28px, 4vw, 72px);
-    align-items: center;
-
-    @include tablet {
-      grid-template-columns: 0.9fr 1.1fr;
-    }
-  }
-
-  &__cover {
-    border: $border-style;
-    box-shadow: $shadow-large;
-    background-color: $color-paper;
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  &__placeholder {
-    aspect-ratio: 1 / 1;
-    background: repeating-linear-gradient(135deg, $hex-muted 0 8px, $hex-warm 8px 16px);
-    display: grid;
-    place-items: center;
-    text-align: center;
-    padding: 20px;
-    color: $color-olive;
-  }
-
-  &__tag {
-    color: $color-brick;
-    margin: 0 0 16px;
-  }
-
-  &__album-title {
-    font-size: clamp(46px, 7vw, 104px);
-    line-height: 0.85;
-    letter-spacing: -0.04em;
-    margin: 0;
-  }
-
-  &__meta {
-    color: $color-olive;
-    margin: 16px 0 0;
-  }
-
-  &__description {
-    font-family: $font-body;
-    font-size: clamp(18px, 1.7vw, 22px);
-    line-height: $lh-body;
-    max-width: 34em;
-    color: $color-brown;
-    margin: 22px 0 0;
-    text-wrap: pretty;
-  }
-
-  &__platforms {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 28px;
-  }
-}
-
 // ----- Latest Songs (sm/latest-songs block) -----
 .latest-songs {
   padding: $section-padding-y $section-padding-x;
@@ -736,7 +660,7 @@
   }
 }
 
-// ----- Home Contact (kept for template-parts/home/contact.php) -----
+// ----- Contact form (sm/contact-form block) -----
 .home-contact {
   background-color: $color-brick;
   color: $color-cream;

@@ -207,12 +207,35 @@ function sm_get_og_image() {
 // =====================================================================
 
 /**
- * Whether the current main query is a core sitemap (or its stylesheet) request.
+ * Whether the current main query is a valid core sitemap (or stylesheet) request.
+ * Unknown sitemap names or subtypes keep the normal 404 flow.
  *
  * @return bool
  */
 function sm_is_sitemap_request() {
-	return (bool) ( get_query_var( 'sitemap' ) || get_query_var( 'sitemap-stylesheet' ) );
+	if ( get_query_var( 'sitemap-stylesheet' ) ) {
+		return true;
+	}
+
+	$name = get_query_var( 'sitemap' );
+
+	if ( ! $name ) {
+		return false;
+	}
+
+	if ( 'index' === $name ) {
+		return true;
+	}
+
+	$provider = wp_sitemaps_get_server()->registry->get_provider( $name );
+
+	if ( ! $provider ) {
+		return false;
+	}
+
+	$subtype = get_query_var( 'sitemap-subtype' );
+
+	return ! $subtype || array_key_exists( $subtype, $provider->get_object_subtypes() );
 }
 
 /**

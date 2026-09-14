@@ -225,7 +225,8 @@ function sm_sanitize_options( $input ) {
 	$clean['sm_contact_maps_url'] = isset( $input['sm_contact_maps_url'] ) ? esc_url_raw( $input['sm_contact_maps_url'] ) : '';
 
 	// Tracking.
-	$clean['sm_ga_id']            = isset( $input['sm_ga_id'] ) ? sanitize_text_field( $input['sm_ga_id'] ) : '';
+	$clean['sm_ga_id']            = isset( $input['sm_ga_id'] ) ? strtoupper( sanitize_text_field( $input['sm_ga_id'] ) ) : '';
+	$clean['sm_gsc_verification'] = isset( $input['sm_gsc_verification'] ) ? sanitize_text_field( $input['sm_gsc_verification'] ) : '';
 	$clean['sm_custom_head_code'] = isset( $input['sm_custom_head_code'] ) ? $input['sm_custom_head_code'] : '';
 
 	return $clean;
@@ -404,7 +405,7 @@ function sm_render_hidden_fields( $active_tab ) {
 		'redes'     => array( 'sm_social_spotify', 'sm_social_instagram', 'sm_social_youtube', 'sm_social_bandcamp', 'sm_social_soundcloud', 'sm_social_facebook', 'sm_social_twitter' ),
 		'contacto'   => array( 'sm_contact_email', 'sm_contact_phone', 'sm_contact_address', 'sm_contact_maps_url' ),
 		'footer'     => array( 'sm_footer_copyright', 'sm_footer_credits', 'sm_footer_scroll_top' ),
-		'tracking'   => array( 'sm_ga_id', 'sm_custom_head_code' ),
+		'tracking'   => array( 'sm_ga_id', 'sm_gsc_verification', 'sm_custom_head_code' ),
 	);
 
 	$checkbox_keys = array( 'sm_player_enabled', 'sm_player_homepage', 'sm_footer_scroll_top' );
@@ -776,13 +777,23 @@ function sm_tab_footer() {
  */
 function sm_tab_tracking() {
 	$ga_id   = sm_get_option( 'sm_ga_id', '' );
+	$gsc     = sm_get_option( 'sm_gsc_verification', '' );
 	$custom  = sm_get_option( 'sm_custom_head_code', '' );
 	?>
 	<tr>
-		<th scope="row"><label for="sm_ga_id"><?php esc_html_e( 'Google Analytics ID', 'santiago-moraes' ); ?></label></th>
+		<th scope="row"><label for="sm_ga_id"><?php esc_html_e( 'Google Analytics 4 — Measurement ID', 'santiago-moraes' ); ?></label></th>
 		<td>
-			<input type="text" id="sm_ga_id" name="sm_options[sm_ga_id]" value="<?php echo esc_attr( $ga_id ); ?>" class="regular-text">
-			<p class="description"><?php esc_html_e( 'Ej: G-XXXXXXXXXX', 'santiago-moraes' ); ?></p>
+			<input type="text" id="sm_ga_id" name="sm_options[sm_ga_id]" value="<?php echo esc_attr( $ga_id ); ?>" class="regular-text" placeholder="G-XXXXXXXXXX">
+			<p class="description">
+				<?php esc_html_e( 'Con el ID cargado se envian pageviews y eventos propios del sitio: album_click, song_open, song_transpose, song_autoscroll, song_chords_toggle, song_print, cancionero_filter, show_click, shop_click, platform_click, contact_submit. Los usuarios logueados con permiso de edicion no se rastrean.', 'santiago-moraes' ); ?>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><label for="sm_gsc_verification"><?php esc_html_e( 'Google Search Console — codigo de verificacion', 'santiago-moraes' ); ?></label></th>
+		<td>
+			<input type="text" id="sm_gsc_verification" name="sm_options[sm_gsc_verification]" value="<?php echo esc_attr( $gsc ); ?>" class="regular-text">
+			<p class="description"><?php esc_html_e( 'Solo el valor de "content" de la etiqueta meta google-site-verification que da Search Console.', 'santiago-moraes' ); ?></p>
 		</td>
 	</tr>
 	<tr>

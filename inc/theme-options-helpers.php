@@ -67,13 +67,19 @@ add_action( 'wp_head', 'sm_tracking_head', 1 );
  * Output GA4 and custom head code.
  */
 function sm_tracking_head() {
+	$gsc = sm_get_option( 'sm_gsc_verification', '' );
+	if ( $gsc ) {
+		echo '<meta name="google-site-verification" content="' . esc_attr( $gsc ) . '">' . "\n";
+	}
+
 	$custom = sm_get_option( 'sm_custom_head_code', '' );
 	if ( $custom ) {
 		echo $custom . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Admin-controlled.
 	}
 
+	// Never send logged-in editors' own browsing to GA4.
 	$ga_id = sm_get_option( 'sm_ga_id', '' );
-	if ( $ga_id ) {
+	if ( $ga_id && ! current_user_can( 'edit_posts' ) ) {
 		?>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr( $ga_id ); ?>"></script>
 		<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','<?php echo esc_js( $ga_id ); ?>');</script>

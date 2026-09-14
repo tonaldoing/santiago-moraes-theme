@@ -99,6 +99,17 @@ function sm_enqueue_assets() {
 		);
 	}
 
+	// Analytics events — only when a GA4 Measurement ID is configured.
+	if ( sm_get_option( 'sm_ga_id', '' ) ) {
+		wp_enqueue_script(
+			'sm-analytics',
+			sm_asset_url( 'assets/js/analytics.js' ),
+			array(),
+			null,
+			array( 'strategy' => 'defer' )
+		);
+	}
+
 	// Acordes filter — only on the acordes page template.
 	if ( is_page_template( 'templates/template-acordes.php' ) ) {
 		wp_enqueue_script(

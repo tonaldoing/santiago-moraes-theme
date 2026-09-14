@@ -55,7 +55,7 @@ if ( ! $recent->have_posts() ) {
 			$meta = array_filter( array( $album, $capo > 0 ? 'Capo ' . $capo : '' ) );
 			?>
 			<li class="recent__item">
-				<a href="<?php the_permalink(); ?>" class="recent__link">
+				<a href="<?php the_permalink(); ?>" class="recent__link" data-album="<?php echo esc_attr( $album ); ?>">
 					<span class="recent__body">
 						<span class="recent__name"><?php the_title(); ?></span>
 						<?php if ( $meta ) : ?>
